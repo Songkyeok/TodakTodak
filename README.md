@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 # TodakTodak
 유아 용품 쇼핑몰
-=======
 # todaktodak_frontend
 
 ## Project setup
@@ -26,4 +24,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
->>>>>>> master
