@@ -2,7 +2,9 @@
   <div>
       <div class="admin-bar">
 
-        <h3 class="lg">Todak Todak</h3>
+        <router-link to ="/">
+        <img src="../assets/logo2.png"/>
+        </router-link>
 
         <br>
 

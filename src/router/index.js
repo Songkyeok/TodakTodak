@@ -7,6 +7,7 @@ import Main from "../views/Main.vue"
 
 import Basket from "../views/basket.vue";
 
+import LoginView from "../views/LoginView";
 
 const routes = [
   {
