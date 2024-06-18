@@ -1,7 +1,6 @@
 <template>
   <div>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <div class="icon-bar mypage-bar">
+      <div class="mypage-bar">
 
         <h3>마이 페이지</h3>
 
@@ -40,26 +39,6 @@
 
 <style>
 
-@font-face {
-font-family: 'GmarketSansMedium';
-font-family: 'GmarketSansLight';
-src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
-font-weight: normal;
-font-style: normal;
-}
-
-.mypage-bar{font-family: GmarketSansMedium}
-
-.mypage-bar {
-overflow-y: scroll;
--ms-overflow-style: none; /* 인터넷 익스플로러 */
-scrollbar-width: none; /* 파이어폭스 */
-}
-.mypage-bar::-webkit-scrollbar {
-    display: none; /* 크롬, 사파리, 오페라, 엣지 */
-}
-
 .mypage-bar {
   height: 100%;
   width: 100px;
@@ -71,8 +50,7 @@ scrollbar-width: none; /* 파이어폭스 */
   background-color: rgb(255, 255, 255);
 }
 
-/* icon */
-.mypage-bar .m, .icon-bar p{
+.mypage-bar .m, p{
   color: #000000;
 }
 
