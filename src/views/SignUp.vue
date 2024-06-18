@@ -54,9 +54,11 @@
         
         <div class="form-group form-group-ad">
           <label for="address">주소</label>
-          <input type="text" id="address" v-model="address" />
-          <button type="button">우편번호검색</button>
+          <div class="address_postcode">
+          <input type="text" name="zonecode" readonly="readonly" value="">
+          <button type="button" id="btnPostcode" class="btn_post_search">우편번호검색</button>
           <input type="hidden" name="zipcode" value="">
+          </div>
           <div class="address_input">
             <div class="member_warning">
                 <input type="text" name="address" readonly="readonly" value="">
@@ -312,6 +314,15 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .chosen-select {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: solid #ccc;
+    background-color: #fff;
+    color: #333;
+    border-radius: 4px;
+  }
   
   .form-group-ad button[type="button"]:hover {
     background-color: #c78683;
@@ -327,8 +338,18 @@
   .form-group-ad label {
     width: 120px;
     font-weight: bold;
-    color: #333;
+    color: #222;
     margin-right: 10px;
+  }
+
+  .address-input {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .address-input {
+    margin-bottom: 5px;
   }
 
   button[type="submit"] {
