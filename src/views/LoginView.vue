@@ -25,7 +25,10 @@ export default {
                 success: res => {
                     const kakao_account = res.kakao_account
                     const nickname = kakao_account.profile.nickname
-                    const email = kakao_account.profile.account_email
+                    const email = kakao_account.email
+
+                    console.log("nickname ===>>> ", nickname);
+                    console.log("email ===>>> ", email);
 
                     axios({
                         url: "http://localhost:3000/auth/kakaoLogin",

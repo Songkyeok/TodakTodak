@@ -524,6 +524,21 @@ h6 span{
   color: #2a2b38;
   margin-bottom: 40px;
 }
+.btn button {
+  margin: 5px;
+}
+
+
+
+
+.logo {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: block;
+  z-index: 100;
+  transition: all 250ms linear;
+}
 
 .top {
   text-align: center;

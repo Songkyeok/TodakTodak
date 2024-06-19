@@ -7,7 +7,9 @@ import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
 import LoginView from "../views/LoginView";
 import SignUp from "../views/SignUp.vue";
+import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
+import orderList from "../views/orderList.vue";
 
 const routes = [
   {
@@ -50,15 +52,30 @@ const routes = [
     component: Basket,
   },
   {
+    path: "/auth",
+    name: "loginView",
+    component: LoginView,
+  },
+  {
     path: "/join",
     name: "SignUp",
     component: SignUp,
+  },
+  {
+    path: "/agreement",
+    name: "SignUpAgreement",
+    component: SignUpAgreement,
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
   },
+  {
+    path: "/orderList",
+    name: "orderList",
+    component: orderList,
+  }
 ];
 
 const router = createRouter({
