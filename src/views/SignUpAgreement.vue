@@ -155,7 +155,7 @@
         <br>
         <div class="btn_center_box">
           <button type="button" id="btnPrevStep" class="btn_member_prev">이전단계</button>
-          <button type="button" id="btnNextStep" class="btn_member_next">다음단계</button>
+          <button type="button" id="btnNextStep" class="btn_member_next" @click="test">다음단계</button>
         </div>
       </div>
     </form>
@@ -163,7 +163,10 @@
 
 <script type="text/javascript">
         var setCriteoGoodsPrice = 0;
-            
+        function test(){
+          window.location.href = '/join'
+        }
+
         function set_criteo_price() {
             if (typeof $('#frmViewLayer input[name="set_goods_price"]').val() == 'undefined') {
                 var tmpGoodsPrice = parseFloat($('#frmView input[name="set_goods_price"]').val());
