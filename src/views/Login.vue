@@ -520,6 +520,10 @@ h6 span{
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
 
+.btn button {
+  margin: 5px;
+}
+
 
 
 

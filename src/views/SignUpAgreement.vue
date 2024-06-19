@@ -5,7 +5,7 @@
             <h1>회원가입</h1>
         </div>
         <div class="agreement">
-            <h3>약관동의</h3>
+            <h4>약관동의</h4>
         </div>
         <div class="join_agreement_cont">
           <div class="join_agreement_box">
@@ -17,6 +17,7 @@
               </label>
             </div>
           </div>
+          <br>
         <div class="join_agreement_box">
           <div class="form_element">
             <input type="checkbox" id="allAgree">
@@ -26,6 +27,7 @@
             <span>(전체동의, 선택항목도 포함됩니다.)</span>
           </div>
         </div>
+        <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
             <input type="checkbox" id="termsAgree1" name="agreementInfoFl" class="require">
@@ -104,6 +106,7 @@
             <br>
           </div>
         </div>
+        <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
             <input type="checkbox" id="termsAgree2" name="privateApprovalFl" class="require">
@@ -117,25 +120,28 @@
             회원의 서비스 이용에 대한 통계, 이용자들의 개인정보를 통한 서비스 개발을 위해 아래와 같은 개인정보를 수집하고 있습니다. "
             <br>
             <br>
-            " 1. - 목적 : 이용자 식별 및 본인여부 확인 "
+            " 1. 목적 : 이용자 식별 및 본인여부 확인 "
             <br>
-            " 2. - 목적 : 민원 등 고객 고충처리 "
+            " 2. 목적 : 민원 등 고객 고충처리 "
             <br>
-            " 3. – 목적 : 만 14세 미만 아동 확인 "
+            " 3. 목적 : 만 14세 미만 아동 확인 "
             <br>
             <br>
             <br>
           </div>
         </div>
         <div class="important_check_box">
+          <br>
           <strong class="important_check_on">이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.</strong>
         </div>
         </div>
+        <br>
         <div class="join_certify_box">
           <h3>본인 인증방법 선택</h3>
           <div class="join_certify_list">
             <ul>
               <li>
+                <br>  
                 <div class="form_element">
                   <input type="radio" id="authCellPhone" name="RnCheckType" value="authCellPhone">
                   <label class="choice_s" for="authCellPhone">휴대폰 본인인증</label>
@@ -144,6 +150,9 @@
             </ul>
           </div>
         </div>
+        <br>
+        <br>
+        <br>
         <div class="btn_center_box">
           <button type="button" id="btnPrevStep" class="btn_member_prev">이전단계</button>
           <button type="button" id="btnNextStep" class="btn_member_next">다음단계</button>
@@ -239,110 +248,38 @@
   }
 
   .agreement {
-    font-size: 18px;
+    font-size: 10px;
     font-weight: normal;
-    text-align: left;   
+    text-align: left; 
     border-bottom: 1px solid #434340;
-  }
-/*  */
-  .note {
-    font-size: 12px;
-    color: #d9534f;
-    margin-top: 10; 
     margin-bottom: 20px;
-    text-align: right;
   }
-  
-  .form-group {
-    display: flex;
+
+  .agreement_box {
+    border-style: solid;
+  }
+
+  .btn_center_box {
+    text-align: center;
     align-items: center;
-    margin-bottom: 15px;
-    margin-left: 50px;
-    margin-right: 50px;
-    line-height: 1.5;
-  }
-  
-  .form-group label {
-    width: 120px;
-    font-weight: bold;
-    color: #333;
-    margin-right: 10px;
-  }
-  
-  .form-group .required::after {
-    content: '*';
-    color: #c9302c;
-    margin-left: 5px;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="password"],
-  .form-group input[type="email"] {
-    flex: 1;
-    padding: 8px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .form-group button[type="button"] {
-    margin-left: 10px;
-    padding: 8px 12px;
-    border: none;
-    background-color: #767070;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
   }
 
-  .chosen-select {
-    margin-left: 10px;
-    padding: 8px 12px;
-    border: solid #ccc;
-    background-color: #fff;
-    color: #333;
-    border-radius: 4px;
-  }
-  
-  .form-group-ad button[type="button"]:hover {
-    background-color: #c78683;
+  .join_certify_box {
+    text-align: left;
   }
 
-  .form-group-ad {
-    flex-direction: row;
-    display: flex;
+  .join_certify_list {
+    text-align: center;
     align-items: center;
-    margin-bottom: 15px;
+    border-style: solid; 
+    border-color: #ccc;
+    width: auto;
+    height: 100px;
+    margin-top: 30px;
   }
 
-  .form-group-ad label {
-    width: 120px;
-    font-weight: bold;
-    color: #222;
-    margin-right: 10px;
-  }
-
-  .address-input {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-  }
-
-  .address-input {
-    margin-bottom: 5px;
-  }
-
-  button[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-    border: none;
-    background-color: #767070;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
+  .btn_center_box button {
+    margin: 12px;
   }
   
-  button[type="submit"]:hover {
-    background-color: #767070;
-  }
   </style>

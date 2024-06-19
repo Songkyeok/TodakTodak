@@ -61,7 +61,7 @@ const routes = [
     component: SignUp,
   },
   {
-    path: "/join",
+    path: "/agreement",
     name: "SignUpAgreement",
     component: SignUpAgreement,
   },
