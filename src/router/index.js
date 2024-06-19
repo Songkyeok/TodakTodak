@@ -6,6 +6,9 @@ import header from "../layouts/header.vue";
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
 import LoginView from "../views/LoginView";
+import SignUp from "../views/SignUp.vue";
+import SignUpAgreement from "../views/SignUpAgreement.vue";
+import Login from "../views/Login.vue";
 
 const routes = [
   {
@@ -51,6 +54,21 @@ const routes = [
     path: "/auth",
     name: "loginView",
     component: LoginView,
+  },
+  {
+    path: "/join",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    path: "/join",
+    name: "SignUpAgreement",
+    component: SignUpAgreement,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   }
 ];
 
