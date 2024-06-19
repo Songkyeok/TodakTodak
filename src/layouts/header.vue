@@ -107,6 +107,5 @@ export default {
 }
 </script>
 <style>
-@import "C:\Users\user\OneDrive\Desktop\team project\TodakTodak_Frontend\css\main.css";
-
+@import "../assets/css/main.css";
 </style>
