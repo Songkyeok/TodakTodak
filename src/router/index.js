@@ -9,6 +9,7 @@ import LoginView from "../views/LoginView";
 import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
+import orderList from "../views/orderList.vue";
 
 const routes = [
   {
@@ -69,6 +70,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/orderList",
+    name: "orderList",
+    component: orderList,
   }
 ];
 
