@@ -4,9 +4,7 @@ import adminSideBar from "../layouts/mypageSideBar.vue";
 import footer from "../layouts/footer.vue";
 import header from "../layouts/header.vue";
 import Main from "../views/Main.vue"
-
 import Basket from "../views/basket.vue";
-
 import LoginView from "../views/LoginView";
 
 const routes = [
@@ -48,6 +46,11 @@ const routes = [
     path: "/basket",
     name: "basket",
     component: Basket,
+  },
+  {
+    path: "/auth",
+    name: "loginView",
+    component: LoginView,
   }
 ];
 
