@@ -178,24 +178,23 @@ input:focus {
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+            <a href="https://localhost:8080/login" class="head" mb-0 pb-3><h6><span>로그인</span></h6></a>
+            <a href="https://localhost:8080/join" class="head" mb-0 pb-3><h6><span>회원가입</span></h6></a>
             <div class="title">
-                        <h1>로그인</h1>
-                    </div>
-                  <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
-                  <label for="reg-log"></label>
+                <h1>로그인</h1>
+            </div>
             <div class="card-3d-wrap mx-auto">
               <div class="card-3d-wrapper">
                 <div class="card-front">
                   <div class="center-wrap">
                     <div class="section text-center">
-                      <h4 class="mb-4 pb-3">회원 로그인</h4>
+                      <h4 class="top" mb-4 pb-3>회원 로그인</h4>
                       <div class="form-group">
-                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                        <input type="email" name="user_id" class="form-style" placeholder="아이디" id="logemail" autocomplete="off">
                         <i class="input-icon uil uil-at"></i>
                       </div>  
                       <div class="form-group mt-2">
-                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                        <input type="password" name="user_pw" class="form-style" placeholder="비밀번호" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <button @click="login" class="btn">로그인</button>
@@ -204,7 +203,7 @@ input:focus {
                         </div>
                       </div>
                     </div>
-                <div class="card-back">
+                <!-- <div class="card-back">
                   <div class="center-wrap">
                     <div class="section text-center">
                       <h4 class="mb-4 pb-3">Sign Up</h4>
@@ -223,7 +222,7 @@ input:focus {
                       <a href="#" class="btn mt-4">submit</a>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -358,8 +357,7 @@ h6 span{
 .card-front, .card-back {
   width: 100%;
   height: 100%;
-  background-color: #2a2b38;
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
+  background-color: #ccc;
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 300%;
@@ -480,19 +478,22 @@ h6 span{
     transition: all 200ms linear;
 }
 
-.btn{  
+.btn{
+  align-items: center;  
+  margin-top: 80px;
   border-radius: 4px;
-  height: 44px;
-  font-size: 13px;
+  height: 30px;
+  font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
-  -webkit-transition : all 200ms linear;
+  text-transform: lowercase;
+  /* -webkit-transition : all 200ms linear; */
   transition: all 200ms linear;
   padding: 0 30px;
   letter-spacing: 1px;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
+  /* display: -webkit-inline-flex;
+  display: -ms-inline-flexbox; */
   display: inline-flex;
+  text-align: center;
   /* -webkit-align-items: center;
   -moz-align-items: center;
   -ms-align-items: center;
@@ -505,21 +506,24 @@ h6 span{
   text-align: center;
   border: none;
   background-color: #ffeba7;
-  color: #102770;
+  color: #222222;
   box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
 }
 .btn:active,
 .btn:focus{  
-  background-color: #102770;
-  color: #ffeba7;
-  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+  background-color: #d7ea56;
+  color: #53524e;
 }
 .btn:hover{  
-  background-color: #102770;
-  color: #ffeba7;
-  box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
+  background-color: #d7ea56;
+  color: #53524e;
 }
 
+.head {
+  display: inline-block;
+  color: #2a2b38;
+  margin-bottom: 40px;
+}
 .btn button {
   margin: 5px;
 }
@@ -535,11 +539,13 @@ h6 span{
   z-index: 100;
   transition: all 250ms linear;
 }
-.logo img {
-  height: 26px;
-  width: auto;
-  display: block;
+
+.top {
+  text-align: center;
+  color: #222222;
+  margin-bottom: 50px;
 }
+
 
 
 </style>
