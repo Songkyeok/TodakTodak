@@ -4,7 +4,7 @@
             <h1>회원가입</h1>
         </div>
         <div class="information">
-            <h3>기본정보</h3>
+            <h4>기본정보</h4>
         </div>
             <p class="note">* 표시는 반드시 입력하셔야 하는 항목입니다.</p>
   
@@ -251,6 +251,13 @@
     color: #222222;
     border-bottom: 1px solid #434340;
   }
+
+  .signup-container h4 {
+    text-align: left;
+    font-size: 20px;
+    color: #222222;
+    margin-left: 10px;
+  }
   
   .container {
     padding: 0 0 17px;
@@ -267,7 +274,7 @@
   }
 
   .note {
-    font-size: 12px;
+    font-size: 15px;
     color: #d9534f;
     margin-top: 10; 
     margin-bottom: 20px;
@@ -353,14 +360,19 @@
   }
 
   button[type="submit"] {
-    display: block;
-    width: 100%;
+    display: grid;
+    height: 50px;
+    align-items: end;
+    width: 30%;
     padding: 10px 0;
     border: none;
     background-color: #767070;
     color: #fff;
     border-radius: 4px;
     cursor: pointer;
+    align-content: center;
+    margin-left: 35%;
+    margin-top: 80px;
   }
   
   button[type="submit"]:hover {
