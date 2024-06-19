@@ -178,8 +178,8 @@ input:focus {
       <div class="row full-height justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <a href="https://localhost:8080/login" class="head" mb-0 pb-3><h6><span>로그인</span></h6></a>
-            <a href="https://localhost:8080/join" class="head" mb-0 pb-3><h6><span>회원가입</span></h6></a>
+            <a href="/login" class="head" mb-0 pb-3><h6><span>로그인</span></h6></a>
+            <a href="/join" class="head" mb-0 pb-3><h6><span>회원가입</span></h6></a>
             <div class="title">
                 <h1>로그인</h1>
             </div>
@@ -197,9 +197,11 @@ input:focus {
                         <input type="password" name="user_pw" class="form-style" placeholder="비밀번호" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
-                      <button @click="login" class="btn">로그인</button>
-                      <button @click="findId" class="btn">아이디 찾기</button>
-                      <button @click="findPw" class="btn">비밀번호 찾기</button>
+                      <!-- <div class="btn123"> -->
+                      <button @click="login" class="btn1">로그인</button>
+                      <button @click="findId" class="btn2">아이디 찾기</button>
+                      <button @click="findPw" class="btn3">비밀번호 찾기</button>
+                      <!-- </div> -->
                         </div>
                       </div>
                     </div>
@@ -478,37 +480,55 @@ h6 span{
     transition: all 200ms linear;
 }
 
-.btn{
-  align-items: center;  
-  margin-top: 80px;
-  border-radius: 4px;
-  height: 30px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: lowercase;
-  /* -webkit-transition : all 200ms linear; */
-  transition: all 200ms linear;
-  padding: 0 30px;
-  letter-spacing: 1px;
-  /* display: -webkit-inline-flex;
-  display: -ms-inline-flexbox; */
-  display: inline-flex;
-  text-align: center;
-  /* -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: center;
-  -ms-justify-content: center;
-  justify-content: center;
-  -ms-flex-pack: center; */
-  text-align: center;
-  border: none;
-  background-color: #ffeba7;
-  color: #222222;
-  box-shadow: 0 8px 24px 0 rgba(255,235,167,.2);
+.btn1 {
+  display: inline-block;
+  margin: 10px; /* 버튼 사이의 간격 설정 */
+  background-color: #c4c3ca;
+  position: relative;
+  top: 55px;
+  padding: 10px 20px; /* 여백 조정 */
+  background-color: #7fc481; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 둥근 모서리 */
+  font-size: 12px; /* 글자 크기 */
+  cursor: pointer; /* 커서 모양 변경 */
 }
+
+.btn2 {
+  display: inline-block;
+  margin: 10px; /* 버튼 사이의 간격 설정 */
+  background-color: #c4c3ca;
+  position: relative;
+  top: 55px;
+  padding: 10px 20px; /* 여백 조정 */
+  background-color: #7fc481; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 둥근 모서리 */
+  font-size: 12px; /* 글자 크기 */
+  cursor: pointer; /* 커서 모양 변경 */
+}
+
+.btn3 {
+  display: inline-block;
+  margin: 10px; /* 버튼 사이의 간격 설정 */
+  background-color: #c4c3ca;
+  position: relative;
+  top: 55px;
+  padding: 10px 20px; /* 여백 조정 */
+  background-color: #7fc481; /* 배경색 */
+  color: white; /* 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 둥근 모서리 */
+  font-size: 12px; /* 글자 크기 */
+  cursor: pointer; /* 커서 모양 변경 */
+}
+
+.btn {
+  align-items: end;
+}
+
 .btn:active,
 .btn:focus{  
   background-color: #d7ea56;
@@ -527,9 +547,6 @@ h6 span{
 .btn button {
   margin: 5px;
 }
-
-
-
 
 .logo {
   position: absolute;
