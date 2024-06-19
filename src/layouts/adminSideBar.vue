@@ -34,6 +34,11 @@
 
 <style>
 
+img {
+    width: 100px;
+    height: auto;
+}
+
 .admin-bar {
   height: 100%;
   width: 100px;
