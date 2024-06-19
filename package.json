@@ -8,7 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@splidejs/vue-splide": "^0.6.12",
+=======
+>>>>>>> c35912dea7c1ee4e226007d6d1c424d327066aa9
     "axios": "^1.7.2",
     "core-js": "^3.8.3",
     "passport": "^0.7.0",
