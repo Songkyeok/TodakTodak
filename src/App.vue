@@ -13,7 +13,9 @@
     <router-link to="/orderList">orderList</router-link> 
 
   </nav>
-  <router-view></router-view>
+
+  <router-view />
+
 </template>
 
 <script>

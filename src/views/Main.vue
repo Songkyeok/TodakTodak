@@ -68,6 +68,8 @@ export default {
     width: 50%;
     height: 300px;
     object-fit: cover;
+    margin: auto;
+    display: block;
 }
 
 .home_title{
