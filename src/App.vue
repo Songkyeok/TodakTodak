@@ -7,6 +7,7 @@
     <router-link to="/footer">footer</router-link> |
     <router-link to="/header">header</router-link> |
   </nav>
+  <router-view />
 </template>
 
 <script>
