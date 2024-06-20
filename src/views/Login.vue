@@ -1,177 +1,3 @@
-<!-- <template>
-    <main class="mt-5">
-        <div class="login-form">
-            <div class="logo">
-                <img src='../assets/logo2.png'>
-            </div>
-            <div>
-                <input type="id" @keyup.enter="login()" class="form-control" placeholder="아이디" v-model="user_id" />
-                <label for="floatingInput"></label>
-            </div>
-
-            <div>
-                <input type="password" @keyup.enter="login()" class="form-control" placeholder="비밀번호" v-model="user_pw" />
-                <label for="floatingPassword"></label>
-            </div>
-
-            <div>
-                <button type="button" class="btn" @click="login">로그인</button>
-            </div>
-
-
-
-            <div class="find" @click="goToFind">아이디 / 비밀번호 찾기</div>
-        </div>
-    </main>
-</template>
-
-<script>
-import axios from 'axios';
-
-export default {
-    data() {
-        return {
-            user_id: '',
-            naver_id: '',
-            user_pw: '',
-            naverLogin: [],
-        };
-    },
-    computed: {
-        user() {
-            return this.$store.state.user; // user 정보가 바뀔 때마다 자동으로 user() 갱신
-        },
-    },
-
-    methods: {
-        login() {
-            axios({
-                url: "http://localhost:3000/auth/login_process",
-                method: "POST",
-                data: {
-                    user_id: this.user_id,
-                    user_pw: this.user_pw
-                },
-            })
-                .then(res => {
-                    if (res.data.message == 'undefined_id') {
-                        this.$swal("존재하지 않는 아이디입니다.")
-                    }
-                    else if (res.data.message == 'incorrect_pw') {
-                        this.$swal("비밀번호가 틀렸습니다.")
-                    }
-                    else {
-                        this.$store.commit("user", { user_id: this.user_id, user_no: res.data.message })
-                        this.$swal({
-                            position: 'top',
-                            icon: 'success',
-                            title: '로그인 성공!',
-                            showConfirmButton: false,
-                            timer: 1000
-                        })
-                        this.$router.push({ path: '/' });  // 메인 화면으로 이동
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        },
-
-        goToFind() {
-            this.$router.push({ path: 'find' });
-        },
-    },
-};
-</script>
-
-<style scoped>
-.login-form {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 50px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-.logo img {
-    width: auto;
-    height: auto;
-    max-width: 300px;
-    display: block;
-    margin: auto;
-    position: relative;
-    top: 40px;
-}
-
-.login-form {
-    display: grid;
-    width: 400px;
-    height: 500px;
-    margin: 6% auto;
-    border: solid 2px rgb(237, 237, 237);
-    background-color: #fcf9db;
-    background: linear-gradient(180deg, rgb(253, 238, 204), rgb(253, 245, 221));
-    box-shadow: 0px 1px 30px 2px rgb(238, 238, 238);
-    border-radius: 30px;
-}
-
-.login-form .form-control {
-    height: 48px;
-    width: 240px;
-    font-size: 16px;
-    display: inline;
-    margin-left: 20%;
-    margin-bottom: 10px;
-    border: solid 2px rgb(237, 237, 237);
-    text-align: center;
-    border-radius: 8px;
-    position: relative;
-    top: 90px;
-}
-
-input::placeholder {
-    color: #aaa;
-}
-
-input:focus {
-    outline: 2px solid #ffc905;
-}
-
-.login-form .btn {
-    height: 48px;
-    width: 242px;
-    font-size: 16px;
-    display: inline;
-    margin-left: 20%;
-    margin-bottom: 50px;
-    border: solid 2px rgb(255, 204, 122);
-    border-radius: 8px;
-    background-color: rgb(255, 210, 107);
-    position: relative;
-    top: 110px;
-}
-
-.login-form .btn:hover {
-    cursor: pointer;
-}
-
-.find {
-    position: fixed;
-    bottom: 20px;
-    height: 30px;
-    text-align: center;
-    padding-top: 10px;
-    font-size: 0.8rem;
-    color: #aaa;
-    cursor: pointer;
-    /* border: 1px solid red; */
-}
-</style> -->
-
-
-
-
-
 <template>
 <div class="section">
     <div class="container">
@@ -197,34 +23,12 @@ input:focus {
                         <input type="password" name="user_pw" class="form-style" placeholder="비밀번호" id="logpass" autocomplete="off">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
-                      <!-- <div class="btn123"> -->
                       <button @click="login" class="btn1">로그인</button>
                       <button @click="findId" class="btn2">아이디 찾기</button>
                       <button @click="findPw" class="btn3">비밀번호 찾기</button>
-                      <!-- </div> -->
                         </div>
                       </div>
                     </div>
-                <!-- <div class="card-back">
-                  <div class="center-wrap">
-                    <div class="section text-center">
-                      <h4 class="mb-4 pb-3">Sign Up</h4>
-                      <div class="form-group">
-                        <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
-                        <i class="input-icon uil uil-user"></i>
-                      </div>  
-                      <div class="form-group mt-2">
-                        <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
-                        <i class="input-icon uil uil-at"></i>
-                      </div>  
-                      <div class="form-group mt-2">
-                        <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-                        <i class="input-icon uil uil-lock-alt"></i>
-                      </div>
-                      <a href="#" class="btn mt-4">submit</a>
-                        </div>
-                      </div>
-                    </div> -->
                   </div>
                 </div>
               </div>
@@ -234,13 +38,15 @@ input:focus {
   </div>
 </template>
 
-<!-- <script>
+<script>
 export default {
-    setup() {
-        
-    },
+  methods: {
+    findId() {
+      this.$router.push({ name: "findId" });
+    }
+  }
 }
-</script> -->
+</script>
 
 <style scoped>
 .title {

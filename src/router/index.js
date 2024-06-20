@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import adminSideBar from "../layouts/mypageSideBar.vue";
 import footer from "../layouts/footer.vue";
 import header from "../layouts/header.vue";
@@ -10,12 +9,13 @@ import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
+import findId from "../views/findId.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "Main",
+    component: Main,
   },
   {
     path: "/about",
@@ -75,6 +75,11 @@ const routes = [
     path: "/orderList",
     name: "orderList",
     component: orderList,
+  },
+  {
+    path: "/findId",
+    name: "findId",
+    component: findId,
   }
 ];
 
