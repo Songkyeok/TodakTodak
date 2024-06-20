@@ -9,6 +9,7 @@ import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
 import findId from "../views/findId.vue";
+import about from "../views/about.vue";
 
 const routes = [
   {
@@ -19,11 +20,7 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: about,
   },
   {
     path: "/sidebar",
@@ -34,16 +31,6 @@ const routes = [
     path: "/main",
     name: "main",
     component: Main,
-  },
-  {
-    path: "/footer",
-    name: "footer",
-    component: footer,
-  },
-  {
-    path: "/header",
-    name: "header",
-    component: header,
   },
   {
     path: "/basket",

@@ -45,8 +45,8 @@
                                     <ul class="swiper-wrapper">
                                         <li class="swiper-slide swiper-slide-active">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html">
-                                                    <span>소개글</span>
+                                                <a href="#">
+                                                    <span @click="goToAbout()">소개글</span>
                                                 </a>
                                             </div>
                                         </li>
@@ -125,6 +125,9 @@ export default {
         },
         goToCart() {
         this.$router.push({ path: '/basket' });
+        },
+        goToAbout() {
+        this.$router.push({ path: '/about' });
         },
         logout() {
             this.$store.commit("user", {});
