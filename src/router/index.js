@@ -11,6 +11,11 @@ import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
 
+
+
+import GoodsAdd from "../admin/goodsAdd.vue";
+import GoodsDetail from "../views/Detail.vue";
+
 const routes = [
   {
     path: "/",
@@ -75,6 +80,16 @@ const routes = [
     path: "/orderList",
     name: "orderList",
     component: orderList,
+  },
+  {
+    path: "/goodsAdd",
+    name: "GoodsAdd",
+    component: GoodsAdd,
+  },
+  {
+    path: "/goodsDetail/:goodsno",
+    name: "GoodsDetail",
+    component: GoodsDetail,
   }
 ];
 

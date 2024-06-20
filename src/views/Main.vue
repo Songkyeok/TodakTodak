@@ -27,6 +27,7 @@
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import axios from 'axios';
 
 
 export default {	
@@ -47,6 +48,8 @@ export default {
                 autoplay: true,
                 wheel: true,
                 wheelSleep: 500,
+                arrows: false,
+                
             }
         };
     },
@@ -54,11 +57,13 @@ export default {
         filteredGoodsList(category){
             return this.goodsList.filter((goods) => goods.GOODS_CATEGORY === category);
         }
-    }
+    },
+
 }
 </script>
 
 <style scoped>
+
 .hr{
     width: 100%;
     height: 10px;

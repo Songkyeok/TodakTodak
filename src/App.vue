@@ -10,7 +10,11 @@
     <router-link to="/login">Login</router-link>
     <router-link to="/agreement">Agreement</router-link> |
     <router-link to="/login">Login</router-link> |
-    <router-link to="/orderList">orderList</router-link> 
+    <router-link to="/orderList">orderList</router-link> |
+    <router-link to="/goodsAdd">GoodsAdd</router-link> |
+    <router-link to="/goodsDetail">goodsDetail</router-link> |
+
+
 
   </nav>
 
