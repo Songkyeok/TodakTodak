@@ -10,7 +10,7 @@
         <div class="join_agreement_cont">
           <div class="join_agreement_box">
             <div class="form_element" id="termAgreeDiv">
-              <input type="checkbox" id="termAgree" name="under14ConsentFl" value="y" data-gtm-form-interact-field-id="0">
+              <input type="checkbox" v-model="joinAgreementBox" id="termAgree" name="under14ConsentFl" value="y" data-gtm-form-interact-field-id="0">
               <label class="check on" for="termAgree">
                 <strong>(필수)</strong>
                 <em>만 14세 이상입니다</em>
@@ -18,19 +18,9 @@
             </div>
           </div>
           <br>
-        <div class="join_agreement_box">
-          <div class="form_element">
-            <input type="checkbox" id="allAgree">
-            <label class="check" for="allAgree">
-              <em>토닥토닥의 모든 약관을 확인하고 전체 동의합니다.</em>
-            </label>
-            <span>(전체동의, 선택항목도 포함됩니다.)</span>
-          </div>
-        </div>
-        <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
-            <input type="checkbox" id="termsAgree1" name="agreementInfoFl" class="require">
+            <input type="checkbox" v-model="joinAgreementBox" id="termsAgree1" name="agreementInfoFl" class="require">
             <label class="check_s" for="termsAgree1">
             <strong>(필수)</strong>
             " 이용약관 "
@@ -109,7 +99,7 @@
         <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
-            <input type="checkbox" id="termsAgree2" name="privateApprovalFl" class="require">
+            <input type="checkbox" v-model="joinAgreementBox" id="termsAgree2" name="privateApprovalFl" class="require">
             <label class="check_s" for="termsAgree2">
               <strong>(필수)</strong>
               " 개인정보 수집 및 이용 "
@@ -143,7 +133,7 @@
               <li>
                 <br>  
                 <div class="form_element">
-                  <input type="radio" id="authCellPhone" name="RnCheckType" value="authCellPhone">
+                  <input type="radio" v-model="phoneAuth" id="authCellPhone" name="RnCheckType" value="authCellPhone">
                   <label class="choice_s" for="authCellPhone">휴대폰 본인인증</label>
                 </div>
               </li>
@@ -154,77 +144,42 @@
         <br>
         <br>
         <div class="btn_center_box">
-          <button type="button" id="btnPrevStep" class="btn_member_prev">이전단계</button>
-          <button type="button" id="btnNextStep" class="btn_member_next" @click="test">다음단계</button>
+          <!-- <button type="button" id="btnPrevStep" class="btn_member_prev">이전단계</button> -->
+          <button @click="goToNextStep" type="button" id="btnNextStep" class="btn-next-step">다음단계</button>
+          <p v-if="!joinAgreementBox && showWarning" class="warning-message">
+          </p>
         </div>
       </div>
     </form>
 </template>
 
-<script type="text/javascript">
-        var setCriteoGoodsPrice = 0;
-        function test(){
-          window.location.href = '/join'
-        }
+<script>
+export default {
+  data() {
+    return {
+      joinAgreementBox: false,
+      showWarning: false,
+      phoneAuth: false,
+    };
+  },
 
-        function set_criteo_price() {
-            if (typeof $('#frmViewLayer input[name="set_goods_price"]').val() == 'undefined') {
-                var tmpGoodsPrice = parseFloat($('#frmView input[name="set_goods_price"]').val());
-                var tmpOptionPrice = parseFloat($('#frmView input[name="set_option_price"]').val());
-                var tmpTextPrice = parseFloat($('#frmView input[name="set_option_text_price"]').val());
-            } else {
-                var tmpGoodsPrice = parseFloat($('#frmViewLayer input[name="set_goods_price"]').val());
-                var tmpOptionPrice = parseFloat($('#frmViewLayer input[name="set_option_price"]').val());
-                var tmpTextPrice = parseFloat($('#frmViewLayer input[name="set_option_text_price"]').val());
-            }
-            if (tmpOptionPrice > 0) { tmpOptionPrice = tmpOptionPrice / goodsTotalCnt; }
-            if (tmpTextPrice > 0) { tmpTextPrice = tmpTextPrice / goodsTotalCnt; }
-            
-            setCriteoGoodsPrice = tmpGoodsPrice + tmpOptionPrice + tmpTextPrice;
-        }
-        
-        function criteoCartEvent(goodsNo, price, quantity) {
-            window.criteo_q = window.criteo_q || [];
-            var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
-            window.criteo_q.push(
-                { event: "setAccount", account: "96165" },
-                { event: "setEmail", email: "", hash_method: "sha256" },
-                { event: "setZipcode", zipcode: "" },
-                { event: "setSiteType", type: deviceType },
-                { event: "addToCart", item: [
-                    { id: goodsNo, price: price, quantity: quantity }
-                    ]
-                }
-            );
-        }
+  methods: {
+    goToNextStep() {
+      if (!this.joinAgreementBox) {
+        this.showWarning = true;
+        alert ('약관에 동의해주세요.');
+      } else if (!this.phoneAuth) {
+        alert ('휴대폰 인증을 완료해주세요.')
+        return;
+      } else {
+        this.showWarning = false;
+        window.location.href = '/join';
+        alert ('인증이 완료되었습니다.');
+      }
+    }    
+  },
+}
 </script>
-
-<!-- <script defer="" async="" src="https://cdn.megadata.co.kr/dist/prod/v2/mtm.js?adverId=wmilk01&amp;device=W"></script>
-
-<iframe allow="join-ad-interest-group" data-tagging-id="AW-954432226" data-load-time="1718766237723" height="0" width="0" 
-  src="https://td.doubleclick.net/td/rul/954432226?random=1718766237720&amp;cv=11&amp;fst=1718766237720&amp;fmt=3&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be46h0v9177819199za200&amp;gcd=13l3l3l3l1&amp;dma=0&amp;tag_exp=0&amp;u_w=1470&amp;u_h=956&amp;url=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_agreement.php%3FmemberFl%3Dpersonal&amp;ref=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_method.php&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%EB%B8%94%EB%9E%91101&amp;npa=0&amp;pscdl=noapi&amp;auid=891236645.1718007324&amp;uaa=arm&amp;uab=64&amp;uafvl=Google%2520Chrome%3B125.0.6422.60%7CChromium%3B125.0.6422.60%7CNot.A%252FBrand%3B24.0.0.0&amp;uamb=0&amp;uam=&amp;uap=macOS&amp;uapv=14.5.0&amp;uaw=0&amp;fledge=1&amp;data=event%3Dgtag.config" style="display: none; visibility: hidden;"></iframe>
-  #document (https://td.doubleclick.net/td/rul/954432226?random=1718766237720&cv=11&fst=1718766237720&fmt=3&bg=ffffff&guid=ON&async=1&gtm=45be46h0v9177819199za200&gcd=13l3l3l3l1&dma=0&tag_exp=0&u_w=1470&u_h=956&url=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_agreement.php%3FmemberFl%3Dpersonal&ref=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_method.php&hn=www.googleadservices.com&frm=0&tiba=%EB%B8%94%EB%9E%91101&npa=0&pscdl=noapi&auid=891236645.1718007324&uaa=arm&uab=64&uafvl=Google%2520Chrome%3B125.0.6422.60%7CChromium%3B125.0.6422.60%7CNot.A%252FBrand%3B24.0.0.0&uamb=0&uam=&uap=macOS&uapv=14.5.0&uaw=0&fledge=1&data=event%3Dgtag.config)
-<iframe data-siteid="11442" data-platform="godomall" style="position: fixed; border: none; box-sizing: border-box; z-index: -99999;"></iframe>
-
-<div id="criteo-tags-div" style="display: none;"></div>
-<script type="text/javascript" id="" charset="UTF-8" src="//t1.daumcdn.net/kas/static/kp.js"></script>
-<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1798482097159592");fbq("track","PageView");</script>
-<noscript>
-<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1798482097159592&amp;ev=PageView&amp;noscript=1">
-</noscript>
-<div id="ch-plugin" class="notranslate" style="z-index: 100000 !important;">
-  <div id="ch-plugin-entry">
-    <div style="display: block !important;">
-</div>
-</div>      
-<div id="ch-plugin-script" style="display:none;" class="ch-messenger-hidden">
-<iframe id="ch-plugin-script-iframe" title="Channel chat" style="position:relative!important;height:100%!important;width:100%!important;border:none!important;"></iframe>
-</div>
-  <style data-styled="active" data-styled-version="5.3.9"></style>
-</div>
-<iframe allow="join-ad-interest-group" data-tagging-id="AW-954432226" data-load-time="1718766565446" height="0" width="0" src="https://td.doubleclick.net/td/rul/954432226?random=1718766565436&amp;cv=11&amp;fst=1718766565436&amp;fmt=3&amp;bg=ffffff&amp;guid=ON&amp;async=1&amp;gtm=45be46h0v9177819199za200&amp;gcd=13l3l3l3l1&amp;dma=0&amp;tag_exp=0&amp;u_w=1470&amp;u_h=956&amp;url=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_agreement.php%3FmemberFl%3Dpersonal&amp;ref=https%3A%2F%2Fwww.blanc101.com%2Fmember%2Fjoin_method.php&amp;hn=www.googleadservices.com&amp;frm=0&amp;tiba=%EB%B8%94%EB%9E%91101&amp;npa=0&amp;pscdl=noapi&amp;auid=891236645.1718007324&amp;uaa=arm&amp;uab=64&amp;uafvl=Google%2520Chrome%3B125.0.6422.60%7CChromium%3B125.0.6422.60%7CNot.A%252FBrand%3B24.0.0.0&amp;uamb=0&amp;uam=&amp;uap=macOS&amp;uapv=14.5.0&amp;uaw=0&amp;fledge=1&amp;data=event%3Dform_start" style="display: none; visibility: hidden;"></iframe>
-<script type="text/javascript" id="">kakaoPixel("5936787149110723607").pageView();
-</script> -->
 
 <style scoped>
   .signup-container {
