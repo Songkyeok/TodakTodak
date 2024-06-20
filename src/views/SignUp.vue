@@ -96,22 +96,22 @@
           </div> -->
       </div>
       <div class="form-group form-group-ad">
-        <div
-          class="address_input"
-          style="display: flex; justify-content: space-between"
-        >
-          <div class="member_warning">
-            <input
-              type="text"
-              v-model="user_adr1"
-              name="address"
-              readonly="readonly"
-              value=""
-            />
+        <div class="address_input_box" style="display: flex; justify-content: space-between">
+          <div class="member_warning" style="margin-left: 128px; width: 100%;">
+            <input type="text" v-model="user_adr1" name="address" readonly="readonly" value="" />
           </div>
+        </div>
+        <!-- <div class="address_input" style="display: flex; justify-content: space-between">
           <div class="member_warning js_address_sub">
             <input type="text" v-model="user_adr2" name="addressSub" value="" />
           </div>
+        </div> -->
+      </div>
+      <div class="form-group form-group-ad">
+        <div class="address_input_box" style="display: flex; justify-content: space-between">
+            <div class="member_warning js_address_sub" style="margin-left: 128px; width: auto; ">
+              <input type="text" v-model="user_adr2" name="addressSub" value="" />
+            </div>
         </div>
       </div>
 
@@ -403,7 +403,7 @@ export default {
   margin-right: 10px;
 }
 
-.address-input {
+/* .address-input {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
@@ -411,7 +411,7 @@ export default {
 
 .address-input {
   margin-bottom: 5px;
-}
+} */
 
 button[type="submit"] {
   display: grid;
@@ -431,5 +431,9 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #767070;
+}
+
+.address_input_box {
+  width: auto;
 }
 </style>
