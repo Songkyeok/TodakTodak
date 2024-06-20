@@ -181,6 +181,42 @@ export default {
       }
     },
 
+    checkUserId() {
+      axios({
+        url: "http://localhost:3000/auth/checkUserId",
+        method: "POST",
+        data: {
+          user_id: this.user_id
+        }
+      }).then(results => {
+        // console.log(" this.user_id ==>>>>",this.user_id);
+        console.log("results ===>>> ", results)
+        // user_id = test 
+        if(results.data.length > 0) {
+          alert("중복입니다.");
+        } else {
+          alert("사용할 수 있습니다.")
+        }
+      })
+      
+      
+      
+      // .then (res => {
+      //   if (res.data.message == 'already_exist_id') {
+      //     this.$swal("이미 존재하는 아이디입니다")
+      //   } else if (res.data.message == 'DB_error') {
+      //     this.$swal("DB에러 발생")
+      //   } else {
+      //     this.user_idError = "",
+      //     this.user_idSuccess = "사용가능한 아이디입니다";
+      //     alert ('사용가능한 아이디입니다');
+      //   }
+      // })
+      // .catch (err => {
+      //   console.log(err);
+      // })
+      
+    }
     // checkUserId() {
     //   axios ({
     //     url: "http://localhost:3000/auth/join",
