@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 import adminSideBar from "../layouts/mypageSideBar.vue";
 import footer from "../layouts/footer.vue";
 import header from "../layouts/header.vue";
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
-import LoginView from "../views/LoginView";
 import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
+import findId from "../views/findId.vue";
+import about from "../views/about.vue";
 
 
 
@@ -19,17 +19,13 @@ import GoodsDetail from "../views/Detail.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "Main",
+    component: Main,
   },
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: about,
   },
   {
     path: "/sidebar",
@@ -42,24 +38,9 @@ const routes = [
     component: Main,
   },
   {
-    path: "/footer",
-    name: "footer",
-    component: footer,
-  },
-  {
-    path: "/header",
-    name: "header",
-    component: header,
-  },
-  {
     path: "/basket",
     name: "basket",
     component: Basket,
-  },
-  {
-    path: "/auth",
-    name: "loginView",
-    component: LoginView,
   },
   {
     path: "/join",
@@ -90,6 +71,11 @@ const routes = [
     path: "/goodsDetail/:goodsno",
     name: "GoodsDetail",
     component: GoodsDetail,
+
+    path: "/findId",
+    name: "findId",
+    component: findId,
+
   }
 ];
 

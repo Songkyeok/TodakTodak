@@ -22,23 +22,52 @@
             </div>
         </div>
         <hr>
+        
+        <div v-if="bestGoods.length>0">
+            <div class="best_container" v-for="(data, index) in bestGoods" :key="index">
+                <div>
+                    <router-link class="img" to="/detail/:goodsNo" >
+                        <img class="img" src="../assets/logo.png" alt="상품 이미지" />
+                    </router-link>
+                </div>
+                <div class="name">{{ bestGoods[index].goods_nm }}</div>
+                <div class="span">{{ bestGoods[index].goods_price }}</div>
+
+            </div>
+        </div>
+
+
+
+
+
+        <div class="menu">
+            <a v-for="(a,i) in 메뉴들" :key="i">
+                {{ a }}
+            </a>
+            <!-- 메뉴들 갯수만큼 반복되고 a는 메뉴들의 자료로 변경된다 -->
+            <!-- 왼쪽은 하나하나의 데이터 오른쪽은 1씩 증가하는 정수가 된다 -->
+        </div>
+        
+        
     </div>
 </template>
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+
 import axios from 'axios';
 
 
 export default {	
-    name:'MainSlider',
     components:{
         Splide,
         SplideSlide,
     },
     data() {
         return {
+            메뉴들:['Home','Shop','About'],
             goodsList: [],
+            bestGoods: [],
             options: {
                 type: 'fade',
                 rewind: true,
@@ -53,11 +82,25 @@ export default {
             }
         };
     },
+    mounted() {
+        this.bestGoodsList();
+    },
     methods: {
         filteredGoodsList(category){
             return this.goodsList.filter((goods) => goods.GOODS_CATEGORY === category);
+        },
+        async bestGoodsList() {
+            axios({
+                url: "http://localhost:3000/main/bestGoodsList",
+                method: "GET",
+            }).then(results => {
+                console.log(results.data);
+                this.bestGoods = results.data;
+            })
+            
         }
     },
+
 
 }
 </script>
@@ -81,5 +124,20 @@ export default {
     font-size: 30px;
     font-weight: bold ;
 }
+.img{
+    height: 310px;
+    width: 236px;
+}
+.name{
+    height: 58px;
+    width: 236px;
+}
+.span{
+    height: 50px;
+    width: 236px;
+}
 
+.best_container {
+    display: inline-block;
+}
 </style>
