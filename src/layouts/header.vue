@@ -27,7 +27,7 @@
 
                                     <ul v-if="user.user_id == ''" class="join">
                                         <li @click="goToLogin()">로그인</li>
-                                        <li @click="goToJoin()">회원가입</li>
+                                        <li @click="goToAgreement()">회원가입</li>
                                     </ul>
                                     <ul v-else-if="adminCheck == 1" class="join">
                                         <li @click="goToAdmin()">관리 페이지</li>
@@ -110,6 +110,9 @@ export default {
     methods: {
         logState() {
             console.log("Current state: ", this.$store.state);
+        },
+        goToAgreement() {
+        this.$router.push({ path: '/agreement'});
         },
         goToLogin() {
         this.$router.push({ path: '/login' });
