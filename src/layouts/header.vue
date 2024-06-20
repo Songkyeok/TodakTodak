@@ -1,7 +1,7 @@
 <template>
     <div id="header">
         <div class="cm-component pc">
-            <div class="sticky-wrap" style="height: 154px;">
+            <div class="sticky-wrap">
                 <header class="ki-header cm-header is-fill">
                     <div class="ki-header__inner">
                         <div class="cm-layout">
@@ -9,11 +9,9 @@
                                 <div class="cm-component">
                                     <div class="cn-mall">
                                         <div class="cn-mall-inner">
-                                            <h1 class="logo">
-                                                <a href="/main">
-                                                    <img src="../assets/logo2.png" alt="">
-                                                    <span class="blind">토닥토닥</span>
-                                                </a>
+                                            <h1 class="logo" @click="goToHome()">
+                                                <img src="../assets/logo2.png" alt="">
+                                                <span class="blind">토닥토닥</span>
                                             </h1>
                                         </div>
                                     </div>
@@ -21,10 +19,22 @@
                             </div>
                             <div class="cm-layout__item">
                                 <div class="cm-component">
-                                    <ul class="quick-list">
+                                    <!-- <ul class="quick-list">
                                         <li><a href="/html/header.html" class="ki-cs"><em class="blind">고객센터</em></a></li>
                                         <li><a href="/html/header.html" class="ki-mypage"><em class="blind">마이페이지</em></a></li>
                                         <li><a href="/basket" class="ki-cart"><span id="cartCnt"></span></a></li>
+                                    </ul> -->
+
+                                    <ul v-if="user.user_id == ''" class="join">
+                                        <li @click="goToLogin()">로그인</li>
+                                        <li @click="goToJoin()">회원가입</li>
+                                    </ul>
+                                    <ul v-else-if="adminCheck == 1" class="join">
+                                        <li @click="goToAdmin()">관리 페이지</li>
+                                        <li @click="logout()">로그아웃</li>
+                                    </ul>
+                                    <ul v-else class="join">
+                                        <li @click="logout()">로그아웃</li>
                                     </ul>
                                 </div>
                             </div>
@@ -86,23 +96,55 @@
     </div>
 </template>
 <script>
-
-export default {	
-    components:{},
+export default {
     data() {
         return {
             sampleData : ''
         };
     },
-    beforeCreate() {},
-    created() {},
-    beforeMount() {},
-    mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    beforeUnmount() {},
-    unmounted() {},
-    methods: {}
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    },
+    methods: {
+        logState() {
+            console.log("Current state: ", this.$store.state);
+        },
+        goToLogin() {
+        this.$router.push({ path: '/login' });
+        },
+        goToJoin() {
+        this.$router.push({ path: '/join' });
+        },
+        goToAdmin() {
+        this.$router.push({ path: '/admin' });
+        },
+        goToMypage() {
+        this.$router.push({ path: '/mypage' });
+        },
+        goToCart() {
+        this.$router.push({ path: '/basket' });
+        },
+        logout() {
+            this.$store.commit("user", {});
+            this.$swal({
+                position: 'top',
+                icon: 'success',
+                title: '로그아웃되셨습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            }).then(() => {
+                window.location.href = "http://localhost:8080";
+            })
+        },
+        goToHome() {
+            window.location.href = "http://localhost:8080";
+        }
+    },
+    mounted() {
+        console.log("Current state: ", this.$store.state);
+    }
 }
 </script>
 <style>

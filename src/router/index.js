@@ -4,7 +4,6 @@ import footer from "../layouts/footer.vue";
 import header from "../layouts/header.vue";
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
-import LoginView from "../views/LoginView";
 import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
@@ -50,11 +49,6 @@ const routes = [
     path: "/basket",
     name: "basket",
     component: Basket,
-  },
-  {
-    path: "/auth",
-    name: "loginView",
-    component: LoginView,
   },
   {
     path: "/join",
