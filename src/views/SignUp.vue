@@ -10,15 +10,15 @@
 
     <form @submit.prevent="onSubmitForm">
       <div class="form-group">
-        <label for="username" class="required">아이디</label>
-        <input type="text" id="username" v-model="user_id" />
+        <label for="user_id" class="required">아이디</label>
+        <input type="text" id="user_id" v-model="user_id" />
         <button type="button" @click="checkUser_Id">중복확인</button>
-        <span v-if="user_idSuccess">{{ user_idSuccess }}</span>
+        <!-- <span v-if="user_idSuccess">{{ user_idSuccess }}</span> -->
       </div>
 
       <div class="form-group">
-        <label for="password" class="required">비밀번호</label>
-        <input type="password" id="password" v-model="user_pw" />
+        <label for="user_pw" class="required">비밀번호</label>
+        <input type="password" id="user_pw" v-model="user_pw" />
       </div>
 
       <div class="form-group">
@@ -152,7 +152,7 @@ export default {
       }
 
       try {
-        const response = await axios.post("/api/check-user_id", {
+        const response = await axios.post("/api/checkUser_Id", {
           user_id: this.user_id,
         });
         if (response.data.exists) {
@@ -236,11 +236,11 @@ export default {
         return false;
       }
 
-      if (!this.zipinput) {
-        this.$swal("우편번호를 입력하세요.");
-        return false;
-      }
-      return true;
+      // if (!this.zipinput) {
+      //   this.$swal("우편번호를 입력하세요.");
+      //   return false;
+      // }
+      // return true;
     },
     validatePhoneNumber() {
       this.user_mobile = this.user_mobile.replace(/\D/g, ""); // 숫자 이외의 문자 제거
