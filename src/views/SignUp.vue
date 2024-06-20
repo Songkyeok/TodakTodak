@@ -8,41 +8,45 @@
     </div>
     <p class="note">* 표시는 반드시 입력하셔야 하는 항목입니다.</p>
 
-    <form @submit.prevent="onSubmitForm">
+    <form @submit.prevent="onSubmitForm" id="sendForm">
       <div class="form-group">
         <label for="user_id" class="required">아이디</label>
-        <input type="text" id="user_id" v-model="user_id" />
-        <button type="button" @click="checkUser_Id">중복확인</button>
-        <!-- <span v-if="user_idSuccess">{{ user_idSuccess }}</span> -->
+        <input type="text" id="user_id" v-model="user_id" placeholder="아이디" />
+        <button type="button" @click="checkUserId">중복확인</button>
+        <span v-if="user_idSuccess">{{ user_idSuccess }}</span>
       </div>
 
       <div class="form-group">
         <label for="user_pw" class="required">비밀번호</label>
-        <input type="password" id="user_pw" v-model="user_pw" />
+        <input type="password" id="user_pw" v-model="user_pw" placeholder="비밀번호" />
       </div>
 
       <div class="form-group">
         <label for="passwordConfirm" class="required">비밀번호 확인</label>
-        <input type="password" id="passwordConfirm" v-model="user_pw_ck" />
+        <input type="password" id="passwordConfirm" v-model="user_pw_ck" placeholder="비밀번호 확인"/>
       </div>
 
       <div class="form-group">
         <label for="name" class="required">이름</label>
-        <input type="text" id="name" v-model="user_nm" />
+        <input type="text" id="name" v-model="user_nm" placeholder="이름" />
       </div>
 
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" v-model="user_email" />
+        <input type="email" id="email" v-model="user_email" placeholder="이메일" />
         <select id="emailDomain" name="emailDomain" class="chosen-select">
+        <input type="text" v-model="emailDomainPart" placeholder="직접입력">
+        <lable for="domain-list">도메인 리스트</lable>  
+        <select v-model="selectedDomain" @change="updateDomain"></select>
           <option value="self">직접입력</option>
-          <option value="naver.com">naver.com</option>
-          <option value="hanmail.net">hanmail.net</option>
-          <option value="daum.net">daum.net</option>
-          <option value="nate.com">nate.com</option>
-          <option value="hotmail.com">hotmail.com</option>
-          <option value="gmail.com">gmail.com</option>
-          <option value="icloud.com">icloud.com</option>
+          <option value="naver.com">@naver.com</option>
+          <option value="hanmail.net">@hanmail.net</option>
+          <option value="daum.net">@daum.net</option>
+          <option value="nate.com">@nate.com</option>
+          <option value="hotmail.com">@hotmail.com</option>
+          <option value="gmail.com">@gmail.com</option>
+          <option value="icloud.com">@icloud.com</option>
+          <option v-for="domain in domains" :key="domain" :value="domain">{{ domain }}</option>
         </select>
         <div
           class="chosen-container chosen-container-single chosen-container-single-nosearch"
@@ -74,12 +78,11 @@
             <input type="text" name="zonecode" readonly="readonly" value="" />
           </div>
           <div>
-            <button type="button" id="btnPostcode" class="btn_post_search">
-              우편번호검색
-            </button>
+            <button type="button" id="btnPostcode" class="btn_post_search">우편번호검색</button>
+            <span v-show="zipinput" class="addinput">{{ user_zipcode }}</span>
+                <span v-show="zipinput" class="addinput">{{ user_adr1 }}</span>
+                <input type="text" v-show="zipinput" v-model="user_adr2" placeholder="상세주소 입력">
           </div>
-          <!-- <button type="button" id="btnPostcode" class="btn_post_search">우편번호검색</button>
-                <input type="hidden" v-model="user_zipcode" name="zipcode" value=""> -->
         </div>
         <!-- <div class="form-group form-group-ad">
             
@@ -115,7 +118,13 @@
         </div>
       </div>
 
-      <button type="submit">회원가입</button>
+      <button @click="goToNextStep" type="button" id="btnNextStep" class="btn-next-step">회원가입</button>
+      <p v-if="!user_id && showWarning" class="warning-message"></p>
+      <p v-if="!user_pw && showWarning" class="warning-message"></p>
+      <p v-if="user_pw !== user_pw_ck && showWarning" class="warning-message"></p>
+      <p v-if="!user_pw_ck && showWarning" class="warning-message"></p>
+      <p v-if="!user_nm && showWarning" class="warning-message"></p>
+      <p v-if="!user_phone && showWarning" class="warning-message"></p>
     </form>
   </div>
 </template>
@@ -134,161 +143,80 @@ export default {
       user_zipcode: "",
       user_adr1: "",
       user_adr2: "",
-      user_idError: "",
-      user_idSuccess: "",
+  
       user_pw_ck: "",
       zipinput: false,
     };
   },
 
   methods: {
-    // 아이디 중복 확인 로직
-    async checkUser_Id() {
+    goToNextStep() {
       if (!this.user_id) {
-        this.user_idError = "아이디를 입력하세요.";
-        alert("아이디를 입력하세요.");
-        this.user_idSuccess = "";
+        this.showWarning = true;
+        alert ('아이디를 입력해주세요');
         return;
-      }
-
-      try {
-        const response = await axios.post("/api/checkUser_Id", {
-          user_id: this.user_id,
-        });
-        if (response.data.exists) {
-          this.user_idError = "아이디가 이미 존재합니다.";
-          alert("아이디가 이미 존재합니다.");
-          this.user_idSuccess = "";
-        } else {
-          this.user_idError = "";
-          this.user_idSuccess = "사용 가능한 아이디입니다.";
-          alert("사용 가능한 아이디입니다.");
-        }
-      } catch (error) {
-        console.error(error);
-        this.user_idError = "아이디 확인중 오류가 발생했습니다.";
-        this.user_idSuccess = "";
-        alert("아이디 확인중 오류가 발생했습니다.");
-      }
-    },
-    async register() {
-      if (this.user_idError || !this.user_idSuccess) {
+      } else if (!this.user_pw) {
+        this.showWarning = true;
+        alert ('비밀번호를 입력해주세요');
         return;
-      }
-
-      this.isSubmitting = true;
-    },
-    zipload() {
-      new window.daum.Postcode({
-        oncomplete: (data) => {
-          // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-          var addr = ""; // 주소 변수
-          var extraAddr = "";
-          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-          if (data.userSelectedType === "R") {
-            // 사용자가 도로명 주소를 선택했을 경우
-            addr = data.roadAddress;
-          } else {
-            // 사용자가 지번 주소를 선택했을 경우(J)
-            addr = data.jibunAddress;
-          }
-          // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-          if (data.userSelectedType === "R") {
-            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-            if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-              // addr += ' ';
-              extraAddr += data.bname;
-            }
-            // 건물명이 있고, 공동주택일 경우 추가한다.
-            if (data.buildingName !== "" && data.apartment === "Y") {
-              // addr += ' ';
-              extraAddr +=
-                extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-            }
-          }
-          this.user_zipcode = data.zonecode;
-          this.user_adr1 = addr;
-          this.user_adr2 = extraAddr;
-          this.zipinput = true;
-        },
-      }).open();
-    },
-    validationCheck() {
-      if (this.user_id == "") {
-        this.$swal("아이디를 입력하세요.");
-        return false;
-      }
-
-      if (this.user_pw == "") {
-        this.$swal("비밀번호를 입력하세요.");
-        return false;
-      }
-
-      if (this.user_pw_ck !== this.user_pw) {
-        this.$swal("비밀번호가 일치하지 않습니다.");
-        return false;
-      }
-
-      if (this.user_phone == "") {
-        this.$swal("전화번호를 정확히 입력해주세요.");
-        return false;
-      }
-
-      // if (!this.zipinput) {
-      //   this.$swal("우편번호를 입력하세요.");
-      //   return false;
-      // }
-      // return true;
-    },
-    validatePhoneNumber() {
-      this.user_mobile = this.user_mobile.replace(/\D/g, ""); // 숫자 이외의 문자 제거
-    },
-    onSubmitForm() {
-      console.log("onSubmit");
-      
-      if (!this.validationCheck()) {
+      } else if (!this.user_pw_ck) {
+        this.showWarning = true;
+        alert ('비밀번호 확인을 입력해주세요');
         return;
+      } else if (this.user_pw !== this.user_pw_ck) {
+        this.showWarning = true;
+        alert ('비밀번호가 동일하지 않습니다');
+      } else if (!this.user_nm) {
+        this.showWarning = true;
+        alert ('이름을 입력해주세요');
+        return;
+      } else if (!this.user_phone) {
+        this.showWarning = true;
+        alert ('휴대폰번호를 입력해주세요');
+        return;
+      } else {
+        this.showWarning = false;
+        alert ('회원가입이 완료되었습니다.');
+        window.location.href = '/login';  
       }
-      axios({
-        url: "http://localhost:3000/auth/join",
-        method: "POST",
-        data: {
-          user_id: this.user_id,
-          user_pw: this.user_pw,
-          user_name: this.user_name,
-          user_email: this.user_email,
-          user_phone: this.user_phone,
-          user_zipcode: this.user_zipcode,
-          user_adr1: this.user_adr1,
-          user_adr2: this.user_adr2,
-        },
-      })
-        .then((res) => {
-          if (res.data.message == "DB_error") {
-            this.$swal("DB 에러 발생");
-          } else {
-            this.$swal({
-              position: "top",
-              icon: "success",
-              title: "회원가입이 완료되었습니다!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            this.$router.push({ path: "/login" }); // 로그인 화면으로 이동
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      alert("회원가입 완료!");
     },
-  },
-};
+
+    // checkUserId() {
+    //   axios ({
+    //     url: "http://localhost:3000/auth/join",
+    //     method: "post",
+    //     data: {
+    //       user_id: this.user_id,
+    //       user_email: this.user_email,
+    //       user_pw: this.user_pw,
+    //       user_nm: this.user_nm,
+    //       user_phone: this.user_phone,
+    //       user_zipcode: this.user_zipcode,
+    //       user_adr1: this.user_adr1,
+    //       user_adr2: this.user_adr2,
+    //     },
+    //   })
+    //   .then (res => {
+    //     if (res.data.message == 'already_exist_id') {
+    //       this.$swal("이미 존재하는 아이디입니다")
+    //     } else if (res.data.message == 'DB_error') {
+    //       this.$swal("DB에러 발생")
+    //     } else {
+    //       this.user_idError = "",
+    //       this.user_idSuccess = "사용가능한 아이디입니다";
+    //       alert ('사용가능한 아이디입니다');
+    //     }
+    //   })
+    //   .catch (err => {
+    //     console.log(err);
+    //   })
+    // }
+
+    
+  }
+}
+
 </script>
-
-<script></script>
 
 <style scoped>
 .signup-container {
@@ -403,6 +331,17 @@ export default {
   margin-right: 10px;
 }
 
+.btn-next-step {
+  margin-left: 50%;
+  margin-top: 50px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #767070;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* .address-input {
   display: flex;
   flex-direction: column;
@@ -437,3 +376,4 @@ button[type="submit"]:hover {
   width: auto;
 }
 </style>
+
