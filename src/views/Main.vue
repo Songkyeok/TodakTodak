@@ -54,7 +54,9 @@
 <script>
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
-import axios from "axios";
+
+import axios from 'axios';
+
 
 export default {	
     components:{
@@ -75,6 +77,8 @@ export default {
                 autoplay: true,
                 wheel: true,
                 wheelSleep: 500,
+                arrows: false,
+                
             }
         };
     },
@@ -102,6 +106,7 @@ export default {
 </script>
 
 <style scoped>
+
 .hr{
     width: 100%;
     height: 10px;
