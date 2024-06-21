@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import adminSideBar from "../layouts/mypageSideBar.vue";
-import footer from "../layouts/footer.vue";
-import header from "../layouts/header.vue";
+
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
 import SignUp from "../views/SignUp.vue";
@@ -72,7 +71,8 @@ const routes = [
     path: "/goodsDetail/:goodsno",
     name: "GoodsDetail",
     component: GoodsDetail,
-
+  },
+  {  
     path: "/findId",
     name: "findId",
     component: findId,

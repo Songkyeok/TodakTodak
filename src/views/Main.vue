@@ -24,15 +24,15 @@
         <hr>
 
         <div v-if="bestGoods.length>0">
-            <div class="best_container" v-for="(data, index) in bestGoods" :key="index">
+            <div class="best_container" v-for="(goods, index) in bestGoods" :key="index">
                 <div class="img">
-                    <a :href="'http://localhost:8080/goodsDetail/' + bestGoods[index].goods_no">
-                        <img class="img" :src="bestGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${bestGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                    <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
+                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                             alt="상품 이미지">
                     </a>
                 </div>
-                    <div class="name">{{ bestGoods[index].goods_nm }}</div>
-                    <div class="span">{{ getCurrencyFormat(bestGoods[index].goods_price) }}</div>
+                    <div class="name">{{ goods.goods_nm }}</div>
+                    <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
 
             </div>
         </div>
@@ -46,15 +46,16 @@
         </div>
         <hr>
         <div v-if="newGoods.length>0">
-            <div class="best_container" v-for="(data, i) in newGoods" :key="i">
+            <div class="best_container" v-for="(data, index) in newGoods" :key="index">
                 <div>
-                    <router-link class="img" to="/detail/:goodsNo">
-                        <img class="img" src="../assets/logo.png" alt="상품 이미지" />
-                    </router-link>
+                    <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
+                        <img class="img" :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                            alt="상품 이미지">
+                    </a>
                     <a @click="goToDetil()"></a>
                 </div>
-                <div class="name">{{ newGoods[i].goods_nm }}</div>
-                <div class="span">{{ getCurrencyFormat(newGoods[i].goods_price) }}</div>
+                <div class="name">{{ newGoods[index].goods_nm }}</div>
+                <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price) }}</div>
             </div>
         </div>
 
@@ -144,7 +145,7 @@ export default {
             },
             bestGoodsList() {
                 axios({
-                    url: "http://localhost:3000/main/bestGoodsList",
+                    url: "http://localhost:3000/goods/bestGoodsList",
                     method: "GET",
                 }).then(results => {
                     console.log(results.data);
@@ -154,7 +155,7 @@ export default {
             },
             newGoodsList() {
                 axios({
-                    url: "http://localhost:3000/main/newGoodsList",
+                    url: "http://localhost:3000/goods/newGoodsList",
                     method: "GET",
                 }).then(res => {
                     console.log(res.data);
