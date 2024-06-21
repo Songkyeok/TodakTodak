@@ -27,12 +27,13 @@
             <div class="best_container" v-for="(goods, index) in bestGoods" :key="index">
                 <div class="img">
                     <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                        <img class="img"
+                            :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                             alt="상품 이미지">
                     </a>
                 </div>
-                    <div class="name">{{ goods.goods_nm }}</div>
-                    <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
+                <div class="name">{{ goods.goods_nm }}</div>
+                <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
 
             </div>
         </div>
@@ -49,7 +50,8 @@
             <div class="best_container" v-for="(data, index) in newGoods" :key="index">
                 <div>
                     <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
-                        <img class="img" :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                        <img class="img"
+                            :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
                             alt="상품 이미지">
                     </a>
                     <a @click="goToDetil()"></a>
@@ -61,18 +63,16 @@
     </div>
 </template>
 <script>
-    import {
-        Splide,
-        SplideSlide
-    } from '@splidejs/vue-splide';
-    import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import {
+    Splide,
+    SplideSlide
+} from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 
-    import axios from 'axios';
+import axios from 'axios';
 
-
-
-export default {	
-    components:{
+export default {
+    components: {
         Splide,
         SplideSlide,
     },
@@ -80,6 +80,7 @@ export default {
         return {
             goodsList: [],
             bestGoods: [],
+            newGoods: [],
             options: {
                 type: 'fade',
                 rewind: true,
@@ -90,78 +91,45 @@ export default {
                 wheel: true,
                 wheelSleep: 500,
                 arrows: false,
-                
+
             }
         };
     },
     mounted() {
         this.bestGoodsList();
+        this.newGoodsList();
     },
     methods: {
-        filteredGoodsList(category){
+        filteredGoodsList(category) {
             return this.goodsList.filter((goods) => goods.GOODS_CATEGORY === category);
-
-    export default {
-        components: {
-            Splide,
-            SplideSlide,
+        },
+        bestGoodsList() {
+            axios({
+                url: "http://localhost:3000/goods/bestGoodsList",
+                method: "GET",
+            }).then(results => {
+                console.log(results.data);
+                this.bestGoods = results.data;
+            })
 
         },
-        data() {
-            return {
-                goodsList: [],
-                bestGoods: [],
-                newGoods: [],
-                options: {
-                    type: 'fade',
-                    rewind: true,
-                    speed: 800,
-                    interval: 3000,
-                    perPage: 1,
-                    autoplay: true,
-                    wheel: true,
-                    wheelSleep: 500,
-                    arrows: false,
-
-                }
-            };
+        newGoodsList() {
+            axios({
+                url: "http://localhost:3000/goods/newGoodsList",
+                method: "GET",
+            }).then(res => {
+                console.log(res.data);
+                this.newGoods = res.data;
+            })
         },
-        mounted() {
-            this.bestGoodsList();
-            this.newGoodsList();
+        getCurrencyFormat(value) {
+            return this.$currencyFormat(value);
         },
-        methods: {
-            filteredGoodsList(category) {
-                return this.goodsList.filter((goods) => goods.GOODS_CATEGORY === category);
-            },
-            bestGoodsList() {
-                axios({
-                    url: "http://localhost:3000/goods/bestGoodsList",
-                    method: "GET",
-                }).then(results => {
-                    console.log(results.data);
-                    this.bestGoods = results.data;
-                })
-
-            },
-            newGoodsList() {
-                axios({
-                    url: "http://localhost:3000/goods/newGoodsList",
-                    method: "GET",
-                }).then(res => {
-                    console.log(res.data);
-                    this.newGoods = res.data;
-                })
-            },
-            getCurrencyFormat(value){
-                return this.$currencyFormat(value);
-            },
-            goToDetil(goodsno){
-                window.location.href=`http://localhost:8080/Detail/${goodsno}`;
-            }
-        },
-
-    }
+        goToDetil(goodsno) {
+            window.location.href = `http://localhost:8080/Detail/${goodsno}`;
+        }
+    },
+}
 </script>
 
 <style scoped>
