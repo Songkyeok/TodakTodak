@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       goods : {
-        goods_nm: "",
+        goods_nm: "입력해주세요",
         goods_category: 1,
         goods_price: 1,
         goods_cnt: 100,
