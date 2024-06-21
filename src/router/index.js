@@ -9,6 +9,7 @@ import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
 import findId from "../views/findId.vue";
 import about from "../views/about.vue";
+import Tableware from "../views/Tableware.vue";
 
 
 
@@ -76,6 +77,11 @@ const routes = [
     name: "findId",
     component: findId,
 
+  },
+  {
+    path: "/tableware",
+    name: "Tableware",
+    component: Tableware
   }
 ];
 

@@ -58,6 +58,15 @@
                 <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price) }}</div>
             </div>
         </div>
+
+
+
+
+
+
+        
+        
+
     </div>
 </template>
 <script>
@@ -70,10 +79,42 @@
     import axios from 'axios';
 
 
+
+export default {	
+    components:{
+        Splide,
+        SplideSlide,
+    },
+    data() {
+        return {
+            goodsList: [],
+            bestGoods: [],
+            options: {
+                type: 'fade',
+                rewind: true,
+                speed: 800,
+                interval: 3000,
+                perPage: 1,
+                autoplay: true,
+                wheel: true,
+                wheelSleep: 500,
+                arrows: false,
+                
+            }
+        };
+    },
+    mounted() {
+        this.bestGoodsList();
+    },
+    methods: {
+        filteredGoodsList(category){
+            return this.goodsList.filter((goods) => goods.GOODS_CATEGORY === category);
+
     export default {
         components: {
             Splide,
             SplideSlide,
+
         },
         data() {
             return {
