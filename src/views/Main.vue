@@ -40,13 +40,7 @@
 
 
 
-        <div class="menu">
-            <a v-for="(a,i) in 메뉴들" :key="i">
-                {{ a }}
-            </a>
-            <!-- 메뉴들 갯수만큼 반복되고 a는 메뉴들의 자료로 변경된다 -->
-            <!-- 왼쪽은 하나하나의 데이터 오른쪽은 1씩 증가하는 정수가 된다 -->
-        </div>
+        
         
         
     </div>
@@ -65,7 +59,6 @@ export default {
     },
     data() {
         return {
-            메뉴들:['Home','Shop','About'],
             goodsList: [],
             bestGoods: [],
             options: {

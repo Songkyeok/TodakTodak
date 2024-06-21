@@ -2,9 +2,9 @@
     <div v-if="goods">
         <div class="detail">
             <div class="img">
-                <img :width="500"
+                <!-- <img :width="500"
                     :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
-                    alt="상품 이미지"> 
+                    alt="상품 이미지">  -->
             </div>
             <div>
                 {{goods.goods_nm}}
@@ -28,9 +28,9 @@
                 </div>
             </div>
             <div class="content">
-                <img :width="500"
+                <!-- <img :width="500"
                     :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
-                    alt="상품 디테일 이미지"> 
+                    alt="상품 디테일 이미지">  -->
             </div>
             <!-- <div class="info">
               <div class="header">

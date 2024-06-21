@@ -10,7 +10,7 @@
         <div class="join_agreement_cont">
           <div class="join_agreement_box">
             <div class="form_element" id="termAgreeDiv">
-              <input type="checkbox" v-model="joinAgreementBox" id="termAgree" name="under14ConsentFl" value="y" data-gtm-form-interact-field-id="0">
+              <input type="checkbox" v-model="joinAgreementBox1" id="termAgree">
               <label class="check on" for="termAgree">
                 <strong>(필수)</strong>
                 <em>만 14세 이상입니다</em>
@@ -20,7 +20,7 @@
           <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
-            <input type="checkbox" v-model="joinAgreementBox" id="termsAgree1" name="agreementInfoFl" class="require">
+            <input type="checkbox" v-model="joinAgreementBox2" id="termsAgree1" class="require">
             <label class="check_s" for="termsAgree1">
             <strong>(필수)</strong>
             " 이용약관 "
