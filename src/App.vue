@@ -14,6 +14,7 @@
     <router-link to="/orderList">orderList</router-link> |
     <router-link to="/goodsAdd">GoodsAdd</router-link> |
     <router-link to="/goodsDetail">goodsDetail</router-link> |
+    <router-link to="/tableware">Tableware</router-link> |
 
 
 
