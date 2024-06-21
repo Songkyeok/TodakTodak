@@ -678,3 +678,13 @@ Footer {
     width: 1080px;
     display: block;
 }
+
+.join li {
+  display: inline-block;
+}
+.join li:nth-child(n) {
+  margin-left: 10px;
+}
+.join li:nth-child(1) {
+  margin: 0;
+}

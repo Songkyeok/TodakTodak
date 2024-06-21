@@ -1,6 +1,6 @@
 <template>
 
-  <nav>
+  <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/sidebar">sidebar</router-link> |
@@ -14,14 +14,8 @@
     <router-link to="/orderList">orderList</router-link> |
     <router-link to="/goodsAdd">GoodsAdd</router-link> |
     <router-link to="/goodsDetail">goodsDetail</router-link> |
-
-
-
-  </nav>
-
-
+  </nav> -->
   <Header />
-
   <router-view />
   <Footer />
 </template>

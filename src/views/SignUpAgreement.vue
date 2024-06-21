@@ -10,17 +10,17 @@
         <div class="join_agreement_cont">
           <div class="join_agreement_box">
             <div class="form_element" id="termAgreeDiv">
-              <input type="checkbox" v-model="joinAgreementBox" id="termAgree" name="under14ConsentFl" value="y" data-gtm-form-interact-field-id="0">
+              <input type="checkbox" v-model="joinAgreementBox1" id="termAgree">
               <label class="check on" for="termAgree">
                 <strong>(필수)</strong>
-                <em>만 14세 이상입니다</em>
+                <em> 만 14세 이상입니다</em>
               </label>
             </div>
           </div>
           <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
-            <input type="checkbox" v-model="joinAgreementBox" id="termsAgree1" name="agreementInfoFl" class="require">
+            <input type="checkbox" v-model="joinAgreementBox2" id="termsAgree1" class="require">
             <label class="check_s" for="termsAgree1">
             <strong>(필수)</strong>
             " 이용약관 "
@@ -43,7 +43,7 @@
             " 제 2조(정의) "
             <br>
             <br>
-            " ① "몰"이란 (주)이폴리움 회사가 재화 또는 용역을 이용자에게 제공하기 위하여 컴퓨터등 정보통신설비를 이용하여 재화 또는 용역을 거래할 수 있도록 설정한 
+            " ① "몰"이란 (주)토닥토닥 회사가 재화 또는 용역을 이용자에게 제공하기 위하여 컴퓨터등 정보통신설비를 이용하여 재화 또는 용역을 거래할 수 있도록 설정한 
             가상의 영업장을 말하며, 아울러 사이버몰을 운영하는 사업자의 의미로도 사용합니다. "
             <br>
             " ② "이용자"란 "몰"에 접속하여 이 약관에 따라 "몰"이 제공하는 서비스를 받는 회원 및 비회원을 말합니다. "
@@ -99,7 +99,7 @@
         <br>
         <div class="join_agreement_box js_terms_view">
           <div class="form_element">
-            <input type="checkbox" v-model="joinAgreementBox" id="termsAgree2" name="privateApprovalFl" class="require">
+            <input type="checkbox" v-model="joinAgreementBox3" id="termsAgree2" class="require">
             <label class="check_s" for="termsAgree2">
               <strong>(필수)</strong>
               " 개인정보 수집 및 이용 "
@@ -118,34 +118,25 @@
             <br>
           </div>
         </div>
-        <div class="important_check_box">
+        <!-- <div class="important_check_box">
           <br>
           <strong class="important_check_on">이용약관과 개인정보 수집 및 이용에 대한 안내 모두 동의해주세요.</strong>
+        </div> -->
         </div>
-        </div>
-        <br>
+        <!-- 휴대폰 인증 보류 -->
+        <!-- <br>
         <div class="join_certify_box">
           <h3>본인 인증방법 선택</h3>
           <div class="join_certify_list">
-            <ul>
-              <li>
-                <br>  
-                <div class="form_element">
-                  <input type="radio" v-model="phoneAuth" id="authCellPhone" name="RnCheckType" value="authCellPhone">
-                  <label class="choice_s" for="authCellPhone">휴대폰 본인인증</label>
-                </div>
-              </li>
-            </ul>
+            <div class="form_element">
+              <input type="radio" v-model="phoneAuth" id="authCellPhone">
+              <label class="choice_s" for="authCellPhone">휴대폰 본인인증</label>
+            </div>
           </div>
-        </div>
-        <br>
-        <br>
+        </div> -->
         <br>
         <div class="btn_center_box">
-          <!-- <button type="button" id="btnPrevStep" class="btn_member_prev">이전단계</button> -->
-          <button @click="goToNextStep" type="button" id="btnNextStep" class="btn-next-step">다음단계</button>
-          <p v-if="!joinAgreementBox && showWarning" class="warning-message">
-          </p>
+          <button @click="goToNextStep" type="button" id="btnNextStep" class="btn-next-step">다음</button>
         </div>
       </div>
     </form>
@@ -155,24 +146,24 @@
 export default {
   data() {
     return {
-      joinAgreementBox: false,
-      showWarning: false,
-      phoneAuth: false,
-    };
+      joinAgreementBox1: false,
+      joinAgreementBox2: false,
+      joinAgreementBox3: false,
+      // phoneAuth: false,
+    }
   },
-
   methods: {
     goToNextStep() {
-      if (!this.joinAgreementBox) {
-        this.showWarning = true;
+      if (!this.joinAgreementBox1 || !this.joinAgreementBox2 || !this.joinAgreementBox3) {
         alert ('약관에 동의해주세요.');
-      } else if (!this.phoneAuth) {
-        alert ('휴대폰 인증을 완료해주세요.')
-        return;
-      } else {
-        this.showWarning = false;
+      }
+      // else if (this.phoneAuth !== 'on') {
+      //   alert ('휴대폰 인증을 완료해주세요.')
+      //   return;
+      // } 
+      else {
         window.location.href = '/join';
-        alert ('인증이 완료되었습니다.');
+        // alert ('인증이 완료되었습니다.');
       }
     }    
   },
@@ -214,6 +205,8 @@ export default {
   .agreement_box {
     border-style: solid;
     font-size: 12px;
+    padding: 10px;
+    margin: 10px;
   }
 
   .btn_center_box {
@@ -233,10 +226,21 @@ export default {
     width: auto;
     height: 100px;
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
   }
 
   .btn_center_box button {
     margin: 12px;
+  }
+  .form_element input {
+    vertical-align: middle;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .form_element label {
+    vertical-align: middle;
+    cursor: pointer;
   }
   
   </style>
