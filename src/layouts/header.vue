@@ -52,37 +52,37 @@
                                         </li>
                                         <li class="swiper-slide swiper-slide-next">
                                             <div class="slide-inner">
-                                                <a href="/"><span>이벤트</span></a>
+                                                <a href="#"><span @click="goToEvent()">이벤트</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>유아식기</span></a>
+                                                <a href="#"><span @click="goToTableware()">유아식기</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>욕실용품</span></a>
+                                                <a href="#"><span @click="goToBathStuff()">욕실용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>외출용품</span></a>
+                                                <a href="#"><span @click="goToOutside()">외출용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>유아용품</span></a>
+                                                <a href="#"><span @click="goToBabyStuff()">유아용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>위생용품</span></a>
+                                                <a href="#"><span @click="goToCleanStuff()">위생용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="/html/header.html"><span>장난감</span></a>
+                                                <a href="#"><span @click="goToToy()">장난감</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -131,6 +131,9 @@ export default {
         },
         goToAbout() {
         this.$router.push({ path: '/about' });
+        },
+        goToTableware() {
+        this.$router.push({ path: '/tableware' });
         },
         logout() {
             this.$store.commit("user", {});
