@@ -108,7 +108,6 @@ export default {
                 url: "http://localhost:3000/goods/bestGoodsList",
                 method: "GET",
             }).then(results => {
-                console.log(results.data);
                 this.bestGoods = results.data;
             })
 
@@ -118,7 +117,6 @@ export default {
                 url: "http://localhost:3000/goods/newGoodsList",
                 method: "GET",
             }).then(res => {
-                console.log(res.data);
                 this.newGoods = res.data;
             })
         },
