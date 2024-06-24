@@ -4,9 +4,9 @@
             {{getCategory(goods.goods_category)}}
             <div class="container">
                 <div class="image">
-                    <!-- <img :width="450"
-                        :src="goods.goods_img ? require(`'/Users/areumAREUM/Downloads/TodakTodak/vscode/node-back/TodakToack_Backend/uploads/uploadGoods/${goods.goods_img}''`) : '/goodsempty.jpg'"
-                        alt="상품 이미지"> -->
+                    <img :width="450"
+                        :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                        alt="상품 이미지">
                 </div>
                 <div class="details">
                     {{goods.goods_nm}}
@@ -57,18 +57,11 @@
             
 
             <div class="d-flex justify-content-center">
-                <div class="description">
-                    <!-- <img :src="goods.goods_img ? require(`'/Users/areumAREUM/Downloads/TodakTodak/vscode/node-back/TodakToack_Backend/uploads/uploadGoods/''`) : '/goodsempty.jpg'"
-                        alt="상품 디테일 이미지"> -->
-                </div>
 
-                <div class="content">
-                    <!-- <img :width="500"
-                    :src="goods.goods_img ? require(`../../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
-                    alt="상품 디테일 이미지">  -->
+                    
                 <div class="content">
                     <img :width="550"
-                    :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
+                    :src="goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
                     alt="상품 디테일 이미지">
                 </div>
             </div>
@@ -155,7 +148,7 @@
                         data: {
                             user_no: 1,
                             goods_price: this.goods.goods_price,
-                            goods_nm: 
+                            goods_nm: this.goods.goods_nm,
 
                         }
                     })
