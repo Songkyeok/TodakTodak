@@ -30,12 +30,16 @@
                         <label class="form-check-label" for="cate4">유아용품</label>
                     </div>
                     <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="위생용품" id="cate4">
+                        <input class="form-radio-input" type="radio" v-model="cate_check" value="위생용품" id="cate5">
                         <label class="form-check-label" for="cate5">위생용품</label>
                     </div>
                     <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="장난감" id="cate4">
+                        <input class="form-radio-input" type="radio" v-model="cate_check" value="장난감" id="cate6">
                         <label class="form-check-label" for="cate6">장난감</label>
+                    </div>
+                    <div class="form-check ms-1">
+                        <input class="form-radio-input" type="radio" v-model="cate_check" value="이벤트" id="cate7">
+                        <label class="form-check-label" for="cate6">이벤트</label>
                     </div>
                 </div>
             </div>
@@ -208,14 +212,16 @@ export default {
             else if (this.cate_check == '외출용품'){
                 this.goods.goods_category = 3;
             }
-            else if (this.cate_check == '위생용품'){
+            else if (this.cate_check == '유아용품'){
                 this.goods.goods_category = 4;
             }
-            else if (this.cate_check == '장난감'){
+            else if (this.cate_check == '위생용품'){
                 this.goods.goods_category = 5;
             }
-            else if (this.cate_check == '이벤트'){
+            else if (this.cate_check == '장난감'){
                 this.goods.goods_category = 6;
+            }else if (this.cate_check == '이벤트'){
+                this.goods.goods_category = 7;
             }
             if (this.goods.goods_price == "" || this.goods.goods_price == 0){
                 alert("제품 가격을 입력하세요.");

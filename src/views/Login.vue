@@ -4,12 +4,6 @@
       <div class="row justify-content-center">
         <div class="col-12 text-center align-self-center py-5">
           <div class="section pb-5 pt-5 pt-sm-2 text-center">
-            <!-- <a href="/login" class="head" mb-0 pb-3>
-              <h6><span>로그인</span></h6>
-            </a>
-            <a href="/join" class="head" mb-0 pb-3>
-              <h6><span>회원가입</span></h6>
-            </a> -->
             <div class="title">
               <h1>로그인</h1>
             </div>
@@ -20,13 +14,11 @@
                     <div class="section text-center">
                       <h4 class="top" mb-4 pb-3>회원 로그인</h4>
                       <div class="form-group">
-                        <input type="email" name="user_id" class="form-style" placeholder="아이디" id="logemail"
-                          autocomplete="off">
+                        <input type="email" class="form-style" placeholder="아이디" autocomplete="off" v-model="user_id">
                         <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="password" name="user_pw" class="form-style" placeholder="비밀번호" id="logpass"
-                          autocomplete="off">
+                        <input type="password" class="form-style" placeholder="비밀번호" autocomplete="off" v-model="user_pw">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <!-- sns 로그인 추가 -->
@@ -59,6 +51,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+        user_no: '',
         user_id: '',
         naver_id: '',
         user_pw: '',
@@ -101,9 +94,47 @@ export default {
   },
   methods: {
     findId() {
-      this.$router.push({
-        name: "findId"
-      });
+      // this.$router.push({
+      //   name: "findId"
+      // });
+    },
+    // 로컬 로그인
+    login() {
+      if(!this.user_id) {
+        alert("아이디를 입력해주세요.");
+        return;
+      } else if(!this.user_pw) {
+        alert("비밀번호를 입력해주세요.")
+        return;
+      } else {
+        axios({
+          url: "http://localhost:3000/auth/login",
+          method: "POST",
+          data: {
+            user_id: this.user_id,
+            user_pw: this.user_pw
+          }
+        }).then(res => {
+          if(res.data.message == 'undefined_id') {
+            this.$swal("존재하지 않는 아이디입니다.");
+          } else if(res.data.message == 'incorrect_pw') {
+            this.$swal("비밀번호가 틀렸습니다.");
+          } else {
+            this.$store.commit("user", {
+              user_id: this.user_id,
+              user_no: res.data.message
+            })
+            this.$swal({
+                position: 'top',
+                icon: 'success',
+                title: '로그인 되었습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            this.$router.push({ path: '/' });
+          }
+        })
+      }
     },
     // 카카오 로그인
     kakaoLogin() {
@@ -120,8 +151,8 @@ export default {
                 const nickname = kakao_account.profile.nickname
                 const email = kakao_account.email
 
-                console.log("nickname ===>>> ", nickname);
-                console.log("email ===>>> ", email);
+                // console.log("nickname ===>>> ", nickname);
+                // console.log("email ===>>> ", email);
 
                 axios({
                     url: "http://localhost:3000/auth/kakaoLogin",
