@@ -41,8 +41,8 @@
 
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" v-model="user_email" placeholder="이메일" />
-        <select id="emailDomain" name="emailDomain" class="chosen-select">
+        <input type="email" id="email" v-model="user_email" placeholder="이메일을 입력해주세요." />
+        <!-- <select id="emailDomain" name="emailDomain" class="chosen-select">
           <input type="text" v-model="emailDomainPart" placeholder="직접입력">
           <lable for="domain-list">도메인 리스트</lable>
           <select v-model="selectedDomain" @change="updateDomain"></select>
@@ -54,15 +54,13 @@
           <option value="hotmail.com">@hotmail.com</option>
           <option value="gmail.com">@gmail.com</option>
           <option value="icloud.com">@icloud.com</option>
-          <option v-for="domain in domains" :key="domain" :value="domain">{{ domain }}</option>
-        </select>
-        <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 120px"
-          title="" id="emailDomain_chosen"></div>
+        </select> -->
+        <!-- <div class="chosen-container chosen-container-single chosen-container-single-nosearch" style="width: 120px" title="" id="emailDomain_chosen"></div> -->
       </div>
 
       <div class="form-group">
         <label for="phone" class="required">휴대폰번호</label>
-        <input type="text" id="phone" v-model="user_phone" name="phone" maxlength="11" placeholder="- 제외하고 입력하세요." />
+        <input type="text" id="phone" v-model="user_phone" name="phone" maxlength="11" placeholder="- 제외하고 입력해주세요." />
       </div>
       <div class="form-group" v-if="error_phone == true">
         <p class="red">휴대폰 번호가 정확한지 확인해 주세요.</p>
@@ -75,54 +73,29 @@
         <label for="address">주소</label>
         <div class="address_postcode">
           <div>
-            <input type="text" name="zonecode" readonly="readonly" v-model="address" />
+            <input type="text" name="zonecode" readonly="readonly" v-model="user_zipcode" />
           </div>
           <div>
             <button type="button" id="btnPostcode" class="btn_post_search" @click="execDaumPostcode()">우편번호검색</button>
-            <span v-show="zipinput" class="addinput">{{ user_zipcode }}</span>
-            <span v-show="zipinput" class="addinput">{{ user_adr1 }}</span>
-            <input type="text" v-show="zipinput" v-model="user_adr2" placeholder="상세주소 입력">
           </div>
         </div>
-        <!-- <div class="form-group form-group-ad">
-            <input type="hidden" v-model="user_zipcode" name="zipcode" value="">
-          </div> -->
-        <!-- <div class="address_input">
-            <div class="member_warning">
-                <input type="text" v-model=user_adr1 name="address" readonly="readonly" value="">
-            </div>
-            <div class="member_warning js_address_sub">
-                <input type="text" v-model="user_adr2" name="addressSub" value="">
-            </div>
-          </div> -->
       </div>
       <div class="form-group form-group-ad">
         <div class="address_input_box" style="display: flex; justify-content: space-between">
           <div class="member_warning" style="margin-left: 128px; width: 100%;">
-            <input type="text" v-model="user_adr1" name="address" readonly="readonly" value="" />
+            <input type="text" v-model="user_adr1" readonly="readonly" value="" />
           </div>
         </div>
-        <!-- <div class="address_input" style="display: flex; justify-content: space-between">
-          <div class="member_warning js_address_sub">
-            <input type="text" v-model="user_adr2" name="addressSub" value="" />
-          </div>
-        </div> -->
       </div>
       <div class="form-group form-group-ad">
         <div class="address_input_box" style="display: flex; justify-content: space-between">
           <div class="member_warning js_address_sub" style="margin-left: 128px; width: auto; ">
-            <input type="text" v-model="user_adr2" name="addressSub" value="" />
+            <input type="text" v-model="user_adr2" value="" placeholder="상세 주소를 입력해주세요."/>
           </div>
         </div>
       </div>
 
       <button @click="goToNextStep" type="button" id="btnNextStep" class="btn-next-step">회원가입</button>
-      <!-- <p v-if="!user_id && showWarning" class="warning-message"></p>
-      <p v-if="!user_pw && showWarning" class="warning-message"></p>
-      <p v-if="user_pw !== user_pw_ck && showWarning" class="warning-message"></p>
-      <p v-if="!user_pw_ck && showWarning" class="warning-message"></p>
-      <p v-if="!user_nm && showWarning" class="warning-message"></p>
-      <p v-if="!user_phone && showWarning" class="warning-message"></p> -->
     </form>
   </div>
 </template>
@@ -141,16 +114,10 @@
         user_zipcode: "",
         user_adr1: "",
         user_adr2: "",
-        user_pw_ck: "",
 
-        zipinput: false,
+        user_pw_ck: "",
         error_id: true,
         error_phone: true,
-        
-        data: {
-          address: ''
-        },
-        address: ''
       };
     },
     mounted() {
@@ -222,8 +189,24 @@
           alert('휴대전화번호가 정확한지 확인해 주세요.');
           return;
         } else {
-          alert('회원가입이 완료되었습니다.');
-          window.location.href = '/login';
+          axios({
+            url: "http://localhost:3000/auth/join",
+            method: "POST",
+            data: {
+              user_id: this.user_id,
+              user_pw: this.user_pw,
+              user_nm: this.user_nm,
+              user_email: this.user_email,
+              user_phone: this.user_phone,
+              user_zipcode: this.user_zipcode,
+              user_adr1: this.user_adr1,
+              user_adr2: this.user_adr2,
+            }
+          }).then(data => {
+            // console.log("data", data);
+            alert('회원가입이 완료되었습니다.');
+            window.location.href = '/login';
+          })
         }
       },
       loadDaumPostcodeScript() {
@@ -240,9 +223,9 @@
             oncomplete: (data) => {
               // 우편번호 검색 완료 후의 처리 로직
               console.log(data);
-              const zonecode = data.zonecode;
               
-              this.address = zonecode;
+              this.user_zipcode = data.zonecode;
+              this.user_adr1 = data.address;
             }
           }).open();
         } else {
