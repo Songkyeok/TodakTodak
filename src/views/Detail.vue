@@ -1,6 +1,7 @@
 <template>
     <div v-if="goods">
         <div class="detail">
+            {{getCategory(goods.goods_category)}}
             <div class="container">
                 <div class="image">
                     <!-- <img :width="450"
@@ -9,6 +10,10 @@
                 </div>
                 <div class="details">
                     {{goods.goods_nm}}
+                    <button class="heart-button" @click="likeInsert">
+                        <i class="far fa-heart heart-icon"></i>
+                    </button>
+                    <h4>{{like}}</h4>
                     <div class="price">
                         {{getCurrencyFormat(goods.goods_price)}}원
                     </div>
@@ -17,7 +22,7 @@
                         <button class="input-group-text" @click="calculatePrice(-1);" :disabled="total === 1">-</button>
                         <input type="text" style="width:40px;" v-model="total">
                         <button class="input-group-text" @click="calculatePrice(1);"
-                            :disabled="total === 999">+</button>
+                            :disabled="total === goods.goods_cnt">+</button>
                     </div>
                     <div class="totalPrice">
                         <div>
@@ -27,8 +32,14 @@
                             <h4>{{getCurrencyFormat(this.totalPrice)}}</h4>
                         </div>
                     </div>
+                    <div class="buttons">
+                        <button class="add-to-cart" @click="addToCart()">장바구니</button>
+                        <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
+                    </div>
                 </div>
-            
+                
+
+                
             
                 
                 
@@ -92,7 +103,7 @@
         beforeUnmount() {},
         unmounted() {},
         methods: {
-            async getGoods() {
+            async getGoods() { 
                 try {
                     const goodsno = this.$route.params.goodsno;
                     const response = await axios.get(`http://localhost:3000/goods/goodsDetail/${goodsno}`);
@@ -111,6 +122,44 @@
             },
             getCurrencyFormat(value) {
                 return this.$currencyFormat(value);
+            },
+            getCategory(cate){
+                console.log(cate)
+                if(cate == 1){
+                    return '유아식기';
+                }else if(cate == 2){
+                    return '욕실용품'
+                }else if(cate == 3){
+                    return '외출용품'
+                }else if(cate == 4){
+                    return '유아용품'
+                }else if(cate == 5){
+                    return '위생용품'
+                }else if(cate == 6){
+                    return '장난감'
+                }else if(cate == 7){
+                    return '이벤트'
+                }
+            },
+            goToBuy(goodsno){
+                
+            },
+            addToCart(){
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    axios({
+                        url: "http//localhost:3000/goods/basketInsert",
+                        method: "post",
+                        data: {
+                            user_no: 1,
+                            goods_price: this.goods.goods_price,
+                            goods_nm: 
+
+                        }
+                    })
+                }
             }
         }
     }
@@ -147,6 +196,7 @@
     .details {
         flex: 2;
         margin-left: 20px;
+        height: 500px;
     }
 
     .details h2 {
