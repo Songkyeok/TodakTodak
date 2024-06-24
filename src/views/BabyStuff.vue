@@ -10,18 +10,17 @@
                 <h2 class="home_title">유아용품</h2>
                 <br>
             </div>
-            <div v-if="babyGoodsList.length>0">
-                <div class="baby_container" v-for="(goods, i) in babyGoodsList" :key="i">
+            <div v-if="goods.length>0">
+                <div class="baby_container" v-for="(good, i) in goods" :key="i">
                     <div class="img">
-                        <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                            <!-- <img class="img" :src="goods.goods_img ? require(`'/Users/areumAREUM/Downloads/TodakTodak/vscode/node-back/TodakToack_Backend/uploads/uploadGoods/${goods.goods_img}'`) : '/goodsempty.jpg'"
-                            alt="상품 이미지"> -->
-                            <!-- <img :src="`/img/${product.id}/${product.path}`" class="card-img-top" alt="..."> -->
+                        <a :href="'http://localhost:8080/goodsDetail/' + good.goods_no">
+                            <img class="img" :src="goods.goods_img ? require(`../../../../TodakTodak_Backend/uploads/uploadGoods/$${goods.goods_img}`) : '/goodsempty.jpg'"
+                            alt="상품 이미지">
                         </a>
                         <a @click="goToDetail()"></a>
                     </div>
-                    <div class="name">{{ goods.goods_nm }}</div>
-                    <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
+                    <div class="name">{{ good.goods_nm }}</div>
+                    <div class="span">{{ $currencyFormat(good.goods_price) }}</div>
                 </div>
             </div>
         </div>
@@ -38,30 +37,33 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import axios from 'axios';
 
 export default {
+    
+
     components: {
         Splide,
         SplideSlide,
     },
 
     data() {
-        return {
-            babyGoodsList: [],
+        return {        
+            goods: [],
         };
     },
-    // mounted() {
-    //     this.babyGoodsList();
-    // },
+    mounted() {
+         this.babyGoodsList();
+    },
     methods: {
         filteredGoodsList(category) {
             return this.GoodsList.filter((goods) => goods.GOODS_CATEGORY === category);
         },
         babyGoodsList() {
             axios({
-                url: "http://localhost:3000/goods/babyGoodsList",
+                url: "http://localhost:3000/goods/babyGoodsList/4",
                 method: "GET",
             }).then(results => {
                 console.log(results.data);
-                this.babyGoodsList = results.data;
+                this.goods = results.data;
+                
             })
         },
         goTogoodsDetail(goodsno) {

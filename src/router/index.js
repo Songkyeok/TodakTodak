@@ -9,6 +9,7 @@ import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
 import findId from "../views/findId.vue";
 import about from "../views/about.vue";
+import EventList from "../views/EventList.vue";
 import Tableware from "../views/Tableware.vue";
 import BathStuff from "../views/BathStuff.vue";
 import Outside from "../views/Outside.vue";
@@ -82,6 +83,11 @@ const routes = [
     name: "findId",
     component: findId,
 
+  },
+  {
+    path: "/eventList",
+    name: "EventList",
+    component: EventList
   },
   {
     path: "/tableware",

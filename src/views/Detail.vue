@@ -37,13 +37,7 @@
                         <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
                     </div>
                 </div>
-                
-
-                
-            
-                
-                
-
+            </div>
                     <!-- <div class="info">
                     <div class="header">
                     <h2>{{categoryType(goods.goods_category)}}/{{goods.goods_nm}}</h2>
@@ -57,16 +51,14 @@
             
 
             <div class="d-flex justify-content-center">
-
-                    
-                <div class="content">
+              <div class="content">
+                    v-show
                     <img :width="550"
                     :src="goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
                     alt="상품 디테일 이미지">
                 </div>
             </div>
         </div>
-    </div>
 
 
 </template>
