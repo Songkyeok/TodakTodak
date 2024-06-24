@@ -33,7 +33,7 @@
                     </a>
                 </div>
                 <div class="name">{{ goods.goods_nm }}</div>
-                <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
+                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}원</div>
 
             </div>
         </div>

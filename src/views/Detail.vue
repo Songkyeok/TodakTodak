@@ -7,22 +7,6 @@
                         :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                         alt="상품 이미지">
                 </div>
-            </div>
-            <div class="img">
-            </div>
-            <div>
-                {{goods.goods_nm}}
-            </div>
-            <div>
-                {{getCurrencyFormat(goods.goods_price)}}원
-            </div>
-            <div>
-                <div class="input-group">
-                    <span class="input-group-text" @click="calculatePrice(-1);">-</span>
-                    <input type="text" style="width:40px;" v-model="total">
-                    <span class="input-group-text" @click="calculatePrice(1);">+</span>
-
-                </div>
                 <div class="details">
                     {{goods.goods_nm}}
                     <div class="price">
@@ -43,6 +27,11 @@
                             <h4>{{getCurrencyFormat(this.totalPrice)}}</h4>
                         </div>
                     </div>
+                </div>
+            
+            
+                
+                
 
                     <!-- <div class="info">
                     <div class="header">
@@ -53,20 +42,15 @@
                     <h4>{{like}}</h4>
                     </div>
                     </div> -->
-                </div>
             </div>
+            
 
             <div class="d-flex justify-content-center">
-                <div class="description">
-                    <img :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
-                        alt="상품 디테일 이미지">
-                </div>
 
                 <div class="content">
-                    <!-- <img :width="500"
+                    <img :width="550"
                     :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
-                    alt="상품 디테일 이미지">  -->
-
+                    alt="상품 디테일 이미지">
                 </div>
             </div>
         </div>
