@@ -64,6 +64,31 @@
         </div>
     </main>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {	
+    name:'',
+    components:{},
+    data() {
+        return {
+            sampleData: ''
+        };
+    },
+    mounted(){
+
+    },
+    methods: {
+        orderPage(){
+            axios({
+                url:"http//localhost:3000/"
+            })
+        }
+    }
+}
+</script>
+
 <style scoped>
 /* Container and Layout */
 .container {
