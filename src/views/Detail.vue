@@ -10,8 +10,14 @@
                 </div>
                 <div class="details">
                     {{goods.goods_nm}}
-                    <button class="heart-button" @click="likeInsert">
+                    <button v-if="user.user_no === ''" class="heart-button" @click="likeInsert">
                         <i class="far fa-heart heart-icon"></i>
+                    </button>
+                    <button v-else-if="!isLiked" class="heart-button" @click="likeInsert">
+                        <i class="far fa-heart heart-icon"></i>
+                    </button>
+                    <button v-else class="heart-button" @click="likeDelete">
+                        <i class="fas fa-heart like-heart-icon"></i>
                     </button>
                     <h4>{{like}}</h4>
                     <div class="price">
@@ -81,20 +87,23 @@
                 total: 1,
                 totalPrice: 0,
                 cnt: 1,
+                isLiked: false,
             };
         },
-        beforeCreate() {},
+        computed: {
+            user(){
+                return this.$store.state.user;
+               
+            }
+        },
         created() {
             this.getGoods();
+        
         },
-        beforeMount() {},
         mounted() {
             this.getGoods();
         },
-        beforeUpdate() {},
         updated() {},
-        beforeUnmount() {},
-        unmounted() {},
         methods: {
             async getGoods() { 
                 try {
@@ -102,7 +111,7 @@
                     const response = await axios.get(`http://localhost:3000/goods/goodsDetail/${goodsno}`);
                     this.goods = response.data[0];
                     this.totalPrice = this.goods.goods_price;
-                    console.log(this.goods);
+
                 } catch (error) {
                     console.error(error);
                 }
@@ -117,7 +126,7 @@
                 return this.$currencyFormat(value);
             },
             getCategory(cate){
-                console.log(cate)
+               
                 if(cate == 1){
                     return '유아식기';
                 }else if(cate == 2){
@@ -143,20 +152,41 @@
                     this.$router.push({ path: '/login'});
                 }else{
                     axios({
-                        url: "http//localhost:3000/goods/basketInsert",
-                        method: "post",
+                        url: "http://localhost:3000/goods/basketInsert",
+                        method: "POST",
                         data: {
-                            user_no: 1,
-                            goods_price: this.goods.goods_price,
-                            goods_nm: this.goods.goods_nm,
-
+                            user_no: this.user.user_no,
+                            basket_price: this.goods.goods_price,
+                            basket_nm: this.goods.goods_nm,
+                            basket_img: this.goods.goods_img,
+                            basket_cnt: this.total,
+                            goods_no: this.goods.goods_no,
+                        }
+                    })
+                    .then(res => {
+                        location.href="http://localhost:8080/basket"
+                    })
+                }
+            },likeInsert(){
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    axios({
+                        url: "http://localhost:3000/goods/likeInsert",
+                        method: "POST",
+                        data: {
+                            user_no: this.user.user_no,
+                            goods_no: this.goods.goods_no,
                         }
                     })
                 }
             }
+
         }
     }
 </script>
+
 <style scoped>
     body {
         font-family: Arial, sans-serif;
