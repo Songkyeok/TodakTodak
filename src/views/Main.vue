@@ -27,9 +27,9 @@
             <div class="best_container" v-for="(goods, index) in bestGoods" :key="index">
                 <div class="img">
                     <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                        <!-- <img class="img"
-                            :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
-                            alt="상품 이미지"> -->
+                        <img class="img"
+                            :src="goods.goods_img ? require(`../../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                            alt="상품 이미지">
                     </a>
                 </div>
                 <div class="name">{{ goods.goods_nm }}</div>
@@ -50,9 +50,9 @@
             <div class="best_container" v-for="(data, index) in newGoods" :key="index">
                 <div>
                     <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
-                        <!-- <img class="img"
-                            :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
-                            alt="상품 이미지"> -->
+                        <img class="img"
+                            :src="newGoods[index].goods_img ? require(`../../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                            alt="상품 이미지">
                     </a>
                     <a @click="goToDetil()"></a>
                 </div>

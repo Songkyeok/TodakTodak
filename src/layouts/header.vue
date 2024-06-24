@@ -132,6 +132,9 @@ export default {
         goToAbout() {
         this.$router.push({ path: '/about' });
         },
+        goToEvent() {
+        this.$router.push({ path: '/eventList' });
+        },
         goToTableware() {
         this.$router.push({ path: '/tableware' });
         },
