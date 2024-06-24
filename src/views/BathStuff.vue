@@ -7,11 +7,11 @@
             </div>
             <hr>
             <div class="content cate-list">
-                <h2 class="home_title">유아식기</h2>
+                <h2 class="home_title">욕실용품</h2>
                 <br>
             </div>
-            <div v-if="tableGoodsList.length>0">
-                <div class="table_container" v-for="(goods, i) in tableGoodsList" :key="i">
+            <div v-if="bathGoodsList.length>0">
+                <div class="bath_container" v-for="(goods, i) in bathGoodsList" :key="i">
                     <div class="img">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                             <!-- <img class="img" :src="goods.goods_img ? require(`'/Users/areumAREUM/Downloads/TodakTodak/vscode/node-back/TodakToack_Backend/uploads/uploadGoods/${goods.goods_img}'`) : '/goodsempty.jpg'"
@@ -38,11 +38,6 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import axios from 'axios';
 
 export default {
-    goods_category: [
-        { id: 1, name: "유아식기" },
-    ],
-    goods: [],
-
     components: {
         Splide,
         SplideSlide,
@@ -50,7 +45,7 @@ export default {
 
     data() {
         return {
-            tableGoodsList: [],
+            bathGoodsList: [],
         };
     },
     // mounted() {
@@ -62,11 +57,11 @@ export default {
         },
         tableGoodsList() {
             axios({
-                url: "http://localhost:3000/goods/tableGoodsList",
+                url: "http://localhost:3000/goods/bathGoodsList",
                 method: "GET",
             }).then(results => {
                 console.log(results.data);
-                this.tableGoodsList = results.data;
+                this.bathGoodsList = results.data;
             })
         },
         goTogoodsDetail(goodsno) {

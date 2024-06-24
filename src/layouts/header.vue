@@ -135,6 +135,21 @@ export default {
         goToTableware() {
         this.$router.push({ path: '/tableware' });
         },
+        goToBathStuff() {
+        this.$router.push({ path: '/bathstuff' });
+        },
+        goToOutside() {
+        this.$router.push({ path: '/outside' });
+        },
+        goToBabyStuff() {
+        this.$router.push({ path: '/babystuff' });
+        },
+        goToCleanStuff() {
+        this.$router.push({ path: '/cleanstuff' });
+        },
+        goToToy() {
+        this.$router.push({ path: '/toy' });
+        },
         logout() {
             this.$store.commit("user", {});
             this.$swal({

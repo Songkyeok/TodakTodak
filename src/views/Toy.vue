@@ -7,18 +7,18 @@
             </div>
             <hr>
             <div class="content cate-list">
-                <h2 class="home_title">유아식기</h2>
+                <h2 class="home_title">장난감</h2>
                 <br>
             </div>
-            <div v-if="tableGoodsList.length>0">
-                <div class="table_container" v-for="(goods, i) in tableGoodsList" :key="i">
+            <div v-if="toyGoodsList.length>0">
+                <div class="toy_container" v-for="(goods, i) in toyGoodsList" :key="i">
                     <div class="img">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                             <!-- <img class="img" :src="goods.goods_img ? require(`'/Users/areumAREUM/Downloads/TodakTodak/vscode/node-back/TodakToack_Backend/uploads/uploadGoods/${goods.goods_img}'`) : '/goodsempty.jpg'"
                             alt="상품 이미지"> -->
                             <!-- <img :src="`/img/${product.id}/${product.path}`" class="card-img-top" alt="..."> -->
                         </a>
-                        <a @click="goToDetail()"></a>
+                        <a @click="goToDetil()"></a>
                     </div>
                     <div class="name">{{ goods.goods_nm }}</div>
                     <div class="span">{{ getCurrencyFormat(goods.goods_price) }}</div>
@@ -38,11 +38,6 @@ import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import axios from 'axios';
 
 export default {
-    goods_category: [
-        { id: 1, name: "유아식기" },
-    ],
-    goods: [],
-
     components: {
         Splide,
         SplideSlide,
@@ -50,23 +45,23 @@ export default {
 
     data() {
         return {
-            tableGoodsList: [],
+            toyGoodsList: [],
         };
     },
     // mounted() {
-    //     this.tableGoodsList();
+    //     this.toyGoodsList();
     // },
     methods: {
         filteredGoodsList(category) {
             return this.GoodsList.filter((goods) => goods.GOODS_CATEGORY === category);
         },
-        tableGoodsList() {
+        toyGoodsList() {
             axios({
-                url: "http://localhost:3000/goods/tableGoodsList",
+                url: "http://localhost:3000/goods/toyGoodsList",
                 method: "GET",
             }).then(results => {
                 console.log(results.data);
-                this.tableGoodsList = results.data;
+                this.toyGoodsList = results.data;
             })
         },
         goTogoodsDetail(goodsno) {

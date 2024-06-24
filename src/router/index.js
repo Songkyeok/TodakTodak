@@ -10,6 +10,11 @@ import orderList from "../views/orderList.vue";
 import findId from "../views/findId.vue";
 import about from "../views/about.vue";
 import Tableware from "../views/Tableware.vue";
+import BathStuff from "../views/BathStuff.vue";
+import Outside from "../views/Outside.vue";
+import BabyStuff from "../views/BabyStuff.vue";
+import CleanStuff from "../views/CleanStuff.vue";
+import Toy from "../views/Toy.vue";
 
 
 
@@ -82,7 +87,32 @@ const routes = [
     path: "/tableware",
     name: "Tableware",
     component: Tableware
-  }
+  },
+  {
+    path: "/bathstuff",
+    name: "BathStuff",
+    component: BathStuff
+  },
+  {
+    path: "/outside",
+    name: "Outside",
+    component: Outside
+  },
+  {
+    path: "/babystuff",
+    name: "BabyStuff",
+    component: BabyStuff
+  },
+  {
+    path: "/cleanstuff",
+    name: "CleanStuff",
+    component: CleanStuff
+  },
+  {
+    path: "/toy",
+    name: "Toy",
+    component: Toy
+  },
 ];
 
 const router = createRouter({
