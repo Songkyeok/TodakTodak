@@ -14,11 +14,11 @@
                     <div class="section text-center">
                       <h4 class="top" mb-4 pb-3>회원 로그인</h4>
                       <div class="form-group">
-                        <input type="email" class="form-style" placeholder="아이디" autocomplete="off" v-model="user_id">
+                        <input type="email" class="form-style" placeholder="아이디" autocomplete="off" v-model="user_id" @keyup.enter="login()">
                         <i class="input-icon uil uil-at"></i>
                       </div>
                       <div class="form-group mt-2">
-                        <input type="password" class="form-style" placeholder="비밀번호" autocomplete="off" v-model="user_pw">
+                        <input type="password" class="form-style" placeholder="비밀번호" autocomplete="off" v-model="user_pw" @keyup.enter="login()">
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <!-- sns 로그인 추가 -->
@@ -31,8 +31,8 @@
                           <div id="naverIdLogin" class="mt-2" @click="naverlogin" img src="../assets/naver.png"></div>
                       </div>
                       <button @click="login" class="btn1">로그인</button>
-                      <button @click="findId" class="btn2">아이디 찾기</button>
-                      <button @click="findPw" class="btn3">비밀번호 찾기</button>
+                      <button @click="goToFindId" class="btn2">아이디 찾기</button>
+                      <button @click="goToFindPw" class="btn3">비밀번호 찾기</button>
                     </div>
                   </div>
                 </div>
@@ -83,20 +83,21 @@ export default {
             const email = this.naverLogin.user.email;
             const name = this.naverLogin.user.name;
 
-            console.log("this.naverLogin.user.id ====>>>", id);
-            console.log("this.naverLogin.user.email ====>>>", email);
-            console.log("this.naverLogin.user.name ====>>>", name);
+            // console.log("this.naverLogin.user.id ====>>>", id);
+            // console.log("this.naverLogin.user.email ====>>>", email);
+            // console.log("this.naverLogin.user.name ====>>>", name);
 
         } else {
-            console.log("callback처리 실패");
+            console.log("callback 처리 실패");
         }
     });
   },
   methods: {
-    findId() {
-      // this.$router.push({
-      //   name: "findId"
-      // });
+    goToFindId() {
+      this.$router.push({ name: "FindId" });
+    },
+    goToFindPw() {
+      this.$router.push({ name: "FindPw" });
     },
     // 로컬 로그인
     login() {

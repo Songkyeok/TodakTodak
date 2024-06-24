@@ -33,8 +33,12 @@
                                         <li @click="goToAdmin()">관리 페이지</li>
                                         <li @click="logout()">로그아웃</li>
                                     </ul>
-                                    <ul v-else class="join">
+                                    <ul v-else class="join quick-list">
                                         <li @click="logout()">로그아웃</li>
+                                        <!-- 카카오톡 링크 추가 예정 -->
+                                        <li><a href="#" class="ki-cs"><em class="blind">고객센터</em></a></li>
+                                        <li><a href="/mypage" class="ki-mypage"><em class="blind">마이페이지</em></a></li>
+                                        <li><a href="/basket" class="ki-cart"><span id="cartCnt"></span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -132,9 +136,6 @@ export default {
         goToAbout() {
         this.$router.push({ path: '/about' });
         },
-        goToEvent() {
-        this.$router.push({ path: '/eventList' });
-        },
         goToTableware() {
         this.$router.push({ path: '/tableware' });
         },
@@ -152,6 +153,9 @@ export default {
         },
         goToToy() {
         this.$router.push({ path: '/toy' });
+        },
+        goToEvent() {
+        this.$router.push({ path: '/eventList' });
         },
         logout() {
             this.$store.commit("user", {});

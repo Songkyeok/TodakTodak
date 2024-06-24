@@ -7,17 +7,17 @@ import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
-import findId from "../views/findId.vue";
+import FindId from "../views/FindId.vue";
+import FindPw from "../views/FindPw.vue";
 import about from "../views/about.vue";
-import EventList from "../views/EventList.vue";
 import Tableware from "../views/Tableware.vue";
 import BathStuff from "../views/BathStuff.vue";
 import Outside from "../views/Outside.vue";
 import BabyStuff from "../views/BabyStuff.vue";
 import CleanStuff from "../views/CleanStuff.vue";
 import Toy from "../views/Toy.vue";
-
-
+import Profile from "../mypages/Profile.vue"
+import EventList from "../views/EventList.vue";
 
 
 
@@ -82,14 +82,13 @@ const routes = [
   },
   {  
     path: "/findId",
-    name: "findId",
-    component: findId,
-
+    name: "FindId",
+    component: FindId,
   },
-  {
-    path: "/eventList",
-    name: "EventList",
-    component: EventList
+  {  
+    path: "/findPw",
+    name: "FindPw",
+    component: FindPw,
   },
   {
     path: "/tableware",
@@ -120,6 +119,16 @@ const routes = [
     path: "/toy",
     name: "Toy",
     component: Toy
+  },
+  {
+    path: "/mypage/profile",
+    name: "Profile",
+    component: Profile
+  },
+  {
+    path: "/eventList",
+    name: "EventList",
+    component: EventList
   },
 ];
 
