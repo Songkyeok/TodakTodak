@@ -58,7 +58,6 @@
 
             <div class="d-flex justify-content-center">
               <div class="content">
-                    v-show
                     <img :width="550"
                     :src="goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`) : '/goodsempty.jpg'"
                     alt="상품 디테일 이미지">
@@ -75,27 +74,27 @@
     export default {
         data() {
             return {
-                goods: {}, //사용해야 되는 변수명 초기값
+                goods: {},
                 total: 1,
                 totalPrice: 0,
                 cnt: 1,
                 isLiked: false,
+
             };
         },
         computed: {
             user(){
-                return this.$store.state.user; // 로그인한 유저 정보 가져옴(user의 구체적인 정보를 가져오려면 user.컬럼명)
+                return this.$store.state.user;
                
             }
         },
-        created() { // 페이지가 만들어짐과 동시에 함수가 실행되도록 하는 메소드
-            this.getGoods();
         
-        },
-        mounted() { // 정보를 변경해주는 메소드
+        created() {
             this.getGoods();
+            this.likeCheck();   
         },
-        updated() {},
+        
+        
         methods: {
             async getGoods() { 
                 try {
@@ -135,9 +134,6 @@
                     return '이벤트'
                 }
             },
-            goToBuy(goodsno){
-                
-            },
             addToCart(){
                 if(this.user.user_no === ''){
                     alert('로그인해주셈');
@@ -159,7 +155,34 @@
                         location.href="http://localhost:8080/basket"
                     })
                 }
-            },likeInsert(){
+            },
+            async goToBuy(goodsno){
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    const response = await axios.post("http://localhost:3000/goods/orderpay");
+                    
+                }
+            },
+            async likeCheck(){
+                axios({
+                    url: "http://localhost:3000/goods/likeCheck",
+                    method: "POST",
+                    data: {
+                        user_no: this.user.user_no,
+                        goods_no: this.$route.params.goodsno,
+                    }
+                })
+                .then(res => {
+                    if(res.data.message == '좋아요 성공'){
+                        this.isLiked = res.data.isLiked;
+                    }else{
+                        this.isLiked = false;
+                    }
+                })
+            },
+            async likeInsert(){
                 if(this.user.user_no === ''){
                     alert('로그인해주셈');
                     this.$router.push({ path: '/login'});
@@ -171,10 +194,26 @@
                             user_no: this.user.user_no,
                             goods_no: this.goods.goods_no,
                         }
-                    })
+                    }),
+                    this.isLiked = true;
+                }
+            },
+            likeDelete(){
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    axios({
+                        url: "http://localhost:3000/goods/likeDelete",
+                        method: "POST",
+                        data: {
+                            user_no: this.user.user_no,
+                            goods_no: this.goods.goods_no,
+                        }
+                    }),
+                    this.isLiked = false;
                 }
             }
-
         }
     }
 </script>
