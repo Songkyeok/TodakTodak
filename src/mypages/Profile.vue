@@ -1,15 +1,14 @@
 <template>
-    <MypageSidebar />
+    <MypageSideBar />
 
-    <div>1</div>
 
 </template>
 <script>
-import MypageSidebar from "../layouts/mypageSideBar.vue";
+import MypageSideBar from "../layouts/MypageSideBar.vue";
 
 export default {
     components: {
-        MypageSidebar
+        MypageSideBar
     }
 }
 </script>

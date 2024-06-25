@@ -1,5 +1,5 @@
 <template>
-    <MypageSidebar />
+    <MypageSideBar />
 
     <div class="mypage_container">
         <div class="mypage_top_info">
@@ -121,11 +121,11 @@
     
 </template>
 <script>
-import MypageSidebar from "../layouts/mypageSideBar.vue";
+import MypageSideBar from "../layouts/MypageSideBar.vue";
 
 export default {
     components: {
-        MypageSidebar
+        MypageSideBar
     }
 }
 </script>

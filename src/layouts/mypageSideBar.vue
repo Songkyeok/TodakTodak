@@ -21,7 +21,7 @@
           나의 쇼핑 정보
           <ul>
             <li>
-              <span @click="goToOrdered">- 주문 내역</span>
+              <span @click="goToCheck">- 주문 내역</span>
             </li>
             <li>
               <span @click="goToQna">- 문의 내역</span>
@@ -38,11 +38,20 @@
 <script>
 export default {
   methods: {
+    goToMypage() {
+      this.$router.push({ path: '/mypage' });
+    },
     goToProfile() {
       this.$router.push({ path: '/mypage/profile' });
     },
-    goToAbout() {
-      this.$router.push({ path: '/about' });
+    goToCheck() {
+      this.$router.push({ path: '/mypage/check' });
+    },
+    goToQna() {
+      this.$router.push({ path: '/mypage/qna' });
+    },
+    goToReview() {
+      this.$router.push({ path: '/mypage/review' });
     },
   }
 }
