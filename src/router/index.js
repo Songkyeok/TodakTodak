@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import adminSideBar from "../layouts/mypageSideBar.vue";
+// import adminSideBar from "../layouts/myPageSidebar.vue";
 
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
@@ -15,6 +15,7 @@ import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
 import UserList from "../admin/UserList.vue";
 
+import MypageMain from "../mypages/MypageMain.vue"
 
 
 import GoodsAdd from "../admin/goodsAdd.vue";
@@ -31,11 +32,11 @@ const routes = [
     name: "about",
     component: about,
   },
-  {
-    path: "/sidebar",
-    name: "adminSideBar",
-    component: adminSideBar,
-  },
+  // {
+  //   path: "/sidebar",
+  //   name: "adminSideBar",
+  //   component: adminSideBar,
+  // },
   {
     path: "/main",
     name: "main",
@@ -92,11 +93,6 @@ const routes = [
     component: CategoryGoodsList
   },
   {
-    path: "/mypage/profile",
-    name: "Profile",
-    component: Profile
-  },
-  {
     path: "/eventList",
     name: "EventList",
     component: EventList
@@ -105,6 +101,17 @@ const routes = [
     path: "/userlist",
     name: "UserList",
     component: UserList
+  },
+  // 마이페이지
+  {
+    path: "/mypage",
+    name: "MypageMain",
+    component: MypageMain,
+  },
+  {
+    path: '/mypage/profile',
+    name: "Profile",
+    component: Profile
   }
 ];
 
