@@ -121,7 +121,7 @@
     
 </template>
 <script>
-import MypageSidebar from "../layouts/myPageSidebar.vue";
+import MypageSidebar from "../layouts/mypageSideBar.vue";
 
 export default {
     components: {

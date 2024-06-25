@@ -39,7 +39,7 @@
 export default {
   methods: {
     goToProfile() {
-      this.$router.push({ path: '/mypage/Profile' });
+      this.$router.push({ path: '/mypage/profile' });
     },
     goToAbout() {
       this.$router.push({ path: '/about' });

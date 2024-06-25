@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import adminSideBar from "../layouts/myPageSidebar.vue";
+// import adminSideBar from "../layouts/myPageSidebar.vue";
 
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
@@ -21,8 +21,6 @@ import EventList from "../views/EventList.vue";
 import MypageMain from "../mypages/MypageMain.vue"
 import Profile from "../mypages/Profile.vue"
 
-
-
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsDetail from "../views/Detail.vue";
 
@@ -37,11 +35,11 @@ const routes = [
     name: "about",
     component: about,
   },
-  {
-    path: "/sidebar",
-    name: "adminSideBar",
-    component: adminSideBar,
-  },
+  // {
+  //   path: "/sidebar",
+  //   name: "adminSideBar",
+  //   component: adminSideBar,
+  // },
   {
     path: "/main",
     name: "main",
@@ -132,14 +130,12 @@ const routes = [
     path: "/mypage",
     name: "MypageMain",
     component: MypageMain,
-    children: [
-      {
-        path: 'profile',
-        name: "Profile",
-        component: Profile
-      }
-    ]
   },
+  {
+    path: '/mypage/profile',
+    name: "Profile",
+    component: Profile
+  }
 ];
 
 const router = createRouter({
