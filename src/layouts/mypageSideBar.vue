@@ -7,13 +7,13 @@
           회원 정보
           <ul>
             <li>
-              <router-link to="/mypage" class="">- 내 정보</router-link>
+              <span @click="goToMypage">- 내 정보</span>
             </li>
             <li>
-              <router-link to="/checkPw" class="">- 개인정보 수정</router-link>
+              <span @click="goToProfile">- 개인정보 수정</span>
             </li>
             <li>
-              <router-link to="/mypage" class="">- 회원 탈퇴</router-link>
+              <span @click="goToProfile">- 회원 탈퇴</span>
             </li>
           </ul>
         </li>
@@ -21,13 +21,13 @@
           나의 쇼핑 정보
           <ul>
             <li>
-              <router-link to="/check" class="">- 주문 내역</router-link>
+              <span @click="goToOrdered">- 주문 내역</span>
             </li>
             <li>
-              <router-link to="/qna" class="">- 문의 내역</router-link>
+              <span @click="goToQna">- 문의 내역</span>
             </li>
             <li>
-              <router-link to="/review" class="">- 리뷰 관리</router-link>
+              <span @click="goToReview">- 리뷰 관리</span>
             </li>
           </ul>
         </li>
@@ -35,6 +35,18 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    goToProfile() {
+      this.$router.push({ path: '/mypage/Profile' });
+    },
+    goToAbout() {
+      this.$router.push({ path: '/about' });
+    },
+  }
+}
+</script>
 
 <style>
   .mypage-bar {
@@ -44,6 +56,7 @@
     background-color: rgb(255, 255, 255);
     margin: 80px 5% 0 5%;
     min-height: 250px;
+    display:inline-block;
   }
   .title_text {
     padding: 0 0 14px 10px;
@@ -70,6 +83,10 @@
     font-size: 12px;
     text-indent: 10px;
     padding: 7px 0 6px 0;
+  }
+
+  .mypage_nav > ul > li > ul > li > span {
+    cursor: pointer;
   }
 
   a {
