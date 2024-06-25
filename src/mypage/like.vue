@@ -27,7 +27,7 @@
                                     <td>{{ like.goods_nm }}</td>
                                     <td>{{ formatPrice(like.goods_price) }} </td>
                                     <td><button class="btn" @click="addToCart(like)">장바구니</button></td>
-                                    <td><button class="btn2" @click="likeDelete(like.GOODS_NO)">삭제</button></td>
+                                    <td><button class="btn2" @click="likeDelete(like.goods_no)">삭제</button></td>
                                 </tr>
                                 <tr v-if="likeList.length === 0">
                                     <td colspan="5" style=" padding: 150px 0px;">찜 목록 내역이 없습니다.</td>
