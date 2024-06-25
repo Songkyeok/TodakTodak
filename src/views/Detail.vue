@@ -75,7 +75,7 @@
     export default {
         data() {
             return {
-                goods: {},
+                goods: {}, //사용해야 되는 변수명 초기값
                 total: 1,
                 totalPrice: 0,
                 cnt: 1,
@@ -84,15 +84,15 @@
         },
         computed: {
             user(){
-                return this.$store.state.user;
+                return this.$store.state.user; // 로그인한 유저 정보 가져옴(user의 구체적인 정보를 가져오려면 user.컬럼명)
                
             }
         },
-        created() {
+        created() { // 페이지가 만들어짐과 동시에 함수가 실행되도록 하는 메소드
             this.getGoods();
         
         },
-        mounted() {
+        mounted() { // 정보를 변경해주는 메소드
             this.getGoods();
         },
         updated() {},
