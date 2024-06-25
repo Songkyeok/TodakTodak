@@ -61,32 +61,32 @@
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToTableware()">유아식기</span></a>
+                                                <a href="#"><span @click="goToCategory(1)">유아식기</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToBathStuff()">욕실용품</span></a>
+                                                <a href="#"><span @click="goToCategory(2)">욕실용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToOutside()">외출용품</span></a>
+                                                <a href="#"><span @click="goToCategory(3)">외출용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToBabyStuff()">유아용품</span></a>
+                                                <a href="#"><span @click="goToCategory(4)">유아용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCleanStuff()">위생용품</span></a>
+                                                <a href="#"><span @click="goToCategory(5)">위생용품</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToToy()">장난감</span></a>
+                                                <a href="#"><span @click="goToCategory(6)">장난감</span></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -136,24 +136,24 @@ export default {
         goToAbout() {
         this.$router.push({ path: '/about' });
         },
-        goToTableware() {
-        this.$router.push({ path: '/tableware' });
+        goToCategory(category) {
+            window.location.href = `http://localhost:8080/categoryGoodsList/${category}`;
         },
-        goToBathStuff() {
-        this.$router.push({ path: '/bathstuff' });
-        },
-        goToOutside() {
-        this.$router.push({ path: '/outside' });
-        },
-        goToBabyStuff() {
-        this.$router.push({ path: '/babystuff' });
-        },
-        goToCleanStuff() {
-        this.$router.push({ path: '/cleanstuff' });
-        },
-        goToToy() {
-        this.$router.push({ path: '/toy' });
-        },
+        // goToBathStuff() {
+        // this.$router.push({ path: '/bathstuff' });
+        // },
+        // goToOutside() {
+        // this.$router.push({ path: '/outside' });
+        // },
+        // goToBabyStuff() {
+        // this.$router.push({ path: '/babystuff' });
+        // },
+        // goToCleanStuff() {
+        // this.$router.push({ path: '/cleanstuff' });
+        // },
+        // goToToy() {
+        // this.$router.push({ path: '/toy' });
+        // },
         goToEvent() {
         this.$router.push({ path: '/eventList' });
         },

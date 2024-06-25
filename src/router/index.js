@@ -7,17 +7,13 @@ import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
-import FindId from "../views/FindId.vue";
+// import FindId from "../views/FindId.vue";
 import FindPw from "../views/FindPw.vue";
 import about from "../views/about.vue";
-import Tableware from "../views/Tableware.vue";
-import BathStuff from "../views/BathStuff.vue";
-import Outside from "../views/Outside.vue";
-import BabyStuff from "../views/BabyStuff.vue";
-import CleanStuff from "../views/CleanStuff.vue";
-import Toy from "../views/Toy.vue";
+import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
+import UserList from "../admin/UserList.vue";
 
 
 
@@ -80,45 +76,20 @@ const routes = [
     name: "GoodsDetail",
     component: GoodsDetail,
   },
-  {  
-    path: "/findId",
-    name: "FindId",
-    component: FindId,
-  },
+  // {  
+  //   path: "/findId",
+  //   name: "FindId",
+  //   component: FindId,
+  // },
   {  
     path: "/findPw",
     name: "FindPw",
     component: FindPw,
   },
   {
-    path: "/tableware",
-    name: "Tableware",
-    component: Tableware
-  },
-  {
-    path: "/bathstuff",
-    name: "BathStuff",
-    component: BathStuff
-  },
-  {
-    path: "/outside",
-    name: "Outside",
-    component: Outside
-  },
-  {
-    path: "/babystuff",
-    name: "BabyStuff",
-    component: BabyStuff
-  },
-  {
-    path: "/cleanstuff",
-    name: "CleanStuff",
-    component: CleanStuff
-  },
-  {
-    path: "/toy",
-    name: "Toy",
-    component: Toy
+    path: "/categoryGoodsList/:category",
+    name: "CategoryGoodsList",
+    component: CategoryGoodsList
   },
   {
     path: "/mypage/profile",
@@ -130,6 +101,11 @@ const routes = [
     name: "EventList",
     component: EventList
   },
+  {
+    path: "/userlist",
+    name: "UserList",
+    component: UserList
+  }
 ];
 
 const router = createRouter({
