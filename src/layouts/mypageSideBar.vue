@@ -93,11 +93,9 @@ export default {
     text-indent: 10px;
     padding: 7px 0 6px 0;
   }
-
   .mypage_nav > ul > li > ul > li > span {
     cursor: pointer;
   }
-
   a {
     text-decoration: none;
     color: inherit;
