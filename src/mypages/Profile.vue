@@ -74,6 +74,7 @@
 </template>
 <script>
 import MypageSidebar from "../layouts/MypageSidebar.vue";
+
 import axios from "axios";
 
 export default {
