@@ -16,9 +16,10 @@ import UserList from "../admin/UserList.vue";
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 
+import GoodsDetail from "../views/Detail.vue";
+import OrderPay from "../views/orderPay.vue";
 
 import GoodsAdd from "../admin/goodsAdd.vue";
-import GoodsDetail from "../views/Detail.vue";
 
 const routes = [
   {
@@ -113,10 +114,16 @@ const routes = [
     component: Profile
   },
   {
+    path: '/orderpay',
+    name: "OrderPay",
+    component: OrderPay
+  },
+  {
     path: '/mypage/updatePw',
     name: "UpdatePw",
     component: UpdatePw
   },
+
 ];
 
 const router = createRouter({

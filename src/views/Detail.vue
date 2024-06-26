@@ -102,7 +102,6 @@
                     const response = await axios.get(`http://localhost:3000/goods/goodsDetail/${goodsno}`);
                     this.goods = response.data[0];
                     this.totalPrice = this.goods.goods_price;
-
                 } catch (error) {
                     console.error(error);
                 }
@@ -152,7 +151,26 @@
                         }
                     })
                     .then(res => {
-                        location.href="http://localhost:8080/basket"
+                    if (res.data.message == '이미 담겨 있는 상품입니다.') {
+                        this.$swal("이미 장바구니에 담긴 상품입니다")
+                    }
+                    else {
+                        this.$swal({
+                                title: '상품이 장바구니에 담겼습니다.',
+                                showDenyButton: true,
+                                confirmButtonText: '장바구니로 이동',
+                                denyButtonText: `계속 쇼핑하기`,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href="http://localhost:8080/basket"
+                                } else if (result.isDenied) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
                     })
                 }
             },
@@ -161,8 +179,18 @@
                     alert('로그인해주셈');
                     this.$router.push({ path: '/login'});
                 }else{
-                    const response = await axios.post("http://localhost:3000/goods/orderpay");
-                    
+                    axios({
+                        url: "http://localhost:3000/goods/orderpay",
+                        method: "POST",
+                        data: {
+                            user_no: this.user.user_no,
+                            order_tp: this.totalPrice,
+                            order_tc: this.total,
+                            goods_no: this.goods.goods_no,
+                        }
+                        
+                    })
+                    window.location.href="http://localhost:8080/orderpay"
                 }
             },
             async likeCheck(){
