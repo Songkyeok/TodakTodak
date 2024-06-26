@@ -226,6 +226,7 @@
               
               this.user_zipcode = data.zonecode;
               this.user_adr1 = data.address;
+              this.user_adr2 = "";
             }
           }).open();
         } else {
@@ -277,7 +278,7 @@
   .note {
     font-size: 15px;
     color: #d9534f;
-    margin-top: 10;
+    /* margin-top: 10; */
     margin-bottom: 20px;
     text-align: right;
   }
@@ -396,5 +397,9 @@
   .address_postcode {
     display: flex;
     justify-content: space-between;
+  }
+
+  input:disabled {
+      background: #dddddd;
   }
 </style>
