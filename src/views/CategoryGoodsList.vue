@@ -15,7 +15,7 @@
                 <div class="category_container" v-for="(goods, i) in categoryGoods" :key="i">
                     <div class="img">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                            <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods[i].goods_img}`) : '/goodsempty.jpg'"
+                            <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                             alt="상품 이미지">
                         </a>
                         <a @click="goToDetail()"></a>
@@ -34,9 +34,6 @@
 import axios from 'axios';
 
 export default {
-    
-    
-
     data() {
         return {        
             categoryGoods: [],
