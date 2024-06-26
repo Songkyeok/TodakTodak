@@ -14,6 +14,7 @@ import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
 import UserList from "../admin/UserList.vue";
+import Like from "../mypage/like.vue";
 
 import MypageMain from "../mypages/MypageMain.vue"
 
@@ -112,7 +113,11 @@ const routes = [
     path: '/mypage/profile',
     name: "Profile",
     component: Profile
-  }
+  },
+  {
+    path: '/mypage/like',
+    component: Like
+  },
 ];
 
 const router = createRouter({

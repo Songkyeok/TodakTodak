@@ -71,7 +71,7 @@ export default {
         },
         async getReviewList() {
             try {
-                const response = await axios.get(`http://localhost:3000/mypage/review/${this.user.user_no}`);
+                const response = await axios.get(`http://localhost:3000/profile/review/${this.user.user_no}`);
                 this.reviewList = response.data;
                 console.log(this.reviewList);
             } catch (error) {
