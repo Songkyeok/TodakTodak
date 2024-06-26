@@ -1,5 +1,5 @@
 <template>
-    <MypageSideBar />
+    <MypageSidebar />
     
     <div class="profile_container">
         
@@ -9,7 +9,7 @@
             </div>
             <div class="form-group">
                 <label for="user_id">아이디</label>
-                <input type="text" id="user_id" v-model="user_id" placeholder="아이디" disabled />
+                <input type="text" id="user_id" v-model="user_info.user_id" placeholder="아이디" disabled />
             </div>
 
             <!-- <div class="form-group">
@@ -20,17 +20,17 @@
             <!-- 이메일, 휴대폰 번호, 주소  -->
             <div class="form-group">
                 <label for="name">이름</label>
-                <input type="text" id="name" v-model="user_nm" placeholder="이름" value="123" disabled />
+                <input type="text" id="name" v-model="user_info.user_nm" placeholder="이름" value="123" disabled />
             </div>
 
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" id="email" v-model="user_email" placeholder="이메일을 입력해주세요." />
+                <input type="email" id="email" v-model="user_info.user_email" placeholder="이메일을 입력해주세요." />
             </div>
 
             <div class="form-group">
                 <label for="phone">휴대폰번호</label>
-                <input type="text" id="phone" v-model="user_phone" name="phone" maxlength="11" placeholder="- 제외하고 입력해주세요." />
+                <input type="text" id="phone" v-model="user_info.user_phone" name="phone" maxlength="11" placeholder="- 제외하고 입력해주세요." />
             </div>
             <div class="form-group" v-if="error_phone == true">
                 <p class="red">휴대폰 번호가 정확한지 확인해 주세요.</p>
@@ -43,52 +43,48 @@
                 <label for="address">주소</label>
                 <div class="address_postcode">
                 <div>
-                    <input type="text" name="zonecode" readonly="readonly" v-model="user_zipcode" />
+                    <input type="text" name="zonecode" readonly="readonly" v-model="user_info.user_zipcode" />
                 </div>
                 <div>
-                    <button type="button" id="btnPostcode" class="btn_post_search">우편번호검색</button>
+                    <button type="button" id="btnPostcode" class="btn_post_search" @click="execDaumPostcode">우편번호검색</button>
                 </div>
                 </div>
             </div>
             <div class="form-group form-group-ad">
                 <div class="address_input_box" style="display: flex; justify-content: space-between">
                 <div class="member_warning" style="margin-left: 128px; width: 100%;">
-                    <input type="text" v-model="user_adr1" readonly="readonly" value="" />
+                    <input type="text" v-model="user_info.user_adr1" readonly="readonly" value="" />
                 </div>
                 </div>
             </div>
             <div class="form-group form-group-ad">
                 <div class="address_input_box" style="display: flex; justify-content: space-between">
                 <div class="member_warning js_address_sub" style="margin-left: 128px; width: auto; ">
-                    <input type="text" v-model="user_adr2" value="" placeholder="상세 주소를 입력해주세요."/>
+                    <input type="text" v-model="user_info.user_adr2" placeholder="상세 주소를 입력해주세요."/>
                 </div>
                 </div>
             </div>
 
             <div class="btn_container">
-                <button type="button" class="btn-next-step">비밀번호 수정</button>
-                <button type="button" class="btn-next-step">변경하기</button>
-                <button type="button" class="btn-next-step">취소하기</button>
+                <button type="button" class="btn-next-step" @click="goToUpdatePw">비밀번호 수정</button>
+                <button type="button" @click="updateProfile" class="btn-next-step" :class="{'active': compareVariable}">변경하기</button>
             </div>
         </div>
     </div>
 </template>
 <script>
-import MypageSideBar from "../layouts/mypageSideBar.vue";
+import MypageSidebar from "../layouts/MypageSidebar.vue";
+
 import axios from "axios";
 
 export default {
     data() {
         return {
-            user_id: "",
-            user_nm: "",
-            user_email: "",
-            user_phone: "",
-            user_zipcode: "",
-            user_adr1: "",
-            user_adr2: "",
+            user_info: {},
+            user_info_init: {},
 
             error_phone: true,
+            compareVariable: false,
         }
     },
     computed: {
@@ -97,16 +93,30 @@ export default {
         }
     },
     components: {
-        MypageSideBar
+        MypageSidebar
     },
     watch: {
-      'user_phone': function () {
-        this.checkUserPhone()
+      'user_info.user_phone': function () {
+        this.checkUserPhone();
+        this.compareValue();
+      },
+      'user_info.user_email': function () {
+        this.compareValue();
+      },
+      'user_info.user_zipcode': function () {
+        this.compareValue();
+      },
+      'user_info.user_adr1': function () {
+        this.compareValue();
+      },
+      'user_info.user_adr2': function () {
+        this.compareValue();
       },
     },
     mounted() {
-        console.log("this.$store.state.user ===>", this.$store.state.user.user_no);
+        // console.log("this.$store.state.user ===>", this.$store.state.user.user_no);
         this.getUserInfo();
+        this.loadDaumPostcodeScript();
     },
     methods: {
         getUserInfo() {
@@ -118,29 +128,99 @@ export default {
                     user_no: user_no
                 }
             }).then(res => {
-                console.log("res ===>>", res.data)
-                this.user_id = res.data.USER_ID;
-                this.user_nm = res.data.USER_NM;
-                this.user_email = res.data.USER_EMAIL;
-                this.user_phone = res.data.USER_PHONE;
-                this.user_zipcode = res.data.USER_ZIPCODE;
-                this.user_adr1 = res.data.USER_ADR1;
-                this.user_adr2 = res.data.USER_ADR2;
-                console.log("res.data.USER_EMAIL ==>>", res.data.USER_EMAIL)
+                // console.log("res ===>>", res.data)
+                this.user_info_init = {
+                    user_id: res.data.USER_ID,
+                    user_nm: res.data.USER_NM,
+                    user_email: res.data.USER_EMAIL,
+                    user_phone: res.data.USER_PHONE,
+                    user_zipcode: res.data.USER_ZIPCODE,
+                    user_adr1: res.data.USER_ADR1,
+                    user_adr2: res.data.USER_ADR2,
+                };
+                this.user_info = {
+                    user_id: res.data.USER_ID,
+                    user_nm: res.data.USER_NM,
+                    user_email: res.data.USER_EMAIL,
+                    user_phone: res.data.USER_PHONE,
+                    user_zipcode: res.data.USER_ZIPCODE,
+                    user_adr1: res.data.USER_ADR1,
+                    user_adr2: res.data.USER_ADR2,
+                };
             })
-            
         },
         checkUserPhone() {
             const validatedPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 
+            console.log();
+
             // 사용 불가능
-            if (!validatedPhone.test(this.user_phone) || !this.user_phone) {
+            if (!validatedPhone.test(this.user_info.user_phone) || !this.user_info.user_phone) {
                 this.error_phone = true;
             // 사용 가능
             } else {
                 this.error_phone = false;
             }
         },
+        loadDaumPostcodeScript() {
+            const script = document.createElement('script');
+            script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+            script.onload = () => {
+                this.isScriptLoaded = true; // 스크립트가 로드되면 isScriptLoaded를 true로 설정
+            };
+            document.head.appendChild(script);
+        },
+        execDaumPostcode() {
+            if (window.daum && window.daum.Postcode) {
+                new daum.Postcode({
+                    oncomplete: (data) => {
+                    // 우편번호 검색 완료 후의 처리 로직
+                    this.user_info.user_zipcode = data.zonecode;
+                    this.user_info.user_adr1 = data.address;
+                    this.user_info.user_adr2 = "";
+                    }
+                }).open();
+            } else {
+                console.error("Daum Postcode 스크립트가 로드되지 않았습니다.");
+            }
+        },
+        compareValue() {
+            // 초기 값
+            // console.log("this.user_info_init.user_email ==>>>", this.user_info_init.user_email);
+            // 변경 값
+            // console.log("this.user_info.user_email ==>>", this.user_info.user_email)
+            
+            // 값 변경 시,
+            if(this.user_info_init.user_email !== this.user_info.user_email || this.user_info_init.user_phone !== this.user_info.user_phone || this.user_info_init.user_zipcode !== this.user_info.user_zipcode || this.user_info_init.user_adr1 !== this.user_info.user_adr1 || this.user_info_init.user_adr2 !== this.user_info.user_adr2) {
+                this.compareVariable = true;
+            } else {
+                this.compareVariable = false;
+            }
+        },
+        updateProfile() {
+            if(this.compareVariable) {
+                axios({
+                    url: "http://localhost:3000/profile/updateProfile",
+                    method: "POST",
+                    data: {
+                        user_id: this.user_info.user_id,
+                        user_email: this.user_info.user_email,
+                        user_phone: this.user_info.user_phone,
+                        user_zipcode: this.user_info.user_zipcode,
+                        user_adr1: this.user_info.user_adr1,
+                        user_adr2: this.user_info.user_adr2,
+                    }
+                }).then(() => {
+                    this.$swal("회원 정보가 변경되었습니다.");
+                    this.$router.push({ path: '/mypage' });
+                })
+            } else {
+                this.$swal("수정된 정보가 없습니다.");
+            }
+        },
+        goToUpdatePw() {
+            this.$router.push({ path: '/mypage/updatePw' });
+        }
     }
 }
 </script>
@@ -237,6 +317,7 @@ export default {
     color: #fff;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 .chosen-select {
@@ -278,12 +359,14 @@ export default {
     background-color: #767070;
     color: #fff;
     border-radius: 4px;
-    cursor: pointer;
+    cursor: auto;
     margin-right: 12px;
+    transition: all 0.3s;
 }
-/* .btn_container button.active {
+.btn_container button.active {
     background-color: #0068FF;
-} */
+    cursor: pointer;
+}
 
 .btn_container button:last-child {
     margin-right: 0;

@@ -15,9 +15,9 @@
                 <div class="category_container" v-for="(goods, i) in categoryGoods" :key="i">
                     <div class="img">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                            <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                            <img class="img" :width="200" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                             alt="상품 이미지">
-                        </a>
+                        </a> 
                         <a @click="goToDetail()"></a>
                     </div>
                     <div class="name">{{ goods.goods_nm }}</div>
@@ -63,7 +63,7 @@ export default {
                 this.cate = results.data[0].goods_category;
             }) .catch(error => {
                 alert('상품이 없습니다.')
-                window.location.href = `http://localhost:8080/main`;  
+                window.location.href = `http://localhost:8080/main`; 
             })     
         },
         goTogoodsDetail(goodsno) {
