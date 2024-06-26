@@ -226,6 +226,7 @@
               
               this.user_zipcode = data.zonecode;
               this.user_adr1 = data.address;
+              this.user_adr2 = "";
             }
           }).open();
         } else {

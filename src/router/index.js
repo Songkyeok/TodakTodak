@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import adminSideBar from "../layouts/myPageSidebar.vue";
 
 import Main from "../views/Main.vue"
 import Basket from "../views/basket.vue";
@@ -7,7 +6,6 @@ import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
-// import FindId from "../views/FindId.vue";
 import FindPw from "../views/FindPw.vue";
 import about from "../views/about.vue";
 import CategoryGoodsList from "../views/CategoryGoodsList.vue";
@@ -17,10 +15,12 @@ import UserList from "../admin/UserList.vue";
 import Like from "../mypage/like.vue";
 
 import MypageMain from "../mypages/MypageMain.vue"
+import UpdatePw from "../mypages/UpdatePw.vue";
 
+import GoodsDetail from "../views/Detail.vue";
+import OrderPay from "../views/orderPay.vue";
 
 import GoodsAdd from "../admin/goodsAdd.vue";
-import GoodsDetail from "../views/Detail.vue";
 
 const routes = [
   {
@@ -118,7 +118,18 @@ const routes = [
     path: '/mypage/like',
     component: Like
   },
+  {
+    path: '/orderpay',
+    name: "OrderPay",
+    component: OrderPay
+  },
+  {
+    path: '/mypage/updatePw',
+    name: "UpdatePw",
+    component: UpdatePw
+  },
 ];
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
