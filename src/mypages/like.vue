@@ -21,7 +21,7 @@
                                 <tr v-for="(like, i) in likeList" :key="i">
                                     <td>
                                         <img :width="100" style="border-radius: 10px;"
-                                            :src="like.goods_img ? require(`../../../node-back/uploads/uploadGoods/${like.goods_img}`) : '/goodsempty.jpg'"
+                                            :src="like.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${like.goods_img}`) : '/goodsempty.jpg'"
                                             alt="상품 이미지">
                                     </td>
                                     <td>{{ like.goods_nm }}</td>
@@ -60,10 +60,13 @@ export default {
     created() {
         this.getLikeList();
     },
+    mounted() {
+        this.getLikeList();
+    },
     methods: { 
         async getLikeList() {
             try {
-                const response = await axios.post(`http://localhost:3000/mypage/likeList/${this.user.user_no}`);
+                const response = await axios.post(`http://localhost:3000/profile/likeList/${this.user.user_no}`);
                 this.likeList = response.data;
             } catch (error) {
                 console.error(error);
@@ -83,15 +86,15 @@ export default {
                 method: "POST",
                 data: {
                     user_no: this.user.user_no,
-                    basket_goods_price: this.likeL.goods_price,
-                    basket_goods_count: 1,
-                    basket_goods_nm: this.likeL.goods_nm,
-                    basket_goods_img: this.likeL.goods_img,
-                    basket_goods_no: this.likeL.GOODS_NO,
+                    basket_price: this.likeL.goods_price,
+                    basket_nm: this.likeL.goods_nm,
+                    basket_img: this.likeL.goods_img,
+                    basket_cnt: 1,
+                    goods_no: this.likeL.goods_no,
                 },
             })
                 .then(res => {
-                    if (res.data.message == 'check_error') {
+                    if (res.data.message == '이미 담겨 있는 상품입니다.') {
                         this.$swal("이미 장바구니에 담긴 상품입니다")
                     }
                     else {
@@ -113,20 +116,27 @@ export default {
                     console.log(err);
                 })
         },
-        likeDelete(goodsno) {
+        likeDelete(goods_no) {
             axios({
-                url: `http://localhost:3000/goods/likeDelete/${goodsno}/${this.user.user_no}`,
-                method: 'POST'
+                url: 'http://localhost:3000/goods/likeDelete',
+                method: 'POST',
+                data: {
+                    goods_no: goods_no,
+                    user_no: this.user.user_no
+                }
             })
-                .then(res => {
-                    if (res.data.message === 'complete') {
-                        this.$swal('상품이 삭제되었습니다.');
-                        this.getLikeList(); // 삭제 후 목록 다시 불러오기
-                    }
-                })
-                .catch(() => {
-                    this.$swal('오류 발생');
-                });
+            .then(res => {
+                if (res.data.message === '좋아요 삭제') {
+                    this.$swal('상품이 삭제되었습니다.');
+                    this.getLikeList(); // 삭제 후 목록 다시 불러오기
+                } else {
+                    console.warn('404:', res.data);
+                }
+            })
+            .catch((error) => {
+                console.error("삭제 메소드 오류:", error);
+                this.$swal('오류 발생');
+            });
         },
     },
 };
