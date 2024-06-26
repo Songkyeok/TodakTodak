@@ -17,9 +17,10 @@ import UserList from "../admin/UserList.vue";
 
 import MypageMain from "../mypages/MypageMain.vue"
 
+import GoodsDetail from "../views/Detail.vue";
+import OrderPay from "../views/orderPay.vue";
 
 import GoodsAdd from "../admin/goodsAdd.vue";
-import GoodsDetail from "../views/Detail.vue";
 
 const routes = [
   {
@@ -112,6 +113,11 @@ const routes = [
     path: '/mypage/profile',
     name: "Profile",
     component: Profile
+  },
+  {
+    path: '/orderpay',
+    name: "OrderPay",
+    component: OrderPay
   }
 ];
 
