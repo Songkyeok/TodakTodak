@@ -68,7 +68,8 @@ export default {
                     } else if(this.user_pw_new !== this.user_pw_new_check) {
                         return this.$swal("입력하신 새 비밀번호가 동일하지 않습니다.");
                     } else if(res.data.message == 'success') {
-                        return this.$swal("비밀번호가 변경되었습니다.");
+                        this.$swal("비밀번호가 변경되었습니다.");
+                        return this.$router.push({ path: '/mypage' });
                     }
                 })
             }
@@ -87,6 +88,7 @@ export default {
     padding: 0 0 0 10%;
     display: inline-block;
     vertical-align: top;
+    margin-bottom: 100px;
 }
 
 .signup-container {

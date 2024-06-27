@@ -13,7 +13,7 @@
               <span @click="goToProfile">- 개인정보 수정</span>
             </li>
             <li>
-              <span @click="goToProfile">- 회원 탈퇴</span>
+              <span @click="goToDeleteProfile">- 회원 탈퇴</span>
             </li>
           </ul>
         </li>
@@ -43,6 +43,9 @@ export default {
     },
     goToProfile() {
       this.$router.push({ path: '/mypage/profile' });
+    },
+    goToDeleteProfile() {
+      this.$router.push({ path: '/mypage/deleteprofile' });
     },
     goToCheck() {
       this.$router.push({ path: '/mypage/check' });

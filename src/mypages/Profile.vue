@@ -120,6 +120,8 @@ export default {
     methods: {
         getUserInfo() {
             const user_no = this.$store.state.user.user_no;
+
+            console.log("user_no", user_no);
             axios({
                 url: "http://localhost:3000/profile/selectProfile",
                 method: "POST",
@@ -230,6 +232,7 @@ export default {
     padding: 0 0 0 10%;
     display: inline-block;
     vertical-align: top;
+    margin-bottom: 100px;
 }
 
 .signup-container {

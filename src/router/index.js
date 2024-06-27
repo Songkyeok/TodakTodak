@@ -13,6 +13,7 @@ import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
 import UserList from "../admin/UserList.vue";
 import Like from "../mypages/like.vue";
+import DeleteProfile from "../mypages/DeleteProfile.vue"
 
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
@@ -129,7 +130,13 @@ const routes = [
     path: '/mypage/updatePw',
     name: "UpdatePw",
     component: UpdatePw
-  }
+  },
+  {
+    path: '/mypage/deleteprofile',
+    name: "DeleteProfile",
+    component: DeleteProfile
+  },
+
 ];
 
 

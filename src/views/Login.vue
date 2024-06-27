@@ -120,6 +120,8 @@ export default {
             this.$swal("존재하지 않는 아이디입니다.");
           } else if(res.data.message == 'incorrect_pw') {
             this.$swal("비밀번호가 틀렸습니다.");
+          } else if(res.data.message == 'delete_user') {
+            this.$swal("탈퇴된 계정입니다.");
           } else {
             this.$store.commit("user", {
               user_id: this.user_id,
