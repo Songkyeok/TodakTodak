@@ -12,7 +12,7 @@ import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
 import UserList from "../admin/UserList.vue";
-import Like from "../mypage/like.vue";
+import Like from "../mypages/like.vue";
 
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
