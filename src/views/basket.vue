@@ -82,17 +82,26 @@ export default {
         };
     },
     created(){
-        
+        this.getBasketList(); 
     },
     mounted(){
-        this.getBasketList(); 
+        
     },
     computed: {
         user(){
                 return this.$store.state.user;
-            }
+            },
+            selectedTotalPrice() {
+                const selectedCarts = this.selectedCartList();
+                return selectedCarts.reduce((total, cart) => {
+                    return total + cart.basket_cnt * cart.basket_price;
+                }, 0);
+        },
     },
     methods: {
+        selectedCartList() {
+            return this.basketList.filter(cart => cart.checked);
+        },
         goToOrder() {
             if (!this.$store.state.user) {
                 alert ('로그인이 필요합니다.');
@@ -123,9 +132,9 @@ export default {
 
             updateBasketCnt(goods) {
                                        
-                let cnt = goods.basket_cnt++
+                goods.basket_cnt++
 
-                goods.basket_price += goods.basket_price;
+                
                                   
                 this.calculateTotalPrice();
             },
@@ -141,8 +150,8 @@ export default {
                 this.totalPrice += this.basketList[i].basket_price * this.basketList[i].basket_cnt;
                 }
                 console.log(this.totalPrice);
-            }
             },
+            
             //     var total = this.total + cnt;
             //     if (total < 1) this.total = 1;
             //     //total = this.basketList[index].basket_cnt;
@@ -173,6 +182,7 @@ export default {
             });
         }
     }
+}
 
 
 </script>
