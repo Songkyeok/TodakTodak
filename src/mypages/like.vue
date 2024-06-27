@@ -20,9 +20,11 @@
                             <tbody>
                                 <tr v-for="(like, i) in likeList" :key="i">
                                     <td>
+                                    <a :href="'http://localhost:8080/goodsDetail/' + like.goods_no">
                                         <img :width="100" style="border-radius: 10px;"
                                             :src="like.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${like.goods_img}`) : '/goodsempty.jpg'"
                                             alt="상품 이미지">
+                                    </a>
                                     </td>
                                     <td>{{ like.goods_nm }}</td>
                                     <td>{{ formatPrice(like.goods_price) }} </td>
