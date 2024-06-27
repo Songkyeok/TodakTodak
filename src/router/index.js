@@ -22,6 +22,7 @@ import OrderPay from "../views/orderPay.vue";
 
 import GoodsAdd from "../admin/goodsAdd.vue";
 
+
 const routes = [
   {
     path: "/",
@@ -98,6 +99,7 @@ const routes = [
     name: "EventList",
     component: EventList
   },
+  // 관리자 페이지
   {
     path: "/userlist",
     name: "UserList",
@@ -127,7 +129,7 @@ const routes = [
     path: '/mypage/updatePw',
     name: "UpdatePw",
     component: UpdatePw
-  },
+  }
 ];
 
 

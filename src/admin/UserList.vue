@@ -1,10 +1,12 @@
 <template>
+  <AdminpageSidebar />
+
   <div class="user-management">
     <h1>회원관리</h1>
     <br />
     <br />
     <table>
-      <thead v-if="userList.length > 0">
+      <thead v-if="selectUser.length > 0">
         <tr class="userlist-title">
           <th class="user-number">회원번호</th>
           <th class="user-name">회원이름</th>
@@ -14,15 +16,15 @@
           <th class="user-point">포인트</th>
           <th class="user-delete">삭제</th>
         </tr>
-        <tr class="user-list" v-for="(user, i) in userList" :key="i">
-            <!-- 반복문이고 userList를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
-              <th class="user-number value">{{ userList[i].user_no }}</th>
-              <th class="user-name value">{{ userList[i].user_nm }}</th>
-              <th class="user-address value">{{ userList[i].user_zipcode }} {{ userList[i].user_adr1 }} {{ userList[i].user_adr2 }}</th>
-              <th class="user-email value">{{ userList[i].user_email }}</th>
-              <th class="user-phone value">{{ userList[i].user_phone }}</th>
-              <th class="user-point value">{{ userList[i].user_point }}포인트</th>
-              <th class="user-delete-btn"><button type="button" class="btn-user-del btn=sm" @click="goToDelete(userList[i].user_no)">삭제</button></th>
+        <tr class="user-list" v-for="(user, i) in selectUser" :key="i">
+            <!-- 반복문이고 selectUser를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
+              <th class="user-number value">{{ selectUser[i].user_no }}</th>
+              <th class="user-name value">{{ selectUser[i].user_nm }}</th>
+              <th class="user-address value">{{ selectUser[i].user_zipcode }} {{ selectUser[i].user_adr1 }}<br>{{ selectUser[i].user_adr2 }}</th>
+              <th class="user-email value">{{ selectUser[i].user_email }}</th>
+              <th class="user-phone value">{{ selectUser[i].user_phone }}</th>
+              <th class="user-point value">{{ selectUser[i].user_point }}포인트</th>
+              <th><button type="button" class="user-delete-btn" @click="goToDelete(selectUser[i].user_no)">삭제</button></th>
         </tr>
         <br />
       </thead>
@@ -32,57 +34,78 @@
 
 <script>
 import axios from "axios";
+import AdminpageSidebar from "../layouts/AdminpageSidebar.vue";
 
 export default {
+  components: {
+    AdminpageSidebar
+  },
+
   data() {
     return {
-      userList: [],
-      userDelete: [],
+      selectUser: [],
+      deleteUser: [],
     };
   },
 
   mounted() {
-    this.selectUser();
+    this.AllSelectUser();
   },
 
   methods: {
-    selectUser() {
+    AllSelectUser() {
       axios({
-        url: `http://localhost:3000/admin/userList`,
+        url: `http://localhost:3000/admin/selectUser`,
         method: "POST",
       }).then((results) => {
         console.log(results);
-        this.userList = results.data;
+        this.selectUser = results.data;
       });
     },
 
     goToDelete(user_n) {
+      if (confirm('정말 삭제하시겠습니까?')) {
         axios({
-            url: `http://localhost:3000/admin/userDelete`,
+            url: `http://localhost:3000/admin/deleteUser`,
             method: "POST",
             data:{
                 user_no: user_n, // user_no가 primarykey 설정이 되어있으니 user_no만 보내주면 됨
             }        
         }).then((results) => {
-            if (confirm('정말 삭제하시겠습니까?')) {
-                console.log(results);
-            this.userDelete = results.data;
+            console.log(results);
+            this.deleteUser = results.data;
             window.location.href = `http://localhost:8080/userlist`;
-            } else {
-                window.location.href = `http://localhost:8080/userlist`;
-            }
-        });
-    }
+            })
+            .catch((error) => {
+              console.error('error');
+            });
+        } else {
+          window.location.href = `http://localhost:8080/userlist`;
+        }
+    },
   },
 };
 </script>
 
 <style scoped>
-.user-management h1 {
-    border-bottom: 1px solid #222222;
+.user-management {
+    /* border-bottom: 1px solid #222222;
     margin-top: 20px;
     text-align: left;
     padding-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px; */
+    width: 80%;
+    margin-top: 100px;
+    padding: 0 10% 0 5%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.user-management h1 {
+  text-align: left;
+  border-bottom: 1px solid #d4cdcd;
+  padding-bottom: 10px;
 }
 
 .userlist-title {
@@ -90,11 +113,13 @@ export default {
     padding-bottom: 20px;
     font-size: large;
     color: #999696;
+    text-align: center;
 }
 
 .user-number {
-    width: 10%;
-    padding-left: 10px;
+    width: 12%;
+    padding: 38px;
+    align-items: center;
 }
 
 .user-name {
@@ -117,6 +142,25 @@ export default {
     width: 10%;
 }
 
+.user-list {
+    border-bottom: 1px solid #d4cdcd;
+    padding-bottom: 20px;
+    font-size: small;
+    color: #5d5b5b;
+    text-align: center;
+    font-weight: 50px;
+}
+
+.user-delete-btn {
+    border: none;
+    width: 25%;
+    border: solid 2px rgb(151, 235, 118);
+    border-radius: 5px;
+    background-color: rgb(151, 235, 118);
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    font-weight: 600;
+}
 
 
 </style>
