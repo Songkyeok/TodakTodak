@@ -2,7 +2,6 @@
     <MypageSidebar />
     
     <div class="profile_container">
-        
         <div class="signup-container">
             <div class="information">
                 <h3>개인정보 수정</h3>
@@ -66,7 +65,7 @@
             </div>
 
             <div class="btn_container">
-                <button type="button" class="btn-next-step" @click="goToUpdatePw">비밀번호 수정</button>
+                <button type="button" class="btn-next-step updatePw" @click="goToUpdatePw">비밀번호 수정</button>
                 <button type="button" @click="updateProfile" class="btn-next-step" :class="{'active': compareVariable}">변경하기</button>
             </div>
         </div>
@@ -410,6 +409,10 @@ button[type="submit"]:hover {
 
 input:disabled {
     background: #dddddd;
+}
+.updatePw:hover {
+    background-color: #0068FF;
+    cursor: pointer;
 }
 
 </style>
