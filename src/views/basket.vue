@@ -30,20 +30,26 @@
                                     <td class="basketName">{{ goods.basket_nm }}</td>
                                     <td class="basketPrice">{{ goods.basket_price }}</td>
                                     <td>
-                                        <div class="goods-cnt d-flex align-items-center">
+
+                                    <div class="goods-cnt d-flex align-items-center">
+                                        <button class="input-group-text" @click="updateBasketCnt2(goods);" :disabled="goods.basket_cnt === 1">-</button>
+                                        <input type="text" style="width:30px;" v-model="basketList[i].basket_cnt"> 
+                                        <button class="input-group-text" @click="updateBasketCnt(goods);" :disabled="goods.basket_cnt === 999">+</button>
+                                    </div>
+                                                    <!--<div class="goods-cnt d-flex align-items-center">
                                             <button class="input-group-text" @click="calculatePrice(basketList[i].basket_price, -1);" :disabled="total === 1">-</button>
                                             <input type="text" style="width:30px;" v-model="goods.basket_cnt"> 
                                             <button class="input-group-text" @click="calculatePrice(basketList[i].basket_price, 1);"
                                                 :disabled="total === 999">+</button>
-                                        </div>
+                                        </div>-->
 
                                             <!--<button class="input-group-text size-sm" @click="decrementQuantity(index);" :disabled="goods.basket_cnt === 1">-</button>
                                             <div class="me-2">{{ goods.basket_cnt }}</div>
                                             <button class="input-group-text" @click="incrementQuantity(index);" :disabled="goods.basket_cnt === 999">+</button>-->
                                     </td>
                                     <td>
-                                        <button @click="goToOrder(data)" type="button" class="order-step">주문하기</button>
-                                        <button @click="confirmDelete(data.basket_no)">삭제</button>
+                                        <button @click="goToOrder(goods)" type="button" class="order-step">주문하기</button>
+                                        <button @click="basketDelete(goods.goods_no)">삭제</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -79,7 +85,7 @@ export default {
         
     },
     mounted(){
-        this.getBasketList();       
+        this.getBasketList(); 
     },
     computed: {
         user(){
@@ -115,23 +121,60 @@ export default {
                 }
             },
 
-            calculatePrice(basket_price, cnt) {
-                
-                var total = this.total + cnt;
-                if (total < 1) this.total = 1;
-                //total = this.basketList[index].basket_cnt;
-                console.log(total)
-                this.totalPrice = basket_price * total;
-                console.log(this.totalPrice)
+            updateBasketCnt(goods) {
+                                       
+                let cnt = goods.basket_cnt++
+
+                goods.basket_price += goods.basket_price;
+                                  
+                this.calculateTotalPrice();
             },
-            goodsDelete(){
-                axios({
-                    url:"",
-                    method: ""
-                })
+            updateBasketCnt2(goods) {
+                goods.basket_cnt--;
+                if (newCnt < 1) newCnt = 1;
+                
+                this.calculateTotalPrice();
+            },
+            calculateTotalPrice(){
+                this.totalPrice = 0;
+                for (let i = 0; i < this.basketList.length; i++) {
+                this.totalPrice += this.basketList[i].basket_price * this.basketList[i].basket_cnt;
+                }
+                console.log(this.totalPrice);
             }
+            },
+            //     var total = this.total + cnt;
+            //     if (total < 1) this.total = 1;
+            //     //total = this.basketList[index].basket_cnt;
+            //     console.log(total)
+            //     this.totalPrice = basket_price * total;
+            //     console.log(this.totalPrice)
+            // },
+            basketDelete(goods_no) {
+            axios({
+                url: 'http://localhost:3000/goods/basketDelete',
+                method: 'POST',
+                data: {
+                    goods_no: goods_no,
+                    user_no: this.user.user_no
+                }
+            })
+            .then(res => {
+                if (res.data.message === '장바구니 삭제') {
+                    this.$swal('상품이 삭제되었습니다.');
+                    this.getBasketList(); // 삭제 후 목록 다시 불러오기
+                } else {
+                    console.warn('404:', res.data);
+                }
+            })
+            .catch((error) => {
+                console.error("삭제 메소드 오류:", error);
+                this.$swal('오류 발생');
+            });
+        }
     }
-}
+
+
 </script>
 
 <style scoped>
@@ -228,6 +271,7 @@ button {
     background-color: #000;
     color: #fff;
     font-size: 1em;
+    margin-right: 3px;
 }
 
 button:hover {
