@@ -40,7 +40,7 @@
                     </div>
                     <div class="buttons">
                         <button class="add-to-cart" @click="addToCart()">장바구니</button>
-                        <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
+                        <button class="buy-now" @click="goToBuy()">구매하기</button>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     })
                 }
             },
-            async goToBuy(goodsno){
+            async goToBuy(){
                 if(this.user.user_no === ''){
                     alert('로그인해주셈');
                     this.$router.push({ path: '/login'});
@@ -187,6 +187,7 @@
                             order_tp: this.totalPrice,
                             order_tc: this.total,
                             goods_no: this.goods.goods_no,
+                            goods_img: this.goods.goods_img,
                         }
                         
                     })
