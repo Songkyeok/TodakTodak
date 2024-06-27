@@ -52,7 +52,7 @@
                 <ul>
                     <li>
                         <span><img src="../assets/img/mypage/icon_coupon.png" alt=""></span>
-                        <span><em>LIKE</em><a href="#"><strong>0</strong></a>장</span>
+                        <span><em>LIKE</em><a href="http://localhost:8080/mypage/like"><strong>0</strong></a>장</span>
                     </li>
                     <li>
                         <span><img src="../assets/img/mypage/icon_mileage.png" alt=""></span>
