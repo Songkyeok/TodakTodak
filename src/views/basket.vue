@@ -48,8 +48,8 @@
                     </div>
                     <div class="d-flex justify-content-center btn_container">
                         <div class="buttons">
-                            <button @click="orderAll" class="btn-order-all">전체상품 주문</button>
-                            <button @click="orderSelected" class="btn-order-selected">선택상품 주문</button>
+                            <button class="btn-order-all" @click="buyAll()">전체상품 주문</button>
+                            <button class="btn-order-selected" @click="goToBuy()">선택상품 주문</button>
                         </div>
                     </div>
                 </div>
@@ -167,12 +167,48 @@ export default {
 
             buyAll() {
             this.basketList.forEach(goods => {
-            this.toggleCartItem(goods);
+                this.toggleCartItem(goods);
             });
-            this.goToBuy();
+                this.goToBuy();
             },
 
+            async goToBuy(){
 
+                const selectedCarts = this.basketList.filter(goods => goods.checked);
+                const basketNos = selectedCarts.map(goods => goods.basket_no);
+                const basketCount = selectedCarts.map(goods => goods.basket_cnt);
+
+                console.log("basketCount", basketCount)
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    axios({
+                        url: "http://localhost:3000/goods/orderpay/1",
+                        method: "POST",
+                        data: {
+                            // user_no: this.user.user_no,
+                            // order_tp: this.basketList.basket_price,
+                            // order_tc: this.basketList.basket_cnt,
+                            // goods_no: this.basketList.goods_no,
+                            // goods_img: this.basketList.goods_img,
+                            basket_no: basketNos,
+                            basket_cnt: basketCount,
+                        }
+                    })
+                    // window.location.href="http://localhost:8080/orderpay/1"
+                    .then(res => {
+                        if (res.data.message === order) {
+                            this.$router.push(`/orderpay/1/${basketNos}/${basketCount}`);
+                        } else {
+                            this.$swal('결제 실패');
+                        }
+                    })
+                    .catch(() => {
+                        this.$swal('오류 발생');
+                    });
+                }
+            },
     }
 }
 
