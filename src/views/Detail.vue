@@ -180,7 +180,7 @@
                     this.$router.push({ path: '/login'});
                 }else{
                     axios({
-                        url: "http://localhost:3000/goods/orderpay",
+                        url: "http://localhost:3000/goods/orderpay/0",
                         method: "POST",
                         data: {
                             user_no: this.user.user_no,
@@ -191,7 +191,7 @@
                         }
                         
                     })
-                    window.location.href="http://localhost:8080/orderpay"
+                    window.location.href="http://localhost:8080/orderpay/0"
                 }
             },
             async likeCheck(){

@@ -122,7 +122,7 @@ const routes = [
     component: Like
   },
   {
-    path: '/orderpay',
+    path: '/orderpay/:ordertp',
     name: "OrderPay",
     component: OrderPay
   },
