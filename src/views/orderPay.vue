@@ -35,6 +35,8 @@
                 </div>
                 <br><br>
 
+                <router-link to="/">삭제메소드 로그 확인</router-link>
+
                 <h5><strong>주문정보</strong></h5>
                 <hr>
                 <div v-if="this.$route.params.ordertp === '0'">
@@ -46,10 +48,10 @@
                         </div>
                         <div class="me-3">
                             <strong>{{ goods.goods_nm }}</strong><br>
-                            수량: {{ this.$route.params.quantity }}개
+                            수량: {{ order.ORDER_TC }}개
                         </div>
                         <div class="ms-auto">
-                            <strong>총 {{ getCurrencyFormat(this.$route.params.quantity * goods.goods_price) }}</strong>
+                            <strong>총 {{ getCurrencyFormat(goods.goods_price * order.ORDER_TC) }}</strong>
                         </div>
                     </div>
                 </div>
@@ -111,13 +113,15 @@
 <script>
 import axios from 'axios';
 
-export default {	
+export default {
+    name:'OrderPay',
     data() {
         return {
             userInfo: {},
             goods: {},
             order: {},
             totalPrice: 0,
+            paymentInit: false,
         };
     },
     computed: {
@@ -126,7 +130,7 @@ export default {
             
         }
     },
-beforeCreate() {},
+    beforeCreate() {},
     created() {
         this.getUserInfo();
         this.getOrder();
@@ -135,7 +139,12 @@ beforeCreate() {},
     mounted() {},
     beforeUpdate() {},
     updated() {},
-    beforeUnmount() {},
+    beforeUnmount() {
+        if(true){
+        console.log('Condition met, calling deleteOrder');
+            this.deleteOrder();
+        }
+    },
     unmounted() {},
     methods: {
         getUserInfo() {
@@ -163,28 +172,49 @@ beforeCreate() {},
                 url: "http://localhost:3000/goods/getOrder",
                 method: "POST",
                 data: {
-                    user_no: this.user.user_no
+                    user_no: this.user.user_no,
                 }
             })
             .then(res => {
                 this.order = res.data[0];
-                console.log('res>>>>>>>>>>', res.data[0]);
+                console.log('res>>>>>>>>>>', this.order);
+                const goodsno = res.data[0].GOODS_NO;
+                
+                console.log('ordertp >>>> ', this.$route.params.ordertp)
+                axios({
+                    url: `http://localhost:3000/goods/goodsDetail/${goodsno}`,
+                    methods: "GET"
+                })
+                .then(res => {
+                    this.goods = res.data[0];
+                    console.log('goods>>>>', res.data[0])
+                })
             })
-        },
-        async getGoods() { 
-            try {
-                const goodsno = this.$route.params.goodsno;
-                const response = await axios.get(`http://localhost:3000/goods/goodsDetail/${goodsno}`);
-                this.goods = response.data[0];
-                console.log('fuck', goods)
-            } catch (error) {
-                console.error(error);
-            }
         },
         getCurrencyFormat(value) {
             return this.$currencyFormat(value);
         },
-        
+        requestPay(){
+            this.paymentInit = true;
+            console.log('결제가 진행되었습니다.')
+        },
+        deleteOrder(){
+            axios({
+                url:"http://localhost:3000/goods/orderDelete",
+                method: "POST",
+                data: {
+                    order_trade_no: this.order.ORDER_TRADE_NO
+                }
+            })
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+    if (true) {
+      console.log('Navigating away from OrderPay, calling deleteOrder');
+      this.deleteOrder();
+      next();
     }
+    next();
+  }
 }
 </script>
