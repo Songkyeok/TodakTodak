@@ -58,7 +58,7 @@ export default {
                 url: `http://localhost:3000/goods/categoryGoodsList/${category}`,
                 method: "GET",
             }).then(results => {
-                console.log('result===', results);
+                // console.log('result===', results);
                 this.categoryGoods = results.data; // 여기에 저장, this.categoryGoods => return 바로 아래에 선언한 categoryGoods: []
                 this.cate = results.data[0].goods_category;
             }) .catch(error => {
@@ -66,7 +66,7 @@ export default {
                 window.location.href = `http://localhost:8080/main`; 
             })     
         },
-        goTogoodsDetail(goodsno) {
+        goToDetail(goodsno) { // goTogoodsDetail?
             window.localStorage.href = `http://localhost:8080/Detail/${goodsno}`;
         },
         getCategoryName(categoryNo) {
