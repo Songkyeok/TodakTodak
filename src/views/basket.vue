@@ -10,45 +10,36 @@
                         <table class="table" style="width:100%;">
                             <thead class="A">
                                 <tr>
-                                    <th class="check"> </th>
+                                    <th class="checkAll"><input class="box" type="checkbox" name="checkbox" @click="toggleSelectAll"  />
+                                    전체 선택/해제</th>
                                     <th class="goodsname">선택사항/상품이미지</th>
                                     <th>상품명</th>
                                     <th>상품금액</th>
                                     <th>수량</th>
-                                    <th>주문하기</th>
+                                    <th>삭제</th>
                                 </tr>
                             </thead>
 
                             <tbody class="QWER" v-if="basketList.length > 0">
                                 <tr class="img_container" v-for="(goods, i) in basketList" :key="i">
-                                    <input class="box" type="checkbox" name="checkbox" value="" checked />
+                                    <input class="box" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
                                     <td>
                                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                                             <img class="img" :src="goods.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.basket_img}`) : '/goodsempty.jpg'" alt="상품 이미지" />
                                         </a>
                                     </td>
                                     <td class="basketName">{{ goods.basket_nm }}</td>
-                                    <td class="basketPrice">{{ goods.basket_price }}</td>
+                                    <td class="basketPrice">{{ formatPrice(goods.basket_cnt * goods.basket_price) }}</td>
                                     <td>
 
+                                        
                                     <div class="goods-cnt d-flex align-items-center">
                                         <button class="input-group-text" @click="updateBasketCnt2(goods);" :disabled="goods.basket_cnt === 1">-</button>
-                                        <input type="text" style="width:30px;" v-model="basketList[i].basket_cnt"> 
+                                        <div>{{ goods.basket_cnt }}</div>
                                         <button class="input-group-text" @click="updateBasketCnt(goods);" :disabled="goods.basket_cnt === 999">+</button>
                                     </div>
-                                                    <!--<div class="goods-cnt d-flex align-items-center">
-                                            <button class="input-group-text" @click="calculatePrice(basketList[i].basket_price, -1);" :disabled="total === 1">-</button>
-                                            <input type="text" style="width:30px;" v-model="goods.basket_cnt"> 
-                                            <button class="input-group-text" @click="calculatePrice(basketList[i].basket_price, 1);"
-                                                :disabled="total === 999">+</button>
-                                        </div>-->
-
-                                            <!--<button class="input-group-text size-sm" @click="decrementQuantity(index);" :disabled="goods.basket_cnt === 1">-</button>
-                                            <div class="me-2">{{ goods.basket_cnt }}</div>
-                                            <button class="input-group-text" @click="incrementQuantity(index);" :disabled="goods.basket_cnt === 999">+</button>-->
                                     </td>
                                     <td>
-                                        <button @click="goToOrder(goods)" type="button" class="order-step">주문하기</button>
                                         <button @click="basketDelete(goods.goods_no)">삭제</button>
                                     </td>
                                 </tr>
@@ -57,8 +48,8 @@
                     </div>
                     <div class="d-flex justify-content-center btn_container">
                         <div class="buttons">
-                            <button @click="orderAll" class="btn-order-all">전체상품 주문</button>
-                            <button @click="orderSelected" class="btn-order-selected">선택상품 주문</button>
+                            <button class="btn-order-all" @click="buyAll()">전체상품 주문</button>
+                            <button class="btn-order-selected" @click="goToBuy()">선택상품 주문</button>
                         </div>
                     </div>
                 </div>
@@ -122,34 +113,23 @@ export default {
             },
 
             updateBasketCnt(goods) {
-                                       
-                let cnt = goods.basket_cnt++
+                goods.basket_cnt++;
+            },
 
-                goods.basket_price += goods.basket_price;
-                                  
-                this.calculateTotalPrice();
-            },
             updateBasketCnt2(goods) {
-                goods.basket_cnt--;
-                if (newCnt < 1) newCnt = 1;
-                
-                this.calculateTotalPrice();
-            },
-            calculateTotalPrice(){
-                this.totalPrice = 0;
-                for (let i = 0; i < this.basketList.length; i++) {
-                this.totalPrice += this.basketList[i].basket_price * this.basketList[i].basket_cnt;
+                if (goods.basket_cnt > 1) {
+                    goods.basket_cnt--;
                 }
-                console.log(this.totalPrice);
-            }
             },
-            //     var total = this.total + cnt;
-            //     if (total < 1) this.total = 1;
-            //     //total = this.basketList[index].basket_cnt;
-            //     console.log(total)
-            //     this.totalPrice = basket_price * total;
-            //     console.log(this.totalPrice)
-            // },
+
+            formatPrice(price) {
+            if (price !== undefined) {
+                const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                return `${formattedPrice} 원`;
+            }
+            return '';
+            },
+
             basketDelete(goods_no) {
             axios({
                 url: 'http://localhost:3000/goods/basketDelete',
@@ -171,9 +151,66 @@ export default {
                 console.error("삭제 메소드 오류:", error);
                 this.$swal('오류 발생');
             });
-        }
-    }
+            },
 
+            toggleCartItem(goods) {
+                goods.checked = goods.checked;
+            },
+
+            toggleSelectAll() {
+                const allChecked = this.basketList.every(goods => goods.checked);
+                console.log("allchecked",allChecked)
+                this.basketList.forEach(goods => {
+                    goods.checked = !allChecked;
+                });
+            },
+
+            buyAll() {
+            this.basketList.forEach(goods => {
+                this.toggleCartItem(goods);
+            });
+                this.goToBuy();
+            },
+
+            async goToBuy(){
+
+                const selectedCarts = this.basketList.filter(goods => goods.checked);
+                const basketNos = selectedCarts.map(goods => goods.basket_no);
+                const basketCount = selectedCarts.map(goods => goods.basket_cnt);
+
+                console.log("basketCount", basketCount)
+                if(this.user.user_no === ''){
+                    alert('로그인해주셈');
+                    this.$router.push({ path: '/login'});
+                }else{
+                    axios({
+                        url: "http://localhost:3000/goods/orderpay/1",
+                        method: "POST",
+                        data: {
+                            // user_no: this.user.user_no,
+                            // order_tp: this.basketList.basket_price,
+                            // order_tc: this.basketList.basket_cnt,
+                            // goods_no: this.basketList.goods_no,
+                            // goods_img: this.basketList.goods_img,
+                            basket_no: basketNos,
+                            basket_cnt: basketCount,
+                        }
+                    })
+                    // window.location.href="http://localhost:8080/orderpay/1"
+                    .then(res => {
+                        if (res.data.message === order) {
+                            this.$router.push(`/orderpay/1/${basketNos}/${basketCount}`);
+                        } else {
+                            this.$swal('결제 실패');
+                        }
+                    })
+                    .catch(() => {
+                        this.$swal('오류 발생');
+                    });
+                }
+            },
+    }
+}
 
 </script>
 
@@ -250,6 +287,7 @@ h2 {
 }
 
 .input-group-text {
+    width: 33.04px;
     cursor: pointer;
     padding: 5px 10px;
     border: 1px solid #ddd;
@@ -307,10 +345,7 @@ button:hover {
     width: 1px;
     height: 1px;
 }
-.box{
 
-}
-    
     
 
 </style>

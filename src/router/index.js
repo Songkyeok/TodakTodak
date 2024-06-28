@@ -136,13 +136,34 @@ const routes = [
     name: "DeleteProfile",
     component: DeleteProfile
   },
-
 ];
-
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+const isLogin = ['/mypage', '/admin'];
+
+router.beforeEach(function(to, from, next) {
+  const user_no = router.user.user.user_no;
+  const user_tp = router.user.user.user_tp;
+
+  const requiresLogin = isLogin.some(route => to.path.startsWith(route));
+  const requiresAdmin = to.path.startsWith('/admin');
+
+  if(requiresLogin && user_no == '') {
+    next({
+      path: "/login"
+    })
+  } else if(requiresAdmin && user_tp !== 1) {
+    alert("관리자만 접근 가능합니다.");
+    next({
+      path: "/"
+    })
+  } else {
+    next();
+  }
+})
 
 export default router;
