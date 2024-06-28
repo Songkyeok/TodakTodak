@@ -53,6 +53,7 @@ export default {
     return {
         user_no: '',
         user_id: '',
+        user_tp: '',
         naver_id: '',
         user_pw: '',
         naverLogin: [],
@@ -122,10 +123,25 @@ export default {
             this.$swal("비밀번호가 틀렸습니다.");
           } else if(res.data.message == 'delete_user') {
             this.$swal("탈퇴된 계정입니다.");
+          } else if(res.data.message.user_tp == "1") {
+            this.$store.commit("user", {
+              user_id: this.user_id,
+              user_no: res.data.message.user_no,
+              user_tp: res.data.message.user_tp
+            })
+            this.$swal({
+                position: 'top',
+                icon: 'success',
+                title: '관리자로 로그인 되었습니다.',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            window.location.href = "http://localhost:8080/admin";
           } else {
             this.$store.commit("user", {
               user_id: this.user_id,
-              user_no: res.data.message
+              user_no: res.data.message.user_no,
+              user_tp: res.data.message.user_tp
             })
             this.$swal({
                 position: 'top',

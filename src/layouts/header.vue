@@ -29,7 +29,7 @@
                                         <li @click="goToLogin()">로그인</li>
                                         <li @click="goToAgreement()">회원가입</li>
                                     </ul>
-                                    <ul v-else-if="adminCheck == 1" class="join">
+                                    <ul v-else-if="user.user_tp == 1" class="join">
                                         <li @click="goToAdmin()">관리 페이지</li>
                                         <li @click="logout()">로그아웃</li>
                                     </ul>
