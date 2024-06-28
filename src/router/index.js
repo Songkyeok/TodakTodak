@@ -136,6 +136,7 @@ const routes = [
     name: "DeleteProfile",
     component: DeleteProfile
   },
+ 
 
 ];
 
