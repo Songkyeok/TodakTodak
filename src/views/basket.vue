@@ -68,7 +68,7 @@ export default {
             basketList:[],
             orderList: [],
             total: 1,
-            totalPrice: 0,
+            totalPrice: [],
             cnt: 1,
         };
     },
@@ -81,7 +81,13 @@ export default {
     computed: {
         user(){
                 return this.$store.state.user;
-            }
+            },
+            selectedTotalPrice() {
+            const selectedCarts = this.selectedCartList();
+            return selectedCarts.reduce((total, goods) => {
+                return this.totalPrice = total + goods.basket_cnt * goods.basket_price;
+            }, 0);
+        },
     },
     methods: {
         goToOrder() {
@@ -107,7 +113,6 @@ export default {
                     })
                     .then(results => {
                         this.basketList = results.data;
-                        
                     })
                 }
             },
@@ -177,7 +182,9 @@ export default {
                 const selectedCarts = this.basketList.filter(goods => goods.checked);
                 const basketNos = selectedCarts.map(goods => goods.basket_no);
                 const basketCount = selectedCarts.map(goods => goods.basket_cnt);
-
+                const price = selectedCarts.map(goods => goods.basket_price);
+                console.log("selectedCarts", selectedCarts)
+                console.log("basketNos", basketNos)
                 console.log("basketCount", basketCount)
                 if(this.user.user_no === ''){
                     alert('로그인해주셈');
@@ -194,12 +201,14 @@ export default {
                             // goods_img: this.basketList.goods_img,
                             basket_no: basketNos,
                             basket_cnt: basketCount,
+                            user_no: this.user.user_no,
+                            basket_price : price,
                         }
                     })
                     // window.location.href="http://localhost:8080/orderpay/1"
                     .then(res => {
                         if (res.data.message === order) {
-                            this.$router.push(`/orderpay/1/${basketNos}/${basketCount}`);
+                            this.$router.push(`/orderpay/1`);
                         } else {
                             this.$swal('결제 실패');
                         }
@@ -209,6 +218,9 @@ export default {
                     });
                 }
             },
+            selectedCartList() {
+            return this.basketList.filter(goods => goods.checked);
+        },
     }
 }
 
