@@ -1,6 +1,4 @@
 <template>
-    <MypageSidebar />
-
     <div class="delete_profile_container">
         <div class="content">
             <div class="mypage_cont">
@@ -74,7 +72,6 @@
 
                 if(this.isChecked) {
                     if(confirm("탈퇴 시 보유 중인 회원혜택은 모두 삭제됩니다. 정말로 탈퇴하시겠습니까?")) {
-                        console.log("yes")
                         axios({
                             url: "http://localhost:3000/profile/deleteProfile",
                             method: "POST",
@@ -88,11 +85,8 @@
                                 this.$router.push({ path: '/' }).then(() => {
                                     window.location.reload();
                                 })
-                                
                             }
                         })
-                    } else {
-                        console.log("no");
                     }
                 } else {
                     alert("탈퇴 안내를 확인하고 약관에 동의해 주세요.")

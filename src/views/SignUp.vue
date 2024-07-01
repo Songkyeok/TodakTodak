@@ -148,9 +148,9 @@
             }
           }).then(results => {
             if (results.data.length > 0) {
-              this.error_id = "exist_id";
+              return this.error_id = "exist_id";
             } else {
-              this.error_id = false;
+              return this.error_id = false;
             }
           })
         }
@@ -221,9 +221,6 @@
         if (window.daum && window.daum.Postcode) {
           new daum.Postcode({
             oncomplete: (data) => {
-              // 우편번호 검색 완료 후의 처리 로직
-              console.log(data);
-              
               this.user_zipcode = data.zonecode;
               this.user_adr1 = data.address;
               this.user_adr2 = "";

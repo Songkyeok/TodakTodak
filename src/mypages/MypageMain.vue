@@ -1,6 +1,4 @@
 <template>
-    <MypageSidebar />
-
     <div class="mypage_container">
         <div class="mypage_top_info">
             <div class="mypage_top_txt">

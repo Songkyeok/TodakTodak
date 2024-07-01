@@ -17,6 +17,7 @@ import DeleteProfile from "../mypages/DeleteProfile.vue"
 
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
+import MypageSidebar from "../layouts/MypageSidebar";
 
 import GoodsDetail from "../views/Detail.vue";
 import OrderPay from "../views/orderPay.vue";
@@ -80,11 +81,6 @@ const routes = [
     name: "GoodsDetail",
     component: GoodsDetail,
   },
-  // {  
-  //   path: "/findId",
-  //   name: "FindId",
-  //   component: FindId,
-  // },
   {  
     path: "/findPw",
     name: "FindPw",
@@ -100,41 +96,47 @@ const routes = [
     name: "EventList",
     component: EventList
   },
-  // 관리자 페이지
   {
     path: "/userlist",
     name: "UserList",
     component: UserList
-  },
-  // 마이페이지
-  {
-    path: "/mypage",
-    name: "MypageMain",
-    component: MypageMain,
-  },
-  {
-    path: '/mypage/profile',
-    name: "Profile",
-    component: Profile
-  },
-  {
-    path: '/mypage/like',
-    component: Like
   },
   {
     path: '/orderpay/:ordertp',
     name: "OrderPay",
     component: OrderPay
   },
+  // 마이페이지
   {
-    path: '/mypage/updatePw',
-    name: "UpdatePw",
-    component: UpdatePw
-  },
-  {
-    path: '/mypage/deleteprofile',
-    name: "DeleteProfile",
-    component: DeleteProfile
+    path: "/mypage/",
+    name: "MypageSidebar",
+    component: MypageSidebar,
+    children: [
+      {
+        path: '',
+        name: "MypageMain",
+        component: MypageMain
+      },
+      {
+        path: 'profile',
+        name: "Profile",
+        component: Profile
+      },
+      {
+        path: 'updatePw',
+        name: "UpdatePw",
+        component: UpdatePw
+      },
+      {
+        path: 'deleteprofile',
+        name: "DeleteProfile",
+        component: DeleteProfile
+      },
+      {
+        path: 'like',
+        component: Like
+      },
+    ]
   },
 ];
 

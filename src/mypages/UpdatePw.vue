@@ -1,6 +1,4 @@
 <template>
-    <MypageSidebar />
-
     <div class="profile_container">
         <div class="signup-container">
             <div class="information">
@@ -27,16 +25,12 @@
 
 <script>
 import axios from 'axios';
-import MypageSidebar from "../layouts/MypageSidebar.vue";
 
 export default {
     data() {
         return {
             
         }
-    },
-    components: {
-        MypageSidebar
     },
     computed: {
         user() {
