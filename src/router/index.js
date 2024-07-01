@@ -23,6 +23,7 @@ import MypageSidebar from "../layouts/MypageSidebar";
 import GoodsDetail from "../views/Detail.vue";
 import OrderPay from "../views/orderPay.vue";
 
+import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 
 
@@ -73,7 +74,11 @@ const routes = [
     component: orderList,
   },
   {
-    path: "/goodsAdd",
+    path: "/admin/goods",
+    component: selectGoods,
+  },
+  {
+    path: "admin/goodscreate",
     name: "GoodsAdd",
     component: GoodsAdd,
   },
@@ -103,7 +108,7 @@ const routes = [
     component: EventList
   },
   {
-    path: "/userlist",
+    path: "admin/userlist",
     name: "UserList",
     component: UserList
   },
