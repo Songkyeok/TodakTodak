@@ -25,7 +25,7 @@
 
         <li class="text">
           <p class="scroll-fade dj-viewport motion2">
-            소중한 우리 아이를 위한 유아용품<br />
+            소중한 우리 아이를 위한 유아도서<br />
             토닥토닥에서 만나보세요.
           </p>
         </li>

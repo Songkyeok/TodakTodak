@@ -77,7 +77,7 @@ export default {
             } else if (categoryNo == 3) {
                 return '외출용품';
             } else if (categoryNo == 4) {
-                return '유아용품';
+                return '유아도서';
             } else if (categoryNo == 5) {
                 return '위생용품';
             } else if (categoryNo == 6) {
