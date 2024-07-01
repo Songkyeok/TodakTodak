@@ -21,6 +21,7 @@ import UpdatePw from "../mypages/UpdatePw.vue";
 import GoodsDetail from "../views/Detail.vue";
 import OrderPay from "../views/orderPay.vue";
 
+import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 
 
@@ -71,7 +72,11 @@ const routes = [
     component: orderList,
   },
   {
-    path: "/goodsAdd",
+    path: "/admin/goods",
+    component: selectGoods,
+  },
+  {
+    path: "admin/goodscreate",
     name: "GoodsAdd",
     component: GoodsAdd,
   },
@@ -102,7 +107,7 @@ const routes = [
   },
   // 관리자 페이지
   {
-    path: "/userlist",
+    path: "admin/userlist",
     name: "UserList",
     component: UserList
   },

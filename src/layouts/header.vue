@@ -125,7 +125,7 @@ export default {
         this.$router.push({ path: '/join' });
         },
         goToAdmin() {
-        this.$router.push({ path: '/admin' });
+        this.$router.push({ path: '/admin/goods' });
         },
         goToMypage() {
         this.$router.push({ path: '/mypage' });

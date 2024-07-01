@@ -150,7 +150,7 @@ export default {
         })
         .then((res) => {
           if(res.data.message == 'success'){
-            alert("이미지 등록 성공")
+            this.$swal("이미지 등록 성공")
             if(type == 0){
               this.goods.goods_img = name;
             }
@@ -186,10 +186,8 @@ export default {
         })
         .then((res) => {
           if(res.data.message == 'success'){
-            alert("완료")
-              .then(() => {
-              window.location.href = "http://localhost:8080/main";
-              })
+            this.$swal("완료")
+            window.location.href = "http://localhost:8080/admin/goods";
           }else if(res.data.message == '실패'){
             alert("sql 쿼리문 오류");
           }else{

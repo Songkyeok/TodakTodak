@@ -5,13 +5,13 @@
         <ul>
             <ul>
               <li>
-                <span @click="goToUserList">- 회원 관리</span>
+                <span @click="goToGoods">- 상품 관리</span>
               </li>
             </ul>
             <br />
             <ul>
               <li>
-                <span @click="goToCheck">- 상품 관리</span>
+                <span @click="goToUserList">- 고객 관리</span>
               </li>
             </ul>
             <br />
@@ -23,7 +23,7 @@
             <br />
             <ul>
               <li>
-                <span @click="goToReview">- 이벤트 관리</span>
+                <span @click="goToEvent">- 이벤트 관리</span>
               </li>
             </ul>
             <br />
@@ -40,15 +40,15 @@
   <script>
   export default {
     methods: {
-      goToUserList() {
-        this.$router.push({ path: '/userlist' });
+      goToGoods() {
+        this.$router.push({ path: '/admin/goods' });
       },
     //   goToProfile() {
     //     this.$router.push({ path: '/mypage/profile' });
     //   },
-    //   goToCheck() {
-    //     this.$router.push({ path: '/mypage/check' });
-    //   },
+       goToUserList() {
+         this.$router.push({ path: '/admin/userlist' });
+       },
     //   goToQna() {
     //     this.$router.push({ path: '/mypage/qna' });
     //   },
