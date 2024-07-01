@@ -26,8 +26,8 @@
                         <label class="form-check-label" for="cate3">외출용품</label>
                     </div>
                     <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="유아용품" id="cate4">
-                        <label class="form-check-label" for="cate4">유아용품</label>
+                        <input class="form-radio-input" type="radio" v-model="cate_check" value="유아도서" id="cate4">
+                        <label class="form-check-label" for="cate4">유아도서</label>
                     </div>
                     <div class="form-check ms-1">
                         <input class="form-radio-input" type="radio" v-model="cate_check" value="위생용품" id="cate5">
@@ -212,7 +212,7 @@ export default {
             else if (this.cate_check == '외출용품'){
                 this.goods.goods_category = 3;
             }
-            else if (this.cate_check == '유아용품'){
+            else if (this.cate_check == '유아도서'){
                 this.goods.goods_category = 4;
             }
             else if (this.cate_check == '위생용품'){

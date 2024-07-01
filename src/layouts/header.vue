@@ -76,7 +76,7 @@
                                         </li>
                                         <li class="swiper-slide">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(4)">유아용품</span></a>
+                                                <a href="#"><span @click="goToCategory(4)">유아도서</span></a>
                                             </div>
                                         </li>
                                         <li class="swiper-slide">
