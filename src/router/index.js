@@ -6,6 +6,7 @@ import SignUp from "../views/SignUp.vue";
 import SignUpAgreement from "../views/SignUpAgreement.vue";
 import Login from "../views/Login.vue";
 import orderList from "../views/orderList.vue";
+import FindId from "../views/FindId.vue";
 import FindPw from "../views/FindPw.vue";
 import about from "../views/about.vue";
 import CategoryGoodsList from "../views/CategoryGoodsList.vue";
@@ -80,6 +81,11 @@ const routes = [
     path: "/goodsDetail/:goodsno",
     name: "GoodsDetail",
     component: GoodsDetail,
+  },
+  {  
+    path: "/findId",
+    name: "FindId",
+    component: FindId,
   },
   {  
     path: "/findPw",

@@ -14,14 +14,12 @@
                     <div class="section text-center">
                       <h4 class="top" mb-4 pb-3>회원 아이디 찾기</h4>
                       <div class="form-group">
-                        <input type="email" class="form-style" placeholder="아이디" autocomplete="off" v-model="user_id">
-                        <i class="input-icon uil uil-at"></i>
+                        <input type="text" class="form-style" placeholder="이름" autocomplete="off" v-model="user_nm" @keyup.enter="findId">
                       </div>
                       <div class="form-group mt-2">
-                        <input type="password" class="form-style" placeholder="비밀번호" autocomplete="off" v-model="user_pw">
-                        <i class="input-icon uil uil-lock-alt"></i>
+                        <input type="text" maxlength="11" class="form-style" placeholder="휴대폰 번호" autocomplete="off" v-model="user_phone" @keyup.enter="findId">
                       </div>
-                      <button @click="findId()" class="btn2">아이디 찾기</button>
+                      <button @click="findId" class="btn2">아이디 찾기</button>
                     </div>
                   </div>
                 </div>
@@ -35,7 +33,38 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  data() {
+    return {
+      user_nm: "",
+      user_phone: "",
+    }
+  },
+  methods: {
+    findId() {
+      if(!this.user_nm) {
+        alert("이름을 입력해 주세요.")
+      } else if(!this.user_phone) {
+        alert("휴대폰 번호를 입력해 주세요.")
+      } else {
+        axios({
+          url: "http://localhost:3000/auth/findId",
+          method: "POST",
+          data: {
+            user_nm: this.user_nm,
+            user_phone: this.user_phone
+          }
+        }).then(res => {
+          if(res.data.message == "user_not_found") {
+            this.$swal("입력하신 정보와 일치하는 ID가 없습니다.");
+          } else if(res.data.message == "user_found") {
+            this.$swal(`찾으시는 ID는 ${res.data.user_id} 입니다.`);
+          }
+        })
+      }
+    },
+  }
 
 }
 </script>
@@ -197,10 +226,9 @@ export default {
   .center-wrap {
     position: absolute;
     width: 100%;
-    padding: 0 35px;
     top: 50%;
     left: 0;
-    transform: translate3d(0, -50%, 35px) perspective(100px);
+    transform: translate(0, -50%);
     z-index: 20;
     display: block;
   }
@@ -211,7 +239,7 @@ export default {
     display: block;
     margin: 0 auto;
     padding: 0;
-    width: 222px;
+    width: 300px;
     box-sizing: border-box;
   }
   .form-group input {
@@ -351,6 +379,7 @@ export default {
     /* 글자 크기 */
     cursor: pointer;
     /* 커서 모양 변경 */
+    margin-top: 20px;
   }
 
   .btn3 {
@@ -413,5 +442,22 @@ export default {
     text-align: center;
     color: #222222;
     margin-bottom: 50px;
+  }
+  .w_50 {
+    width: 60%;
+  }
+  .receiveNum_btn {
+    width: calc(40% - 10px);
+    margin-left: 10px;
+    padding: 12px 0;
+    border: none;
+    background-color: #767070;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .receiveNum_btn:hover {
+    background-color: #c78683;
   }
 </style>
