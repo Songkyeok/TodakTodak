@@ -1,6 +1,4 @@
 <template>
-    <MypageSidebar />
-    
     <div class="profile_container">
         <div class="signup-container">
             <div class="information">
@@ -113,7 +111,6 @@ export default {
       },
     },
     mounted() {
-        // console.log("this.$store.state.user ===>", this.$store.state.user.user_no);
         this.getUserInfo();
         this.loadDaumPostcodeScript();
     },
@@ -121,7 +118,6 @@ export default {
         getUserInfo() {
             const user_no = this.$store.state.user.user_no;
 
-            console.log("user_no", user_no);
             axios({
                 url: "http://localhost:3000/profile/selectProfile",
                 method: "POST",
@@ -129,7 +125,6 @@ export default {
                     user_no: user_no
                 }
             }).then(res => {
-                // console.log("res ===>>", res.data)
                 this.user_info_init = {
                     user_id: res.data.USER_ID,
                     user_nm: res.data.USER_NM,
