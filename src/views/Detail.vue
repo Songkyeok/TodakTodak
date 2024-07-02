@@ -87,31 +87,39 @@
     </div>
     <br />
     <br />
-    <div class="review-none" v-if="reviewList.length === 0">고객 리뷰가 없습니다.</div>
+    <div class="review-none" v-if="pageReviewList.length === 0">고객 리뷰가 없습니다.</div>
     <table class="review-content-list" v-else>
-        <thead>
-            <tr class="user-review-title">
-                <th class="review-no">리뷰 번호</th>
-                <th class="review-star">별점</th>
-                <th class="review-user">작성자</th>
-                <th class="review-photo">포토</th>
-                <th class="review-content">내용</th>
-                <th class="review-date">날짜</th>
-            </tr>
-        </thead>
-        <br />
-        <tbody>
-            <tr class="user-review-content"  v-for="(review, i) in reviewList" :key="i">
-            <!-- 반복문이고 reviewList를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
-                <th class="review-no value">{{ reviewList[i].review_no }}</th>
-                <th class="review-star value">{{ reviewList[i].review_rating }}</th>
-                <th class="review-user value">{{ reviewList[i].user_nm }}</th>
-                <th class="review-photo value">{{ reviewList[i].review_img }}</th>
-                <th class="review-content value">{{ reviewList[i].review_con }}</th>
-                <th class="review-date value">{{ reviewList[i].review_create }}</th>
-            </tr>
-        </tbody>
+      <thead>
+          <tr class="user-review-title">
+              <th class="review-no">리뷰 번호</th>
+              <th class="review-star">별점</th>
+              <th class="review-user">작성자</th>
+              <th class="review-photo">포토</th>
+              <th class="review-content">내용</th>
+              <th class="review-date">날짜</th>
+          </tr>
+      </thead>
+      <br />
+      <tbody>
+          <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
+          <!-- 반복문이고 reviewList를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
+              <th class="review-no value">{{ review.review_no }}</th>
+              <th class="review-star value">{{ review.review_rating }}</th>
+              <th class="review-user value">{{ review.user_nm }}</th>
+              <th class="review-photo value">{{ review.review_img }}</th>
+              <th class="review-content value">{{ review.review_con }}</th>
+              <th class="review-date value">{{ review.review_create }}</th>
+          </tr>
+      </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+              </ul>
+          </ul>
+      </nav>
     <br />
   </div>
 </div>
@@ -133,6 +141,12 @@ export default {
       reviewList: [],
       sortOption: 0,
       goods_no:this.goods_no,
+
+      // 리뷰 페이징
+      pageReviewList: [],
+      pageNum: 0,
+      pageCnt: 0,
+      onePageCnt: 5,
     };
   },
   computed: {
@@ -166,6 +180,15 @@ export default {
   },
 
   methods: {
+    setPage(page) {
+      this.pageReviewList = []
+      this.pageNum = page - 1;
+      this.sliceList()
+    },
+    sliceList() {
+        const start = 0 + this.pageNum * this.onePageCnt
+        this.pageReviewList = this.reviewList.slice(start, start + this.onePageCnt);
+    },
     async getGoods() {
       try {
         const goodsno = this.$route.params.goodsno;
@@ -336,16 +359,16 @@ export default {
     // 실제 정렬 로직
     getReviewList(sortNum) {
         const goods_no = this.$route.params.goodsno;
-        console.log(goods_no)
       axios({
-        url: `http://localhost:3000/review/reviewList/${goods_no}`, // 윗줄에서 const로 정의한 goods_no를 여기에 넣었기때문에 아래에서 params로 다시 받지 않아도 됨
+        url: `http://localhost:3000/review/reviewList/${goods_no}`,
         method: "GET",
-        // params: { // get 방식이므로 params로 보내야 됨
-        //     goods_no: goods_no // key: 값
-        // }
+        params: {
+          sortCase: sortNum
+        }
       }).then((results) => {
-        console.log("정렬 기준:", sortNum);
         this.reviewList = results.data;
+        this.pageCnt = parseInt(this.reviewList.length / this.onePageCnt) + 1
+        this.setPage(1)
       })
       .catch(error => {
         console.error(error);
