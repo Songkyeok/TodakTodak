@@ -10,7 +10,7 @@
                         <table class="table" style="width:100%;">
                             <thead class="A">
                                 <tr>
-                                    <th class="checkAll"><input class="box" type="checkbox" name="checkbox" @click="toggleSelectAll"  />
+                                    <th class="checkAll"><input class="box" type="checkbox" name="checkbox" @click="toggleSelectAll" />
                                     전체 선택/해제</th>
                                     <th class="goodsname">선택사항/상품이미지</th>
                                     <th>상품명</th>
@@ -22,7 +22,7 @@
 
                             <tbody class="QWER" v-if="basketList.length > 0">
                                 <tr class="img_container" v-for="(goods, i) in basketList" :key="i">
-                                    <input class="box" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
+                                    <input class="check" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
                                     <td>
                                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                                             <img class="img" :src="goods.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.basket_img}`) : '/goodsempty.jpg'" alt="상품 이미지" />
@@ -199,8 +199,10 @@ export default {
                         }
                     })
                     .then(res => {
+
                         if (res.data.message === '장바구니 업데이트 성공') {
                             location.href = `http://localhost:8080/orderpay/1/${basketNos}/${basketCount}`;
+
                         } else {
                             this.$swal('결제 실패');
                         }
@@ -346,8 +348,7 @@ button:hover {
     background-color: #555;
 }
 .check{
-    width: 1px;
-    height: 1px;
+    
 }
 
     

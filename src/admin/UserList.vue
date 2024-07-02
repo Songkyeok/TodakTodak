@@ -18,6 +18,7 @@
         </tr>
         <tr class="user-list" v-for="(user, i) in selectUser" :key="i">
             <!-- 반복문이고 selectUser를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
+             <!-- 아래 값에서 selectUser[i]와 v-for에서 user의 값이 동일함. 그래서 바꿔서 사용해도 됨 -->
               <th class="user-number value">{{ selectUser[i].user_no }}</th>
               <th class="user-name value">{{ selectUser[i].user_nm }}</th>
               <th class="user-address value">{{ selectUser[i].user_zipcode }} {{ selectUser[i].user_adr1 }}<br>{{ selectUser[i].user_adr2 }}</th>
