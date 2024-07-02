@@ -111,20 +111,16 @@
               <th class="review-date value">{{ review.review_create }}</th>
           </tr>
       </tbody>
-
-      <nav aria-label="Page navigation example">
+    </table>
+    <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
               <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
-                  <a href="#" style="text-decoration: none;">
-                      <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
-                      <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
-                  </a>
+                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
               </ul>
           </ul>
       </nav>
-    </table>
     <br />
-    
   </div>
 </div>
 </template>
