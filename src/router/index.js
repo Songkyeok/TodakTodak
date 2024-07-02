@@ -108,7 +108,7 @@ const routes = [
     component: UserList
   },
   {
-    path: '/orderpay/:ordertp',
+    path: '/orderpay/:ordertp/:goodsno/:total',
     name: "OrderPay",
     component: OrderPay
   },

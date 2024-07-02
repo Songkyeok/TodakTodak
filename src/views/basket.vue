@@ -191,24 +191,16 @@ export default {
                     this.$router.push({ path: '/login'});
                 }else{
                     axios({
-                        url: "http://localhost:3000/goods/orderpay/1",
+                        url: "http://localhost:3000/goods/updateBasket",
                         method: "POST",
                         data: {
-                            // user_no: this.user.user_no,
-                            // order_tp: this.basketList.basket_price,
-                            // order_tc: this.basketList.basket_cnt,
-                            // goods_no: this.basketList.goods_no,
-                            // goods_img: this.basketList.goods_img,
                             basket_no: basketNos,
                             basket_cnt: basketCount,
-                            user_no: this.user.user_no,
-                            basket_price : price,
                         }
                     })
-                    // window.location.href="http://localhost:8080/orderpay/1"
                     .then(res => {
-                        if (res.data.message === order) {
-                            this.$router.push(`/orderpay/1`);
+                        if (res.data.message === '장바구니 업데이트 성공') {
+                            location.href = `http://localhost:8080/orderpay/1/${basketNos}/${basketCount}`;
                         } else {
                             this.$swal('결제 실패');
                         }
