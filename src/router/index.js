@@ -78,7 +78,7 @@ const routes = [
     component: selectGoods,
   },
   {
-    path: "admin/goodscreate",
+    path: "/admin/goodscreate",
     name: "GoodsAdd",
     component: GoodsAdd,
   },
@@ -108,7 +108,7 @@ const routes = [
     component: EventList
   },
   {
-    path: "admin/userlist",
+    path: "/admin/userlist",
     name: "UserList",
     component: UserList
   },
