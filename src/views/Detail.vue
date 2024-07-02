@@ -35,7 +35,7 @@
           </div>
           <div class="buttons">
             <button class="add-to-cart" @click="addToCart()">장바구니</button>
-            <button class="buy-now" @click="goToBuy()">구매하기</button>
+            <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
           </div>
         </div>
       </div>
@@ -268,23 +268,13 @@ export default {
           });
       }
     },
-    async goToBuy() {
+    async goToBuy(goodsno) {
       if (this.user.user_no === "") {
         alert("로그인해주셈");
         this.$router.push({ path: "/login" });
       } else {
-        axios({
-          url: "http://localhost:3000/goods/orderpay/0",
-          method: "POST",
-          data: {
-            user_no: this.user.user_no,
-            order_tp: this.totalPrice,
-            order_tc: this.total,
-            goods_no: this.goods.goods_no,
-            goods_img: this.goods.goods_img,
-          },
-        });
-        window.location.href = "http://localhost:8080/orderpay/0";
+        const total = this.total;
+        location.href = `http://localhost:8080/orderpay/0/${goodsno}/${total}`;
       }
     },
     async likeCheck() {

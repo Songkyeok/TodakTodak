@@ -191,18 +191,18 @@ export default {
                     this.$router.push({ path: '/login'});
                 }else{
                     axios({
-                        url: "http://localhost:3000/goods/orderpay/1",
+                        url: "http://localhost:3000/goods/updateBasket",
                         method: "POST",
                         data: {
                             basket_no: basketNos,
                             basket_cnt: basketCount,
-                            user_no: this.user.user_no,
-                            basket_price : price,
                         }
                     })
                     .then(res => {
-                        if (res.data.message === '장바구니 주문 성공') {
-                            this.$router.push(`/orderpay/1`);
+
+                        if (res.data.message === '장바구니 업데이트 성공') {
+                            location.href = `http://localhost:8080/orderpay/1/${basketNos}/${basketCount}`;
+
                         } else {
                             this.$swal('결제 실패');
                         }

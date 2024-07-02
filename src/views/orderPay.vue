@@ -6,27 +6,34 @@
         <div class="container-wrapper">
             <div class="container">
                 <h5><strong>배송정보</strong></h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="defaultAddressCheck" v-model="useDefaultAddress">
+                    <label class="form-check-label" for="defaultAddressCheck">
+                        기본 배송지
+                    </label>
+                </div>
                 <hr>
+                <div v-if="useDefaultAddress">
                 <div class="mb-3">
                     <label for="userNick" class="form-label"><strong>받는사람</strong></label>
-                    <input type="text" id="userNick" class="form-control" v-model="userInfo.user_nm"
+                    <input type="text" id="userNick" class="form-control" v-model="userInfo.user_nm" :disabled="useDefaultAddress"
                         @input="updateOrderInfo" />
                 </div>
                 <div class="mb-3">
                     <label for="userMobile" class="form-label"><strong>핸드폰</strong></label>
-                    <input type="text" id="userMobile" class="form-control" v-model="userInfo.user_phone"
+                    <input type="text" id="userMobile" class="form-control" v-model="userInfo.user_phone" :disabled="useDefaultAddress"
                         @input="updateOrderInfo" />
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><strong>주소</strong></label>
                     <div class="input-group">
-                        <input type="text" class="form-control" v-model="userInfo.user_zipcode" placeholder="우편번호"
+                        <input type="text" class="form-control" v-model="userInfo.user_zipcode" placeholder="우편번호" :disabled="useDefaultAddress"
                             @input="updateOrderInfo" />
-                        <button class="btn btn-outline-secondary" type="button" @click="zipload">우편번호 찾기</button>
+                        <button class="btn btn-outline-secondary" type="button" @click="zipload" :disabled="useDefaultAddress" >우편번호 찾기</button>
                     </div>
-                    <input type="text" class="form-control mt-2" v-model="userInfo.user_adr1" placeholder="기본 주소"
+                    <input type="text" class="form-control mt-2" v-model="userInfo.user_adr1" placeholder="기본 주소" :disabled="useDefaultAddress"
                         @input="updateOrderInfo" />
-                    <input type="text" class="form-control mt-2" v-model="userInfo.user_adr2" placeholder="상세 주소"
+                    <input type="text" class="form-control mt-2" v-model="userInfo.user_adr2" placeholder="상세 주소" :disabled="useDefaultAddress"
                         @input="updateOrderInfo" />
                 </div>
                 <div class="mb-3">
@@ -34,8 +41,37 @@
                     <input type="text" id="userMemo" class="form-control" placeholder="10자 이내" v-model="order_memo" />
                 </div>
                 <br><br>
-
-                <router-link to="/">삭제메소드 로그 확인</router-link>
+                </div>
+                <div v-if="!useDefaultAddress">
+                <div class="mb-3">
+                    <label for="userNick" class="form-label"><strong>받는사람</strong></label>
+                    <input type="text" id="userNick" class="form-control" v-model="newOrderInfo.user_nm"
+                        @input="updateOrderInfo" />
+                </div>
+                <div class="mb-3">
+                    <label for="userMobile" class="form-label"><strong>핸드폰</strong></label>
+                    <input type="text" id="userMobile" class="form-control" v-model="newOrderInfo.user_phone"
+                        @input="updateOrderInfo" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"><strong>주소</strong></label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" v-model="newOrderInfo.user_zipcode" placeholder="우편번호"
+                            @input="updateOrderInfo" />
+                        <button class="btn btn-outline-secondary" type="button" @click="zipload">우편번호 찾기</button>
+                    </div>
+                    <input type="text" class="form-control mt-2" v-model="newOrderInfo.user_adr1" placeholder="기본 주소"
+                        @input="updateOrderInfo" />
+                    <input type="text" class="form-control mt-2" v-model="newOrderInfo.user_adr2" placeholder="상세 주소"
+                        @input="updateOrderInfo" />
+                </div>
+                <div class="mb-3">
+                    <label for="userMemo" class="form-label"><strong>배송요청사항</strong></label>
+                    <input type="text" id="userMemo" class="form-control" placeholder="10자 이내" v-model="order_memo" />
+                </div>
+                <br><br>
+                </div>
+                
 
                 <h5><strong>주문정보</strong></h5>
                 <hr>
@@ -48,10 +84,10 @@
                         </div>
                         <div class="me-3">
                             <strong>{{ goods.goods_nm }}</strong><br>
-                            수량: {{ order.ORDER_TC }}개
+                            수량: {{ this.$route.params.total }}개
                         </div>
                         <div class="ms-auto">
-                            <strong>총 {{ getCurrencyFormat(goods.goods_price * order.ORDER_TC) }}</strong>
+                            <strong>총 {{ getCurrencyFormat(getTotalPrice()) }}</strong>
                         </div>
                     </div>
                 </div>
@@ -59,28 +95,28 @@
                     <div class="d-flex mb-3 orderinfo" v-for="(cart, i) in cartList" :key="i">
                         <div class="me-3">
                             <img :width="80"
-                                :src="cart.BASKET_GOODS_IMG ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${cart.BASKET_GOODS_IMG}`) : '/goodsempty.jpg'"
+                                :src="cart.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${cart.basket_img}`) : '/goodsempty.jpg'"
                                 alt="상품 이미지">
                         </div>
                         <div class="me-3">
-                            <strong>{{ cart.BASKET_GOODS_NM }}</strong><br>
-                            수량: {{ cart.BASKET_GOODS_COUNT }}개
+                            <strong>{{ cart.basket_nm }}</strong><br>
+                            수량: {{ cart.basket_cnt }}개
                         </div>
                         <div class="ms-auto">
-                            <strong>총 {{ formatPrice(cart.BASKET_GOODS_COUNT * cart.BASKET_GOODS_PRICE) }}</strong>
+                            <strong>총 {{ getCurrencyFormat(cart.basket_cnt * cart.basket_price) }}</strong>
                         </div>
                     </div>
                 </div>
                 <br><br>
-                <!-- <h5><strong>보유적립금</strong></h5>
+                <h5><strong>보유적립금</strong></h5>
                 <hr>
                 <div class="input-group">
                     <input type="text" class="form-control" v-model="pointInput" placeholder="5천원 이상 사용가능"
                         @input="handlePointInput" />
                     <button class="btn btn-outline-secondary" type="button" @click="pointUse">사용하기</button>
                 </div>
-                보유적립금 : {{ formatPrice(userInfo.user_point) }}
-                <br><br><br> -->
+                보유적립금 : {{ getCurrencyFormat(userInfo.user_point) }}
+                <br><br><br>
 
                 <h5><strong>최종 결제금액</strong></h5>
                 <hr>
@@ -91,16 +127,12 @@
                             <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
                         </tr>
                         <tr>
-                            <th scope="row" class="table-active">배송비</th>
-                            <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
-                        </tr>
-                        <tr>
                             <th scope="row" class="table-active">사용적립금</th>
                             <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
                         </tr>
                         <tr>
                             <th scope="row" class="table-active">총 결제 금액</th>
-                            <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
+                            <td colspan="2"><strong>{{ getCurrencyFormat(getTotalPrice()) }}원</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -117,34 +149,44 @@ export default {
     name:'OrderPay',
     data() {
         return {
+            useDefaultAddress: true,
+            orderAddress: false,
             userInfo: {},
+            newOrderInfo: {
+                user_id: '',
+                user_nm: '',
+                user_email: '',
+                user_phone: '',
+                user_zipcode: '',
+                user_adr1: '',
+                user_adr2: '',
+                user_point: '',
+            },
             goods: {},
             order: {},
-            totalPrice: 0,
             paymentInit: false,
+            cartOrder: [],
+            cartList: [],
         };
     },
     computed: {
         user(){
             return this.$store.state.user;
-            
         }
     },
     beforeCreate() {},
     created() {
         this.getUserInfo();
-        this.getOrder();
+        this.getGoods();
+        this.getBasketList();
     },
     beforeMount() {},
-    mounted() {},
+    mounted() {
+        this.loadDaumPostcodeScript()
+    },
     beforeUpdate() {},
     updated() {},
-    beforeUnmount() {
-        if(true){
-        console.log('Condition met, calling deleteOrder');
-            this.deleteOrder();
-        }
-    },
+    beforeUnmount() {},
     unmounted() {},
     methods: {
         getUserInfo() {
@@ -164,39 +206,37 @@ export default {
                     user_zipcode: res.data.USER_ZIPCODE,
                     user_adr1: res.data.USER_ADR1,
                     user_adr2: res.data.USER_ADR2,
-                }; 
+                    user_point: res.data.USER_POINT,
+                };
             })
         },
-        async getOrder(){
-            axios({
-                url: "http://localhost:3000/goods/getOrder",
-                method: "POST",
-                data: {
-                    user_no: this.user.user_no,
-                }
-            })
-            .then(res => {
-                this.order = res.data[0];
-                console.log('res>>>>>>>>>>', this.order);
-                const goodsno = res.data[0].GOODS_NO;
-                
-                console.log('ordertp >>>> ', this.$route.params.ordertp)
-                axios({
-                    url: `http://localhost:3000/goods/goodsDetail/${goodsno}`,
-                    methods: "GET"
-                })
-                .then(res => {
-                    this.goods = res.data[0];
-                    console.log('goods>>>>', res.data[0])
-                })
-            })
+        async getGoods() {
+            try {
+            const goodsno = this.$route.params.goodsno;
+            const response = await axios.get(
+                `http://localhost:3000/goods/goodsDetail/${goodsno}`
+            );
+            this.goods = response.data[0];
+            } catch (error) {
+            console.error(error);
+            }
         },
         getCurrencyFormat(value) {
             return this.$currencyFormat(value);
         },
+        updateOrderInfo(){
+            if(this.useDefaultAddress){
+                this.order_nm
+            }
+        },
         requestPay(){
-            this.paymentInit = true;
-            console.log('결제가 진행되었습니다.')
+
+            if (!this.validationCheck()) {
+                return;
+            }
+
+            
+            
         },
         deleteOrder(){
             axios({
@@ -206,15 +246,93 @@ export default {
                     order_trade_no: this.order.ORDER_TRADE_NO
                 }
             })
+        },
+        getBasketList(){
+            if(this.user.user_no === ''){
+                alert('로그인해주셈');
+                this.$router.push({ path: '/login'});
+            }else{
+                axios({
+                    url: "http://localhost:3000/goods/basketList",
+                    method: "POST",
+                    data: {
+                        user_no: this.user.user_no
+                    }
+                })
+                .then(results => {
+                    this.cartList = results.data;
+                    console.log('rrrrrrrrrrrrrrrrrrrrrrrrr',this.cartList)
+                })
+            }
+        },
+        getTotalPrice(){
+            if(this.$route.params.ordertp === '0'){
+                const totalPrice = this.goods.goods_price * this.$route.params.total;
+                return totalPrice
+            }else if(this.$route.params.ordertp === '1'){
+                const totalPrice = this.cartList.reduce((total, cart) =>  total + (cart.basket_cnt * cart.basket_price),0);
+                return totalPrice;
+            }else {
+                return 0;
+            }
+        },
+        loadDaumPostcodeScript() {
+        const script = document.createElement('script');
+        script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+        script.onload = () => {
+          this.isScriptLoaded = true; // 스크립트가 로드되면 isScriptLoaded를 true로 설정
+        };
+        document.head.appendChild(script);
+        },
+        zipload() {
+            if (window.daum && window.daum.Postcode) {
+                new daum.Postcode({
+                    oncomplete: (data) => {
+                    this.newOrderInfo.user_zipcode = data.zonecode;
+                    this.newOrderInfo.user_adr1 = data.address;
+                    this.newOrderInfo.user_adr2 = "";
+                    }
+                }).open();
+            } else {
+            console.error("Daum Postcode 스크립트가 로드되지 않았습니다.");
+            }
+        },
+        validationCheck(){
+            
+
+            if ((this.useDefaultAddress && (this.userInfo.user_nm === "" || this.userInfo.user_nm == null)) ||
+                (!this.useDefaultAddress && (this.newOrderInfo.user_nm === "" || this.newOrderInfo.user_nm == null))) {
+                this.$swal("이름을 입력하세요.");
+                return false;
+            }
+            if ((this.useDefaultAddress && (this.userInfo.user_phone === "" || this.userInfo.user_phone == null)) ||
+                (!this.useDefaultAddress && (this.newOrderInfo.user_phone === "" || this.newOrderInfo.user_phone == null))) {
+                this.$swal("전화번호를 입력하세요.");
+                return false;
+            }else if(!this.useDefaultAddress && (this.newOrderInfo.user_phone)){
+                const validatedPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+                if(!validatedPhone.test(this.newOrderInfo.user_phone)){
+                    this.$swal("전화번호를 다시 입력하세요. EX) 01012345678");
+                    return false;
+                }
+            }
+            if ((this.useDefaultAddress && (this.userInfo.user_zipcode === "" || this.userInfo.user_zipcode == null)) ||
+                (!this.useDefaultAddress && (this.newOrderInfo.user_zipcode === "" || this.newOrderInfo.user_zipcode == null))) {
+                this.$swal("우편번호를 입력하세요.");
+                return false;
+            }
+            if ((this.useDefaultAddress && (this.userInfo.user_adr1 === "" || this.userInfo.user_adr1 == null)) ||
+                (!this.useDefaultAddress && (this.newOrderInfo.user_adr1 === "" || this.newOrderInfo.user_adr1 == null))) {
+                this.$swal("집주소를 입력하세요.");
+                return false;
+            }
+            if ((this.useDefaultAddress && (this.userInfo.user_adr2 === "" || this.userInfo.user_adr2 == null)) ||
+                (!this.useDefaultAddress && (this.newOrderInfo.user_adr2 === "" || this.newOrderInfo.user_adr2 == null))){
+                this.$swal("상세 주소를 입력하세요.");
+                return false;
+            }
+            return true;
         }
     },
-    beforeRouteLeave(to, from, next) {
-    if (true) {
-      console.log('Navigating away from OrderPay, calling deleteOrder');
-      this.deleteOrder();
-      next();
-    }
-    next();
-  }
 }
 </script>
