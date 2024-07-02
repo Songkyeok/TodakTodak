@@ -26,6 +26,7 @@ import OrderPay from "../views/orderPay.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 
+import ReviewWrite from "../views/ReviewWrite.vue";
 
 const routes = [
   {
@@ -116,6 +117,12 @@ const routes = [
     path: '/orderpay/:ordertp',
     name: "OrderPay",
     component: OrderPay
+  },
+  // 리뷰작성
+  {
+    path: "/reviewwrite",
+    name: "ReviewWrite",
+    component: ReviewWrite
   },
   // 마이페이지
   {

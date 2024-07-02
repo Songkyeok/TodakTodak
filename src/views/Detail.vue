@@ -102,8 +102,9 @@
       <br />
       <tbody>
           <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
-          <!-- 반복문이고 reviewList를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
-              <th class="review-no value">{{ review.review_no }}</th>
+          <!-- 반복문이고 reviewList를 배열로 받아왔으므로 [i]를 넣어야 됨 => for in에서 in에 있는 내용을 가져다 쓸 때만 [i]를 넣으면 됨 -->
+           <!-- pageReviewList[i] = v-for에 있는 review와 같음 -->
+              <th class="review-no value">{{ review.review_no }}</th> 
               <th class="review-star value">{{ review.review_rating }}</th>
               <th class="review-user value">{{ review.user_nm }}</th>
               <th class="review-photo value">{{ review.review_img }}</th>
@@ -136,7 +137,7 @@ export default {
       totalPrice: 0,
       cnt: 1,
       isLiked: false,
-      sortCase: '최근 순', // 리뷰조회 dropdown
+      sortCase: '정렬 기준', // 리뷰조회 dropdown
       isDropdownOpen: false,
       reviewList: [],
       sortOption: 0,
@@ -155,8 +156,8 @@ export default {
     },
 
     // 드롭박스 메뉴대로 정렬되도록 하는 로직
-    reviewList() { // 함수명이 위에서 v-for을 사용할 때 in에 명시한 이름과 동일해야 됨
-      let sortedArray = [...this.reviewList];
+    arrayReviewList() {  // 아래 배열에서 [...this.page~~]의 page~~와 for-in 에서 in의 함수명과 같은 이름이어야 됨
+      let sortedArray = [...this.pageReviewList]; // ... : 배열일 때, 나머지 객체를 하나씩 가져와서 묶어주는 기능
       if (this.sortOption == 0) {
         sortedArray.sort((a, b) => new Date(b.review_create) - new Date(a.review_create));
       } else if (this.sortOption == 1) {
@@ -356,14 +357,14 @@ export default {
     changePage(page) {
       this.currentPage = page;
     },
-    // 실제 정렬 로직
+    // 리뷰 불러오는 실제 정렬 로직
     getReviewList(sortNum) {
         const goods_no = this.$route.params.goodsno;
       axios({
         url: `http://localhost:3000/review/reviewList/${goods_no}`,
         method: "GET",
         params: {
-          sortCase: sortNum
+          sortCase: sortNum // back에서 sql (정렬 : order by)을 통해 정렬 값을 불러오려고 이 값을 보내줌
         }
       }).then((results) => {
         this.reviewList = results.data;
