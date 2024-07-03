@@ -147,9 +147,6 @@ export default {
         },
         checkUserPhone() {
             const validatedPhone = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
-
-            console.log();
-
             // 사용 불가능
             if (!validatedPhone.test(this.user_info.user_phone) || !this.user_info.user_phone) {
                 this.error_phone = true;

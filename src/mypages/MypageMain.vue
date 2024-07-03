@@ -3,11 +3,18 @@
         <div class="mypage_top_info">
             <div class="mypage_top_txt">
                 <div class="grade_txt">
-                    <p>송기혁님의</p><p> 회원등급은 <span>NEW회원등급</span> 입니다.
-                    </p><div class="btn_layer">
-                        <!--span class="btn_gray_list"><a href="#lyGrade" class="btn_gray_small"><em>등급혜택보기</em></a></span-->
+                    <p>{{ user_nm }}님의</p>
+                    <p> 회원등급은
+                        <span v-if="user_grade == 0">골드</span>
+                        <span v-else-if="user_grade == 1">플레티넘</span>
+                        <span v-else>다이아</span>
+                        입니다.
+                    </p>
+                    <!-- <div class="btn_layer">
+                        <span class="btn_gray_list">
+                            <a href="#lyGrade" class="btn_gray_small"><em>등급혜택보기</em></a>
+                        </span>
 
-                        <!-- N : 회원등급혜택 레이어 시작 -->
                         <div id="lyGrade" class="layer_area" style="display:none;">
                             <div class="ly_wrap grade_layer">
                                 <div class="ly_tit">
@@ -28,19 +35,16 @@
                                             <dd><strong>0원이상 구매시 상품 판매금액의 0.0% 추가 할인</strong></dd>
                                         </dl>
                                         <dl>
-                                            <dt>추가  적립</dt>
+                                            <dt>추가 적립</dt>
                                             <dd>0원이상 구매 시 구매금액당 0.0% 추가 적립</dd>
                                         </dl>
                                     </div>
                                 </div>
-                                <!-- //ly_cont -->
                                 <a href="#lyGrade" class="ly_close"><img src="https://blanc1tr2775.cdn-nhncommerce.com/data/skin/front/coslab2023/img/common/layer/btn_layer_close.png" alt="닫기"></a>
                             </div>
-                            <!-- //ly_wrap -->
                         </div>
-                        <!-- N : 회원등급혜택 레이어 끝 -->
 
-                    </div>
+                    </div> -->
                 </div>
                 <!-- //grade_txt -->
             </div>
@@ -50,11 +54,16 @@
                 <ul>
                     <li>
                         <span><img src="../assets/img/mypage/icon_coupon.png" alt=""></span>
-                        <span><em>LIKE</em><a href="http://localhost:8080/mypage/like"><strong>0</strong></a>장</span>
+                        <span>
+                            <em>LIKE</em>
+                            <a href="http://localhost:8080/mypage/like">
+                                <strong>{{ like_count }}</strong>
+                            </a> 개
+                        </span>
                     </li>
                     <li>
                         <span><img src="../assets/img/mypage/icon_mileage.png" alt=""></span>
-                        <span><em>적립금</em><a href="#"><strong>3,000</strong></a>원</span>
+                        <span><em>적립금</em><a href="#"><strong>{{ $currencyFormat(user_point) }}</strong></a>원</span>
                     </li>
                 </ul>
             </div>
@@ -119,14 +128,52 @@
     
 </template>
 <script>
-
+import axios from 'axios';
 import MypageSidebar from "../layouts/MypageSidebar.vue";
-
 
 export default {
     components: {
         MypageSidebar
-    }
+    },
+    data() {
+        return {
+            user_nm: '',
+            user_point: 0,
+            user_grade: 0,
+            like_count: 0
+        }
+    },
+    mounted() {
+    },
+    created() {
+        this.getInfo();
+    },
+    methods: {
+        getInfo() {
+            const user_no = this.$store.state.user.user_no;
+
+            Promise.all([
+                axios({
+                    url: "http://localhost:3000/mypage/getInfo",
+                    method: "POST",
+                    data: { user_no: user_no }
+                }),
+                axios({
+                    url: "http://localhost:3000/mypage/likeCount",
+                    method: "POST",
+                    data: { user_no: user_no }
+                })
+            ]).then(res => {
+                this.user_nm = res[0].data[0].user_nm;
+                this.user_point = res[0].data[0].user_point;
+                this.user_grade = res[0].data[0].user_grade;
+                this.like_count = res[1].data.length;
+            })
+            
+            
+        }
+    },
+    
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <main class="mt-3">
+    <main class="mt-3 like_container">
         <div class="container">
             <div class="myinfo">
                 <div>
@@ -47,8 +47,6 @@
 import axios from 'axios';
 
 export default {
-    // el: "#app",
-
     data() {
         return {
             likeList: [],
@@ -163,6 +161,12 @@ li {
 
 a {
     text-decoration: none;
+}
+
+.like_container {
+    width: 70%;
+    padding: 0 5%;
+    display: inline-block;
 }
 
 .container {
