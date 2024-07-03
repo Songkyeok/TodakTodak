@@ -13,9 +13,10 @@ import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import Profile from "../mypages/Profile.vue"
 import EventList from "../views/EventList.vue";
 import UserList from "../admin/UserList.vue";
+import QnA from "../admin/QnA.vue";
 import Like from "../mypages/like.vue";
 import DeleteProfile from "../mypages/DeleteProfile.vue"
-
+selectGoods
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 import MypageSidebar from "../layouts/MypageSidebar";
@@ -78,9 +79,14 @@ const routes = [
     component: selectGoods,
   },
   {
-    path: "admin/goodscreate",
+    path: "/admin/goodscreate",
     name: "GoodsAdd",
     component: GoodsAdd,
+  },
+  {
+    path: '/admin/qna',
+    name: "QnA",
+    component: QnA
   },
   {
     path: "/goodsDetail/:goodsno",
@@ -108,7 +114,7 @@ const routes = [
     component: EventList
   },
   {
-    path: "admin/userlist",
+    path: "/admin/userlist",
     name: "UserList",
     component: UserList
   },
