@@ -75,13 +75,13 @@ export default {
         }).then((results) => {
             console.log(results);
             this.deleteUser = results.data;
-            window.location.href = `http://localhost:8080/userlist`;
+            window.location.href = `http://localhost:8080/admin/userlist`;
             })
             .catch((error) => {
               console.error('error');
             });
         } else {
-          window.location.href = `http://localhost:8080/userlist`;
+          window.location.href = `http://localhost:8080/admin/userlist`;
         }
     },
   },

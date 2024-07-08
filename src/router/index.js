@@ -26,7 +26,8 @@ import OrderPay from "../views/orderPay.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 
-import ReviewWrite from "../views/ReviewWrite.vue";
+import ReviewWrite from "../mypages/ReviewWrite.vue";
+
 
 const routes = [
   {
@@ -118,12 +119,6 @@ const routes = [
     name: "OrderPay",
     component: OrderPay
   },
-  // 리뷰작성
-  {
-    path: "/reviewwrite",
-    name: "ReviewWrite",
-    component: ReviewWrite
-  },
   // 마이페이지
   {
     path: "/mypage/",
@@ -153,6 +148,12 @@ const routes = [
       {
         path: 'like',
         component: Like
+      },
+       // 리뷰작성
+      {
+        path: 'reviewwrite',
+        name: "ReviewWrite",
+        component: ReviewWrite
       },
     ]
   },
