@@ -88,8 +88,9 @@ export default {
                 interval: 3000,
                 perPage: 1,
                 autoplay: true,
-                wheel: true,
-                wheelSleep: 500,
+                // wheel: true,
+                // wheelSleep: 500,
+                wheel: false,
                 arrows: false,
 
             }
@@ -131,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+    #MainSlider {
+        margin-bottom: 100px;
+    }
     .hr {
         width: 100%;
         height: 10px;
@@ -138,8 +142,8 @@ export default {
     }
 
     .slider-image {
-        width: 50%;
-        height: 300px;
+        width: 100%;
+        height: 600px;
         object-fit: cover;
         margin: auto;
         display: block;
