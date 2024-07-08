@@ -1,6 +1,5 @@
 <template>
     <main class="mt-3">
-
         <div class="container goods_add">
             <h2 class="text-center"  style="margin: 30px">제품 등록</h2>
 
@@ -13,34 +12,29 @@
             <div class="mb-3 row">
                 <label class="col-md-3 col-form-label">카테고리 *</label>
                 <div class="col-md-9 inputRadio">
-                    <div class="form-radio">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="유아식기" id="cate1" checked>
-                        <label class="form-radio-label" for="cate1">유아식기</label>
-                    </div>
-                    <div class="form-radio ms-4">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="욕실용품" id="cate2">
-                        <label class="form-check-label" for="cate2">욕실용품</label>
-                    </div>
-                    <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="외출용품" id="cate3">
-                        <label class="form-check-label" for="cate3">외출용품</label>
-                    </div>
-                    <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="유아도서" id="cate4">
-                        <label class="form-check-label" for="cate4">유아도서</label>
-                    </div>
-                    <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="위생용품" id="cate5">
-                        <label class="form-check-label" for="cate5">위생용품</label>
-                    </div>
-                    <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="장난감" id="cate6">
-                        <label class="form-check-label" for="cate6">장난감</label>
-                    </div>
-                    <div class="form-check ms-1">
-                        <input class="form-radio-input" type="radio" v-model="cate_check" value="이벤트" id="cate7">
-                        <label class="form-check-label" for="cate6">이벤트</label>
-                    </div>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="options" v-model="cate_check" value="유아식기" id="cate1" checked> 유아식기
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="욕실용품" id="cate2"> 욕실용품
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="외출용품" id="cate3"> 외출용품
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="유아도서" id="cate4"> 유아도서
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="위생용품" id="cate5"> 위생용품
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="장난감" id="cate6"> 장난감
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="cate_check" value="이벤트" id="cate7"> 이벤트
+                </label>
+            </div>
                 </div>
             </div>
 
@@ -255,4 +249,16 @@ export default {
   }
  
 }
+
 </script>
+<style scoped>
+.inputRadio .btn-group-toggle .btn {
+    margin-bottom: 10px;
+}
+
+.inputRadio .btn-group-toggle .btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+</style>
