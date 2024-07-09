@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       goods : {
-        goods_nm: "입력해주세요",
+        goods_nm: "",
         goods_category: 1,
         goods_price: 1,
         goods_cnt: 100,
@@ -242,8 +242,8 @@ export default {
             }
             return true;
     },
-    goToList(){
-            alert({
+    goToList() {
+            this.$swal({
                 title: '제품 등록을 취소하겠습니까?',
                 icon: 'warning',
                 showCancelButton: true,
@@ -251,11 +251,11 @@ export default {
                 cancelButtonText: '취소',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            this.$router.push({path:'/admin/goods'});
-                    } 
+            })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        this.$router.push({ path: '/admin/goods' });
+                    }
                 })
         },
   }
