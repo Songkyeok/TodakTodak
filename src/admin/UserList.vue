@@ -1,6 +1,4 @@
 <template>
-  <AdminpageSidebar />
-
   <div class="user-management">
     <h1>회원관리</h1>
     <br />
@@ -35,13 +33,8 @@
 
 <script>
 import axios from "axios";
-import AdminpageSidebar from "../layouts/AdminpageSidebar.vue";
 
 export default {
-  components: {
-    AdminpageSidebar
-  },
-
   data() {
     return {
       selectUser: [],
@@ -75,13 +68,13 @@ export default {
         }).then((results) => {
             console.log(results);
             this.deleteUser = results.data;
-            window.location.href = `http://localhost:8080/userlist`;
+            window.location.href = `http://localhost:8080/admin/userlist`;
             })
             .catch((error) => {
               console.error('error');
             });
         } else {
-          window.location.href = `http://localhost:8080/userlist`;
+          window.location.href = `http://localhost:8080/admin/userlist`;
         }
     },
   },

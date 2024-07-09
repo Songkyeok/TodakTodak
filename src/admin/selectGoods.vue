@@ -1,5 +1,5 @@
 <template>
-    <main class="mt-3">
+    <main class="admin_container">
         <div class="container">
             <table class="table caption-top goodslist-table">
                 <thead class="table-light">
@@ -119,6 +119,8 @@ export default {
                 return '위생용품';
             } else if (socialType === 6) {
                 return '장난감';
+            } else if (socialType === 7) {
+                return '이벤트';
             } else {
                 return 'null';
             }
@@ -136,13 +138,13 @@ export default {
                 reverseButtons: true
             }).then(result => {
                 if (result.value) {
-                    this.$router.push({ path: 'admin/goodscreate' });
+                    this.$router.push({ path: '/admin/goodscreate' });
                 }
             });
         },
-        // goToUpdateGoods(goodsno) {
-        //     window.location.href = `http://localhost:8080/admin/updateGoods/${goodsno}`;
-        // },
+        goToUpdateGoods(goodsno) {
+            window.location.href = `http://localhost:8080/admin/goodsupdate/${goodsno}`;
+        },
         goToDetail(goodsno) {
             window.location.href = `http://localhost:8080/goodsDetail/${goodsno}`;
         },
@@ -178,6 +180,11 @@ export default {
 </script>
 
 <style scoped>
+.admin_container {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 100px;
+}
 
 .goodslist-table {
     font-family: unset;

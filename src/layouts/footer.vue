@@ -22,27 +22,27 @@ export default ({
   }
   
 .form{
-    margin: 0;
     padding: 0;
     left: 0;   
     bottom: 0;
     list-style: none;
     text-decoration: none;
+    margin-top: 100px;
 }
-    .f_add{
-        position: relative;
-        height: auto;
-        width: 100%;
-        left: 0;       
-        bottom: 0; 
-        padding: 10px;
-        background: #f2f2f2;
-    }
+.f_add{
+    position: relative;
+    height: auto;
+    width: 100%;
+    left: 0;       
+    bottom: 0; 
+    padding: 10px;
+    background: #f2f2f2;
+}
 
-    p{
-        margin-left: 20px;
-        line-height: 24px;
-        font-size: 12px;
-        color: rgb(173, 173, 173);
-    }
+p{
+    margin-left: 20px;
+    line-height: 24px;
+    font-size: 12px;
+    color: rgb(173, 173, 173);
+}
 </style>

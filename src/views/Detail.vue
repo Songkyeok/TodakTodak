@@ -94,7 +94,7 @@
               <th class="review-no">리뷰 번호</th>
               <th class="review-star">별점</th>
               <th class="review-user">작성자</th>
-              <th class="review-photo">포토</th>
+              <th class="review-photo">리뷰 포토</th>
               <th class="review-content">내용</th>
               <th class="review-date">날짜</th>
           </tr>

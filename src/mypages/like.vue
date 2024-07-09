@@ -1,5 +1,5 @@
 <template>
-    <main class="mt-3 like_container">
+    <main class="like_container">
         <div class="container">
             <div class="myinfo">
                 <div>
@@ -18,7 +18,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(like, i) in likeList" :key="i">
+                                <tr v-for="(like, i) in likeList" :key="i" class="like_contents">
                                     <td>
                                     <a :href="'http://localhost:8080/goodsDetail/' + like.goods_no">
                                         <img :width="100" style="border-radius: 10px;"
@@ -167,21 +167,15 @@ a {
     width: 70%;
     padding: 0 5%;
     display: inline-block;
+    vertical-align: top;
+    margin-top: 100px;
 }
 
-.container {
-    margin: 40px 30px;
-    font-family: unset;
-}
 
 h2 {
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-.myinfo {
-    margin-top: 30px;
-    /* background-color: #fff2c9; */
-}
 
 .my .table {
     text-align: center;
@@ -234,9 +228,6 @@ h2 {
 
 }
 
-.btn {
-    margin-top: 8px;
-}
 
 .btn {
     width: 70px;
@@ -271,5 +262,8 @@ h2 {
 img {
     border-radius: 10%;
     background-color: #eeeeee;
+}
+.like_contents {
+    vertical-align: middle;
 }
 </style>
