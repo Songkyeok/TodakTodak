@@ -1,46 +1,47 @@
 <template>
-    <main class="mt-3">
-        <div class="container">
-            <table class="table caption-top goodslist-table">
-                <thead class="table-light">
-                    <tr>
-                        <th scope="col">이미지</th>
-                        <th scope="col">상품명</th>
-                        <th scope="col">카테고리</th>
-                        <th scope="col">가격</th>
-                        <th scope="col">남은수량</th>
-                        <th scope="col"> </th>
-                        <th scope="col"><button class="btn btn-primary" type="button" @click="goToAddGoods()">상품 등록</button></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(goods, i) in pageGoodsList" :key="i">
+    
+    <div class="goods-management">
+        <h1>상품관리</h1>
+        <br />
+        <br />
+        <table>
+            <thead v-if="pageGoodsList.length > 0">
+                <tr class="goodslist-title">
+                    <th class="goods-img">이미지</th>
+                    <th class="goods-name">상품명</th>
+                    <th class="goods-category">카테고리</th>
+                    <th class="goods-price">가격</th>
+                    <th class="goods-count">남은수량</th>
+                    <th class="goods-none"></th>
+                    <th class="goods-none"><button type="button" class="goods-create-btn" @click="goToAddGoods()">상품등록</button></th>
+                </tr>
+                <tr class="goods-list" v-for="(goods, i) in pageGoodsList" :key="i">
+                    <th class="goods-img value">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                                        <img :height="50"
-                                            :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
-                                            alt="상품 이미지">
-                                    </a>
-                        <td>{{ goods.goods_nm }}</td>
-                        <td>{{ categoryType(goods.goods_category) }}</td>
-                        <td>{{ getCurrencyFormat(goods.goods_price) }}원</td>
-                        <td>{{ goods.goods_cnt }}개</td>
-                        <td><button class="btn btn-light" @click="goToUpdateGoods(goods.goods_no)">수정</button></td>
-                        <td><button class="btn btn-outline-danger" @click="goodsDelete(goods.goods_no)">삭제</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
-                        <a href="" style="text-decoration: none;">
-                            <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
-                            <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+                        <img :height="100" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'" alt="상품 이미지">
                         </a>
-                    </ul>
+                    </th>
+                    <th class="goods-name value">{{pageGoodsList[i].goods_nm}}</th>
+                    <th class="goods-category value">{{categoryType(pageGoodsList[i].goods_category)}}</th>
+                    <th class="goods-price value">{{getCurrencyFormat(pageGoodsList[i].goods_price)}}원</th>
+                    <th class="goods-count value">{{pageGoodsList[i].goods_cnt}}개</th>
+                    <th><button type="button" class="goods-update-btn" @click="goToUpdateGoods(pageGoodsList[i].goods_no)">수정</button></th>
+                    <th><button type="button" class="goods-delete-btn" @click="goodsDelete(pageGoodsList[i].goods_no)">삭제</button></th>
+                </tr>
+                <br />
+            </thead>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                    <a href="" style="text-decoration: none;">
+                        <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                        <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+                    </a>
                 </ul>
-            </nav>
-        </div>
-    </main>
+            </ul>
+        </nav>
+    </div>          
 </template>
 
 <script>
@@ -181,41 +182,101 @@ export default {
 
 <style scoped>
 
-.goodslist-table {
-    font-family: unset;
+.goods-management {
+    /* border-bottom: 1px solid #222222;
+    margin-top: 20px;
+    text-align: left;
+    padding-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px; */
+    width: 80%;
+    margin-top: 100px;
+    padding: 0 10% 0 5%;
+    display: inline-block;
+    vertical-align: top;
 }
 
-th,
-td {
-    vertical-align: middle;
-    font-size: 15.5px;
+.goods-management h1 {
+  text-align: left;
+  border-bottom: 1px solid #d4cdcd;
+  padding-bottom: 10px;
 }
 
-img {
-    border-radius: 10%;
-    background-color: #eeeeee;
+.goodslist-title {
+    border-bottom: 1px solid #d4cdcd;
+    padding-bottom: 20px;
+    font-size: large;
+    color: #999696;
+    text-align: center;
 }
 
-img:hover {
-    transform: scale(1.12);
-    transition: all 0.07s linear;
-    background-color: #f1a87a;
+.goods-img {
+    width: 20%;
+    padding: 38px;
+    align-items: center;
 }
 
-img:not(:hover) {
-    transform: scale(1.0);
-    transition: all 0.07s linear;
+.goods-name {
+    width: 10%;
 }
 
-.goToDetail {
-    cursor: pointer;
+.goods-category {
+    width: 10%;
 }
 
+.goods-price {
+    width: 10%;
+}
 
-.goToDetail:hover {
-    color: #f1a87a;
-    font-weight: bold;
-    font-size: 16.5px;
+.goods-count {
+    width: 10%;
+}
+
+.goods-none {
+    width: 10%;
+}
+
+.goods-list {
+    border-bottom: 1px solid #d4cdcd;
+    padding-bottom: 20px;
+    font-size: small;
+    color: #5d5b5b;
+    text-align: center;
+    font-weight: 50px;
+}
+
+.goods-create-btn {
+    border: none;
+    width: 50%;
+    border: solid 3px rgb(151, 235, 118);
+    border-radius: 5px;
+    background-color: rgb(151, 235, 118);
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.goods-update-btn {
+    border: none;
+    width: 50%;
+    border: solid 2px rgb(151, 235, 118);
+    border-radius: 5px;
+    background-color: rgb(151, 235, 118);
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    font-weight: 600;
+}
+
+.goods-delete-btn {
+    border: none;
+    width: 50%;
+    border: solid 2px rgb(151, 235, 118);
+    border-radius: 5px;
+    background-color: rgb(151, 235, 118);
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    font-weight: 600;
 }
 
 </style>

@@ -1,5 +1,4 @@
 <template>
-  <AdminpageSidebar />
 
   <div class="user-management">
     <h1>회원관리</h1>

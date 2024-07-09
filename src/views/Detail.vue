@@ -137,6 +137,7 @@ export default {
       totalPrice: 0,
       cnt: 1,
       isLiked: false,
+      like: 0,
       sortCase: '정렬 기준', // 리뷰조회 dropdown
       isDropdownOpen: false,
       reviewList: [],
@@ -173,6 +174,7 @@ export default {
 
   created() {
     this.getGoods();
+    this.getLike();
     this.likeCheck();
   },
 
@@ -201,6 +203,18 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    async getLike() {
+            try {
+                const goodsno = this.$route.params.goodsno;
+                const response = await axios.get(`http://localhost:3000/goods/likeCount/${goodsno}`);
+                this.like = response.data;
+                if (this.like === null) {
+                    this.like = 0;
+                }
+            } catch (error) {
+                console.error(error);
+            }
     },
     calculatePrice(cnt) {
       const total = this.total + cnt;
