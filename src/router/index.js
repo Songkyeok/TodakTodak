@@ -36,10 +36,108 @@ import UserList from "../admin/UserList.vue";
 import QnA from "../admin/QnA.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
+import GoodsUpdate from "../admin/goodsUpdate.vue";
 
 const routes = [
   {
     path: "/",
+    name: "Main",
+    component: Main,
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: about,
+  },
+  // {
+  //   path: "/sidebar",
+  //   name: "adminSideBar",
+  //   component: adminSideBar,
+  // },
+  {
+    path: "/main",
+    name: "main",
+    component: Main,
+  },
+  {
+    path: "/basket",
+    name: "basket",
+    component: Basket,
+  },
+  {
+    path: "/join",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    path: "/agreement",
+    name: "SignUpAgreement",
+    component: SignUpAgreement,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/orderList",
+    name: "orderList",
+    component: orderList,
+  },
+  {
+    path: "/admin/goods",
+    component: selectGoods,
+  },
+  {
+    path: "/admin/goodscreate",
+    name: "GoodsAdd",
+    component: GoodsAdd,
+  },
+  {
+    path: "/admin/goodsupdate/:goodsno",
+    component: GoodsUpdate,
+  },
+  {
+    path: '/admin/qna',
+    name: "QnA",
+    component: QnA
+  },
+  {
+    path: "/goodsDetail/:goodsno",
+    name: "GoodsDetail",
+    component: GoodsDetail,
+  },
+  {  
+    path: "/findId",
+    name: "FindId",
+    component: FindId,
+  },
+  {  
+    path: "/findPw",
+    name: "FindPw",
+    component: FindPw,
+  },
+  {
+    path: "/categoryGoodsList/:category",
+    name: "CategoryGoodsList",
+    component: CategoryGoodsList
+  },
+  {
+    path: "/eventList",
+    name: "EventList",
+    component: EventList
+  },
+  {
+    path: "/admin/userlist",
+    name: "UserList",
+    component: UserList
+  },
+  {
+    path: '/orderpay/:ordertp/:goodsno/:total',
+    name: "OrderPay",
+    component: OrderPay
+  },
+  {
     name: "defaultLayout",
     component: DefaultLayout,
     children: [

@@ -136,13 +136,13 @@ export default {
                 reverseButtons: true
             }).then(result => {
                 if (result.value) {
-                    this.$router.push({ path: 'admin/goodscreate' });
+                    this.$router.push({ path: '/admin/goodscreate' });
                 }
             });
         },
-        // goToUpdateGoods(goodsno) {
-        //     window.location.href = `http://localhost:8080/admin/updateGoods/${goodsno}`;
-        // },
+        goToUpdateGoods(goodsno) {
+            window.location.href = `http://localhost:8080/admin/goodsupdate/${goodsno}`;
+        },
         goToDetail(goodsno) {
             window.location.href = `http://localhost:8080/goodsDetail/${goodsno}`;
         },
