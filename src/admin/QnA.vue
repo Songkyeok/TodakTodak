@@ -12,8 +12,8 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody class="table-data" v-if="pageQnaList.length>0">
-                    <tr v-for="(qna, index) in pageQnaList" :key="index">
+                <tbody class="table-data" v-if="qnaList.length>0">
+                    <tr v-for="(qna, index) in qnaList" :key="index">
                             <td>{{ qna.qna_create }}</td>
                             <td>{{ qna.goods_nm }}</td>
                             <td>{{ qna.qna_title }}</td>
@@ -31,8 +31,10 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                        <a href="" style="text-decoration: none;">
                             <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
                             <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+                        </a>
                     </ul>
                 </ul>
             </nav>
@@ -49,27 +51,26 @@ export default {
     },
     data() {
         return {
+            sampleData: '',
             qnaList: [],
             pageNum: 0,
             pageCnt: 0,
-            onePageCnt: 10,
-            pageQnaList: [],
+            pageqnaList: []
         };
     },
     mounted() {
         this.allQnaList()
     },
-    //리스트 조회 , 날짜 (년,월,일)
-    methods: { 
+    methods: {
         allQnaList() {
             axios({
                 url: "http://localhost:3000/admin/qnaList",
                 method: "POST",
             }).then(res => {
-                this.qnaList = res.data.results
-                this.pageCnt = Math.ceil(this.qnaList.length / this.onePageCnt);
+                this.qnaList = res.data.results;
+                this.pageCnt = Math.ceil(this.qnaList.length / 15)
                 this.setPage(1)
-
+                // 날짜 format 변경
                 for(let i=0; i<this.qnaList.length; i++) {
                     let qna_create = this.qnaList[i].qna_create
                     // 문자열을 Date 객체로 변환
@@ -87,7 +88,6 @@ export default {
                 }
             })
         },
-        //리스트 삭제
         answer_btn(qna_no) {
             axios({
                 url: "http://localhost:3000/admin/qnaDelete",
@@ -100,17 +100,30 @@ export default {
                 this.allQnaList();
             })
         },
-        //페이징
+        // allDeleteQna(){
+        //     axios({
+        //         url: "http://localhost:3000/admin/qnaDelete",
+        //         method: "POST",
+        //         data: {
+                    
+        //         }
+        //     }).then(results => {
+        //         this.deleteQna = results.data;
+        //         console.log(deleteQna)
+        //     })
+        // }
+
+
+
         setPage(page) {
-            this.pageQnaList = []
+            this.pageqnaList = []
             this.pageNum = page - 1;
             this.sliceList()
-            console.log(this.pageQnaList);
-            console.log(page)
         },
         sliceList() {
-            const start = 0 + this.pageNum * this.onePageCnt
-            this.pageQnaList = this.qnaList.slice(start, start + this.onePageCnt);
+            const start = this.pageNum * this.itemsPerPage; // 시작 인덱스 계산
+            const end = start + this.itemsPerPage; // 끝 인덱스 계산
+            this.pageqnaList = this.qnaList.slice(start, end); // 페이지에 맞는 목록 추출
         },
     }
 }

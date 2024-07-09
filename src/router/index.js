@@ -38,8 +38,6 @@ import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
 
-import QnaUpdate from "../views/QnaUpdate.vue";
-
 const routes = [
   {
     path: '/',
