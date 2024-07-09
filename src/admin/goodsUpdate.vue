@@ -15,6 +15,7 @@
                 </div>
             </div>
 
+
             <div class="mb-3 row">
                         <label class="col-md-3 col-form-label">카테고리 *</label>
                         <div class="col-md-9 inputRadio">
@@ -55,6 +56,43 @@
                             </div>
                         </div>
                     </div>
+
+
+            <!-- <div class="mb-3 row">
+                <label class="col-md-3 col-form-label">카테고리 *</label>
+                <div class="col-md-9 inputRadio">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="1" id="cate1">
+                    <label class="btn btn-primary" for="cate1">유아식기</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="2" id="cate2">
+                    <label class="btn btn-primary" for="cate2">욕실용품</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="3" id="cate3">
+                    <label class="btn btn-primary" for="cate3">외출용품</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="4" id="cate4">
+                    <label class="btn btn-primary" for="cate4">유아도서</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="5" id="cate5">
+                    <label class="btn btn-primary" for="cate5">위생용품</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="6" id="cate6">
+                    <label class="btn btn-primary" for="cate6">장난감</label>
+                    </label>
+                    <label class="btn btn-primary">
+                    <input type="radio" name="options" v-model="goods.goods_category" value="7" id="cate7">
+                    <label class="btn btn-primary" for="cate7">이벤트</label>
+                    </label>
+            </div>
+                </div>
+            </div> -->
 
             <div class="mb-3 row">
                 <label class="col-md-3 col-form-label">제품 가격 *</label>
