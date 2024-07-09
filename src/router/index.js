@@ -29,6 +29,8 @@ import GoodsAdd from "../admin/goodsAdd.vue";
 
 import ReviewWrite from "../views/ReviewWrite.vue";
 
+import QnaUpdate from "../views/QnaUpdate.vue";
+
 const routes = [
   {
     path: "/",
@@ -123,6 +125,11 @@ const routes = [
     path: '/orderpay/:ordertp/:goodsno/:total',
     name: "OrderPay",
     component: OrderPay
+  },
+  {
+    path: '/qnaupdate',
+    name: "QnaUpdate",
+    component: QnaUpdate
   },
   // 리뷰작성
   {
