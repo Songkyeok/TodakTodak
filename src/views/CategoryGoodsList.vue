@@ -62,8 +62,12 @@ export default {
                 this.categoryGoods = results.data; // 여기에 저장, this.categoryGoods => return 바로 아래에 선언한 categoryGoods: []
                 this.cate = results.data[0].goods_category;
             }) .catch(error => {
-                alert('상품이 없습니다.')
-                window.location.href = `http://localhost:8080/main`; 
+                // alert('상품이 없습니다.')
+                this.$swal("등록된 상품이 없습니다.");
+                // window.location.href = `http://localhost:8080/main`;
+                setTimeout(() => {
+                    this.$router.push({ path: '/' });
+                }, 2000);
             })     
         },
         goToDetail(goodsno) { // goTogoodsDetail?
