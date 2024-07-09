@@ -1,5 +1,5 @@
 <template>
-    <main class="mt-3">
+    <main class="admin_container">
         <div class="container">
             <table class="table caption-top goodslist-table">
                 <thead class="table-light">
@@ -180,6 +180,11 @@ export default {
 </script>
 
 <style scoped>
+.admin_container {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 100px;
+}
 
 .goodslist-table {
     font-family: unset;

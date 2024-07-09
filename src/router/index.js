@@ -152,7 +152,7 @@ const routes = [
     component: AdminpageSidebar,
     children: [
       {
-        path: "goods",
+        path: "",
         component: selectGoods,
       },
       {
