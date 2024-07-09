@@ -22,25 +22,23 @@ export default {
 
 <style>
 * {
-     scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 .content {
-  padding-top: 150px;
   margin: auto;
   height: 100%;
   position: relative;
   min-height: 100%;
 }
 
-body {
+/* body {
   overflow-y: scroll;
-}
+} */
 
 Footer {
   width: 100%;
   height: auto;
   position : relative;
-  transform : translateY(-1%);
 }
 </style>
