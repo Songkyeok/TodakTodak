@@ -36,7 +36,7 @@
                                     <div class="goods-cnt d-flex align-items-center">
                                         <button class="input-group-text" @click="updateBasketCnt2(goods);" :disabled="goods.basket_cnt === 1">-</button>
                                         <div>{{ goods.basket_cnt }}</div>
-                                        <button class="input-group-text" @click="updateBasketCnt(goods);" :disabled="goods.basket_cnt === 999">+</button>
+                                        <button class="input-group-text" @click="updateBasketCnt(goods);" :disabled="goods.basket_cnt === goods.goods_cnt">+</button>
                                     </div>
                                     </td>
                                     <td>
@@ -215,16 +215,6 @@ export default {
             selectedCartList() {
             return this.basketList.filter(goods => goods.checked);
             },
-            basketAllCnt(){
-                axios({
-                        url: "http://localhost:3000/goods/basketCnt",
-                        method: "POST",
-                    })
-                    .then(results => {
-                        this.basketCnt = results.data;
-                        console.log(results)
-                    })
-            }
     }
 }
 
