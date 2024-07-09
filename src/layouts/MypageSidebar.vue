@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <div class="mypage-bar">
     <h3 class="title_text">마이 페이지</h3>
     <div class="mypage_nav">
@@ -37,7 +38,12 @@
   <router-view></router-view>
 </template>
 <script>
+import Header from "../layouts/header.vue";
+
 export default {
+  components: {
+    Header,
+  },
   methods: {
     goToMypage() {
       this.$router.push({ path: '/mypage' });
