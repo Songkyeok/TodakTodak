@@ -26,6 +26,7 @@ import OrderPay from "../views/orderPay.vue";
 
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
+import GoodsUpdate from "../admin/goodsUpdate.vue";
 
 import ReviewWrite from "../mypages/ReviewWrite.vue";
 
@@ -84,6 +85,10 @@ const routes = [
     path: "/admin/goodscreate",
     name: "GoodsAdd",
     component: GoodsAdd,
+  },
+  {
+    path: "/admin/goodsupdate/:goodsno",
+    component: GoodsUpdate,
   },
   {
     path: '/admin/qna',

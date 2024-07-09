@@ -9,34 +9,47 @@
                     <input type="text" class="form-control" v-model="goods.goods_nm">
                 </div>
             </div>
+            
             <div class="mb-3 row">
-                <label class="col-md-3 col-form-label">카테고리 *</label>
-                <div class="col-md-9 inputRadio">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-primary active">
-                    <input type="radio" name="options" v-model="cate_check" value="유아식기" id="cate1" checked> 유아식기
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="욕실용품" id="cate2"> 욕실용품
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="외출용품" id="cate3"> 외출용품
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="유아도서" id="cate4"> 유아도서
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="위생용품" id="cate5"> 위생용품
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="장난감" id="cate6"> 장난감
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="options" v-model="cate_check" value="이벤트" id="cate7"> 이벤트
-                </label>
-            </div>
-                </div>
-            </div>
+                        <label class="col-md-3 col-form-label">카테고리 *</label>
+                        <div class="col-md-9 inputRadio">
+                            <div class="form-radio ms-4">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="1"
+                                    id="cate1">
+                                <label class="form-check-label" for="cate1">유아식기</label>
+                            </div>
+                            <div class="form-radio ms-4">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="2"
+                                    id="cate2">
+                                <label class="form-check-label" for="cate2">욕실용품</label>
+                            </div>
+                            <div class="form-check ms-1">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="3"
+                                    id="cate3">
+                                <label class="form-check-label" for="cate3">외출용품</label>
+                            </div>
+                            <div class="form-check ms-1">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="4"
+                                    id="cate4">
+                                <label class="form-check-label" for="cate4">유아도서</label>
+                            </div>
+                            <div class="form-check ms-1">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="5"
+                                    id="cate5">
+                                <label class="form-check-label" for="cate5">위생용품</label>
+                            </div>
+                            <div class="form-check ms-1">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="6"
+                                    id="cate6">
+                                <label class="form-check-label" for="cate6">장난감</label>
+                            </div>
+                            <div class="form-check ms-1">
+                                <input class="form-radio-input" type="radio" v-model="goods.goods_category" value="7"
+                                    id="cate7">
+                                <label class="form-check-label" for="cate7">이벤트</label>
+                            </div>
+                        </div>
+                    </div>
 
             <div class="mb-3 row">
                 <label class="col-md-3 col-form-label">제품 가격 *</label>
@@ -241,8 +254,7 @@ export default {
                 })
                     .then((result) => {
                         if (result.isConfirmed) {
-                            this.$router.push({path:'/'});
-                        // 나중엔 제품 목록 리스트로 돌아가게 수정하기
+                            this.$router.push({path:'/admin/goods'});
                     } 
                 })
         },
