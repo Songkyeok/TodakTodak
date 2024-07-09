@@ -15,7 +15,7 @@
         <div class="error__title">404</div>
         <div class="error__subtitle">Hmmm...</div>
         <div class="error__description">It looks like one of the  developers fell asleep</div>
-            <button class="error__button error__button--active" @click="this.$router.push({ path: '/' });">Back</button>
+            <button class="error__button error__button--active" @click="this.$router.go(-1);">Back</button>
             <!-- <button class="error__button">CONTACT</button> -->
         </div>
 
