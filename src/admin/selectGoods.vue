@@ -119,6 +119,8 @@ export default {
                 return '위생용품';
             } else if (socialType === 6) {
                 return '장난감';
+            } else if (socialType === 7) {
+                return '이벤트';
             } else {
                 return 'null';
             }
