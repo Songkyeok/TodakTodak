@@ -6,6 +6,8 @@
         <br />
         <br />
         <form @submit.prevent="onSubmitReview" class="form-container">
+            <!-- 사용자 이름 -->
+            {{ this.user_nm }}
             <div class="write-form">
                 <label class="col-md-3 col-form-label">★별점★</label>
                 <div class="dropdown">
@@ -38,7 +40,7 @@
             <div class="mb-3 row">
                 <label class="col-md-3 col-form-label">이미지 등록</label>
                 <div class="col-md-9">
-                    <input type="file" class="form-control" accept="image/png,image/jpeg" @change="uploadFile($event.target.files, 1)">
+                    <input type="file" class="form-control" accept="image/png,image/jpeg" @change="uploadFile($event.target.files, 0)">
                 </div>
                 <div class="alert alert-secondary" role="alert">
                     <ul>
@@ -65,6 +67,7 @@ export default {
             sortCase: '별점 선택',
             isDropdownOpen: false,
             sortOption: 0,
+            user_nm: {}, // 하나만 받으면 되므로
             review: {
                 review_con: "",
                 review_img: "",
@@ -104,20 +107,21 @@ export default {
     },
 
     created() {
-        this.getOrderListGoods();
         this.getUser();
+        this.getReGoods();
     },
 
     methods: {
 
-        async getOrderListGoods() {
-            try {
-                const goodsno = this.$route.params.goods_no;
-                const response = await axios.get(`http://localhost:3000/review/getOrderGoods/${goodsno}`);
-                this.goodsno = response.data[0];
-            } catch(error) {
-                console.error(error);
-            }
+        getReGoods() {
+            const user_no = this.$store.state.user.user_no;
+            axios ({
+                url: 'http://localhost:3000/review/getReGoods',
+                method: "POST",
+                data: {
+                    user_no: user_no, // 메소드 안에 있는 것을 가져다 사용했기 때문에 this를 빼도 됨
+                }
+            })
         },
         
         // 별점 dropdown 버튼
@@ -127,6 +131,7 @@ export default {
         sortList(sortNum) {
             const stars = ['★★★★★', '★★★★', '★★★', '★★', '★'];
             this.sortCase = stars[sortNum];
+            this.review.review_rating = sortNum;
             this.sortOption = sortNum + 1; // 별점은 1부터 5까지
             this.isDropdownOpen = false; // 드롭다운 닫음
         },
@@ -136,6 +141,7 @@ export default {
 
             if (file) {
                 name = file[0].name;
+
             } else {
                 return;
             }
@@ -154,6 +160,7 @@ export default {
             }).then ((results)=> {
                 if (results.data.message === 'success') {
                     this.$swal("이미지 등록 성공");
+
                     if (type == 0) {
                         this.review.review_img = name;
                     } else if (type == 1) {
@@ -177,11 +184,11 @@ export default {
                     method: "POST",
                     data: {
                         review_con: this.review.review_con,
-                        reveiw_img: this.review.review_img,
+                        review_img: this.review.review_img,
                         review_rating: this.review.review_rating,
-                        userno: this.review.user_no,
-                        goodsno: this.review.goods_no,
-                        order_trade_no: this.review.order_trade_no,
+                        user_no:  this.$store.state.user.user_no,
+                        goods_no: 7,
+                        order_trade_no: 9,
                     },
                 }).then((results) => {
                     console.log('결과', results);
@@ -199,11 +206,12 @@ export default {
 
         async getUser() {
             try {
-                const user_no = this.$route.params.user_no;
+                const user_no = this.$store.state.user.user_no; // user_no 가져오려면 이렇게 써야함. params가 아님
                 console.log('user_no:', user_no);
-                const response = await axios.get(`http://localhost:3000/review/getUser/${user_no}`);
-                console.log('response.data:', response.data);
-                this.user_no = response.data;
+                const response = await axios.get(`http://localhost:3000/review/getUser/${user_no}`); // 여기서 params로 보냇음
+                
+                this.user_nm = response.data[0].user_nm;
+                console.log('response.data:', response.data[0].user_nm);
 
                 if (response.data && response.data.length > 0) {
                     this.user_no = response.data[0].user_no;
