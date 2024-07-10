@@ -1,48 +1,54 @@
 <!-- 처음 만든 것 -->
 <template>
     <div class="new-review">
-        <h2 class="text-center">리뷰 등록</h2>
+        <br />
+        <h2 class="text-center">리뷰 작성</h2>
         <br />
         <br />
         <br />
-        <form @submit.prevent="onSubmitReview" class="form-container">
+        <form @submit.prevent="onSubmitReview">
             <!-- 사용자 이름 -->
-            {{ this.user_nm }}
-            <div class="write-form">
-                <label class="col-md-3 col-form-label">★별점★</label>
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-2 col-form-label bold-label">작성자</label>
+                <div class="col-sm-10 d-flex align-items-center">{{ this.user_nm }}</div>
+            </div>
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-2 col-form-label bold-label">상품 만족도</label>
+                <div class="col-sm-10 d-flex align-items-center">
                 <div class="dropdown">
                     <button @click="toggleDropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" style="border: none;">{{ sortCase }}</button>
                     <ul class="dropdown-menu" :class="{ show: isDropdownOpen }">
                         <li>
-                            <a class="dropdown-item" href="#" @click.prevent="sortList(0)">★★★★★</a>
+                            <a class="dropdown-item" href="#" @click.prevent="sortList(4)">★★★★★</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" @click.prevent="sortList(1)">★★★★</a>
+                            <a class="dropdown-item" href="#" @click.prevent="sortList(3)">★★★★</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="#" @click.prevent="sortList(2)">★★★</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" @click.prevent="sortList(3)">★★</a>
+                            <a class="dropdown-item" href="#" @click.prevent="sortList(1)">★★</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" @click.prevent="sortList(4)">★</a>
+                            <a class="dropdown-item" href="#" @click.prevent="sortList(0)">★</a>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div class="review-con mb-3 row">
-                <label class="col-md-3 col-form-label">내용</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" v-model="review.review_con" placeholder="내용을 입력해주세요">
+                    </div>
                 </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-md-3 col-form-label">이미지 등록</label>
-                <div class="col-md-9">
+                <label for="reviewContent" class="col-sm-2 col-form-label bold-label">내용</label>
+                <div class="col-sm-10">
+                    <textarea id="reviewContent" class="form-control review-textarea" v-model="review.review_con" placeholder="내용을 입력해주세요"></textarea>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-md-2 col-form-label bold-label">이미지 등록</label>
+                <div class="col-md-10">
                     <input type="file" class="form-control" accept="image/png,image/jpeg" @change="uploadFile($event.target.files, 0)">
                 </div>
-                <div class="alert alert-secondary" role="alert">
+                <div class="alert alert-secondary mt-2" role="alert">
                     <ul>
                         <li>파일 사이즈 : 5M 이하</li>
                         <li>파일 확장자 : png, jpg만 가능</li>
@@ -50,8 +56,8 @@
                 </div>
             </div>
             <div class="text-center">
-                <button type="button" class="btn btn-secondary" @click="goToPreStep()">이전</button>
-                <button type="submit" class="btn btn-primary" @click="goToNextStep()">리뷰 등록</button>
+                <button type="button" class="btn btn-secondary button-margin-right" @click="goToPreStep()">이전</button>
+                <button type="submit" class="btn btn-primary custom-btn" @click="goToNextStep()">리뷰 등록</button>
             </div>
         </form>
     </div>
@@ -64,14 +70,14 @@ export default {
 
     data() {
         return {
-            sortCase: '별점 선택',
+            sortCase: '점수 선택',
             isDropdownOpen: false,
             sortOption: 0,
             user_nm: {}, // 하나만 받으면 되므로
             review: {
                 review_con: "",
                 review_img: "",
-                review_rating: 0,
+                review_rating: 5,
                 user_no: "",
                 goods_no: "",
                 order_trade_no: ""
@@ -84,26 +90,10 @@ export default {
         user() {
             return this.$store.state.user;
         },
+    },
 
-        // uniqueOrderList() {
-        //     const uniqueOrders = [];
-        //     const tradeNo = [];
-
-        //     for (const order of this.orderList) {
-        //         if (!tradeNo.includes(order.ORDER_TRADE_NO)) {
-        //             uniqueOrders.push({
-        //                 ORDER_TRADE_NO: order.ORDER_TRADE_NO,
-        //                 items: [order],
-        //             });
-        //             tradeNo.push(order.ORDER_TRADE_NO);
-        //         } else {
-        //             const index = uniqueOrders.findIndex((o) => o.ORDER_TRADE_NO === order.ORDER_TRADE_NO);
-        //             uniqueOrders[index].items.push(order);
-        //         }
-        //     }
-
-        //     return uniqueOrders;
-        // },
+    mounted() {
+        this.user_nm;
     },
 
     created() {
@@ -129,9 +119,9 @@ export default {
             this.isDropdownOpen = !this.isDropdownOpen;
         },
         sortList(sortNum) {
-            const stars = ['★★★★★', '★★★★', '★★★', '★★', '★'];
+            const stars = ['★', '★★', '★★★', '★★★★', '★★★★★'];
             this.sortCase = stars[sortNum];
-            this.review.review_rating = sortNum;
+            this.review.review_rating = sortNum + 1;
             this.sortOption = sortNum + 1; // 별점은 1부터 5까지
             this.isDropdownOpen = false; // 드롭다운 닫음
         },
@@ -187,8 +177,8 @@ export default {
                         review_img: this.review.review_img,
                         review_rating: this.review.review_rating,
                         user_no:  this.$store.state.user.user_no,
-                        goods_no: 7,
-                        order_trade_no: 9,
+                        goods_no: 7, // orderList 완성 후 변경필요
+                        order_trade_no: 9, // orderList 완성 후 변경필요
                     },
                 }).then((results) => {
                     console.log('결과', results);
@@ -224,12 +214,11 @@ export default {
         },
         
         goToPreStep() {
-            window.location.href = 'http://localhost:8080/mypage/review'; // 동작함
+            window.location.href = 'http://localhost:8080/mypage/review';
         },
 
         goToNextStep() {
-            // alert('리뷰가 성공적으로 등록되었습니다.');
-            // window.location.href = 'http://localhost:8080/mypage/review'; // 동작함
+            // window.location.href = 'http://localhost:8080/mypage/review';
         }
     },    
 };
@@ -242,4 +231,27 @@ export default {
     display: inline-block;
     padding: 0 5%;
 }
+
+.review-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+}
+
+.button-margin-right {
+    margin-right: 30px;
+}
+
+.bold-label {
+  font-weight: bold;
+  font-size: 1.2em; /* 글씨 크기를 키우기 위해 1.2em으로 설정 (필요에 따라 조정 가능) */
+}
+
+.custom-btn {
+    background-color: rgb(151, 235, 118);
+    border-color: rgb(151, 235, 118);
+    color: #222222;
+}
+
+
 </style>
