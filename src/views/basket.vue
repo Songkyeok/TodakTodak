@@ -98,7 +98,7 @@ export default {
                 alert ('주문페이지로 이동합니다.');
                 window.location.href = '/order';
             }
-            },
+        },
         getBasketList(){
                 if(this.user.user_no === ''){
                     alert('로그인해주셈');
@@ -214,7 +214,7 @@ export default {
             },
             selectedCartList() {
             return this.basketList.filter(goods => goods.checked);
-            },
+            }
     }
 }
 
