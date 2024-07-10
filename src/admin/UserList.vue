@@ -1,4 +1,5 @@
 <template>
+
   <div class="user-management">
     <h1>회원관리</h1>
     <br />
@@ -33,8 +34,13 @@
 
 <script>
 import axios from "axios";
+import AdminpageSidebar from "../layouts/AdminpageSidebar.vue";
 
 export default {
+  components: {
+    AdminpageSidebar
+  },
+
   data() {
     return {
       selectUser: [],
