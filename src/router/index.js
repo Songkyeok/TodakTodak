@@ -19,6 +19,7 @@ import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import EventList from "../views/EventList.vue";
 import GoodsDetail from "../views/Detail.vue";
 import OrderPay from "../views/orderPay.vue";
+import QnaUpdate from "../views/QnaUpdate.vue";
 
 // 404 page
 import NotFoundPage from "../views/NotFoundPage.vue";
@@ -37,9 +38,8 @@ import QnA from "../admin/QnA.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
-import { compile } from "vue";
 
-import QnaUpdate from "../views/QnaUpdate.vue";
+
 
 const routes = [
   {
@@ -110,6 +110,11 @@ const routes = [
         path: '/orderpay/:ordertp/:goodsno/:total',
         name: "OrderPay",
         component: OrderPay
+      },
+      {
+        path: "/qnaupdate",
+        name: "QnaUpdate",
+        component: QnaUpdate
       },
     ]
   },
