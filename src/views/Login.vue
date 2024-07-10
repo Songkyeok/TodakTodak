@@ -68,7 +68,7 @@ export default {
     console.log("this.$store.state ===>>>", this.$store.state);
     this.naverLogin = new window.naver.LoginWithNaverId({
         clientId: "LQsxeMjDjQpARzFM3jwf",
-        callbackUrl: "http://localhost:8080",
+        callbackUrl: "http://localhost:8080/login",
         isPopup: false,
         loginButton: {
             color: "green", type: 3, height: 48,

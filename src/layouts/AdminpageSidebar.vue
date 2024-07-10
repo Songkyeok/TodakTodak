@@ -11,6 +11,9 @@
               <span @click="goToGoods">- 상품 관리</span>
             </li>
             <li>
+              <span @click="goToStatus">- 주문 관리</span>
+            </li>
+            <li>
               <span @click="goToUserList">- 고객 관리</span>
             </li>
             <li>
@@ -46,6 +49,11 @@ export default {
     goToGoods() {
       this.$router.push({
         path: '/admin'
+      });
+    },
+    goToStatus() {
+      this.$router.push({
+        path: '/admin/status'
       });
     },
     goToUserList() {
