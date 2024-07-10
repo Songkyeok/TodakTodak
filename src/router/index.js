@@ -30,6 +30,7 @@ import DeleteProfile from "../mypages/DeleteProfile.vue"
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 import ReviewWrite from "../mypages/ReviewWrite.vue";
+import Check from "../mypages/Check.vue";
 
 // admin page
 import UserList from "../admin/UserList.vue";
@@ -87,11 +88,6 @@ const routes = [
         component: Basket,
       },
       {
-        path: "/orderList",
-        name: "orderList",
-        component: orderList,
-      },
-      {
         path: "/goodsDetail/:goodsno",
         name: "GoodsDetail",
         component: GoodsDetail,
@@ -146,6 +142,15 @@ const routes = [
         path: 'reviewwrite',
         name: "ReviewWrite",
         component: ReviewWrite
+      },
+      {
+        path: 'check',
+        component: Check
+      },
+      {
+        path: "orderList",
+        name: "orderList",
+        component: orderList,
       },
     ]
   },
