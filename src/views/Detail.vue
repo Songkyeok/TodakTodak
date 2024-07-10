@@ -1,43 +1,138 @@
 <template>
   <div v-if="goods">
     <div class="detail">
-      {{ getCategory(goods.goods_category) }}
       <div class="container">
-        <div class="image">
-          <img :width="450" :src="goods.goods_img? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): '/goodsempty.jpg'" alt="상품 이미지"/>
-        </div>
-        <div class="details">
-          {{ goods.goods_nm }}
-          <button v-if="user.user_no === ''" class="heart-button" @click="likeInsert">
-            <i class="far fa-heart heart-icon"></i>
-          </button>
-          <button v-else-if="!isLiked" class="heart-button" @click="likeInsert">
-            <i class="far fa-heart heart-icon"></i>
-          </button>
-          <button v-else class="heart-button" @click="likeDelete">
-            <i class="fas fa-heart like-heart-icon"></i>
-          </button>
-          <h4>{{ like }}</h4>
-          <div class="price">{{ getCurrencyFormat(goods.goods_price) }}원</div>
-          <div class="input-group">
-            <span>수량</span>
-            <button class="input-group-text" @click="calculatePrice(-1)" :disabled="total === 1">-</button>
-            <input type="text" style="width: 40px" v-model="total" />
-            <button class="input-group-text" @click="calculatePrice(1)" :disabled="total === goods.goods_cnt">+</button>
+        <div class="content">
+          <div class="brand_wrap">
+            <h4>{{getCategory(goods.goods_category)}}</h4>
           </div>
-          <div class="totalPrice">
-            <div>
-              <h4>총 금액</h4>
+          <div class="product_wrapper">
+            <div class="visual_area">
+                <img class="product-img" :src="goods.goods_img? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): '/goodsempty.jpg'" alt="상품 이미지"/>
             </div>
-            <div>
-              <h4>{{ getCurrencyFormat(this.totalPrice) }}</h4>
+            <div class="product-info_wrap">
+              <div class="details">
+                <div class="title_wrap">
+                  <strong class="title">{{ goods.goods_nm }}</strong>
+                  <span class="like_box">
+                  <button v-if="user.user_no === ''" class="heart-button" @click="likeInsert">
+                    <i class="far fa-heart heart-icon"></i>
+                  </button>
+                  <button v-else-if="!isLiked" class="heart-button" @click="likeInsert">
+                    <i class="far fa-heart heart-icon"></i>
+                  </button>
+                  <button v-else class="heart-button" @click="likeDelete">
+                    <i class="fas fa-heart like-heart-icon"></i>
+                  </button>
+                  </span>
+                </div>
+                <div class="detail_wrap">
+                
+                  <h4>{{ like }}</h4>
+                  <div class="price-box">
+                    <li class="price_list">
+                      <div class="price_name">
+                        <span>판매가</span>
+                      </div>
+                        <span class="price">
+                        <strong>{{ getCurrencyFormat(goods.goods_price) }}</strong>
+                        </span>
+                        <h5>원</h5>
+                    </li>
+                  </div>
+                  <div class="detail-info-box">
+                    <strong class="detail-info-tit">혜택안내</strong>
+                    <ul class="detail-info-list">
+                      <li>
+                        <div class="tit">카드혜택</div>
+                        <div class="info_box">
+                          <span>
+                            무이자 할부혜택
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="detail-info-box">
+                    <strong class="detail-info-tit">배송안내</strong>
+                    <ul class="detail-info-list">
+                      <li>
+                        <div class="tit">배송비</div>
+                        <div class="info_box">
+                          <span>
+                            배송비 무료
+                          </span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="tit">발송예정일</div>
+                        <div class="info_box">
+                          <span>
+                            3일 이내 배송가능 (토,일,공휴일 제외)
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="detail-option-section">
+                    <div class="detail-final-box">
+                      <div class="input-group">
+                        <span class="total">[택배배송]{{goods.goods_nm}} </span>
+                        <div class="button-group">
+                          <button class="btn decrease" @click="calculatePrice(-1)" :disabled="total === 1">-</button>
+                          <input type="number" class="input-field" v-model="total" @input="updatePrice" min="1" :max="goods.goods_cnt"/>
+                          <button class="btn increase" @click="calculatePrice(1)" :disabled="total === goods.goods_cnt">+</button>
+                        </div>
+                        <div class="input-group-price">{{getCurrencyFormat(this.totalPrice)}}원</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="detail-total-box">
+                    <span class="total-txt">총 합계</span>
+                    <span>
+                      <strong class="total-price">{{ getCurrencyFormat(this.totalPrice) }}</strong>원
+                    </span>
+                  </div>
+                  <div class="detail-buy-box">
+                    
+                      <button class="add-to-cart" @click="addToCart()">장바구니</button>
+                      <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
+                
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="buttons">
-            <button class="add-to-cart" @click="addToCart()">장바구니</button>
-            <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
-          </div>
-        </div>
+
+          <section class="cp-detail-info">
+            <div class="cp-detail-info_inner">
+              <div class="cm-tab">
+                <div class="tab__wrap size04" data-sticky-tab>
+                  <div class="sticky-wrap" style="height: 46px;">
+                    <div data-sticky style="width: 1080px; top: 154px;"  class="is-down is-fixed">
+                      <ul class="tab-tit">
+                        
+                        <li class="active">
+                          <a href="#detail-info01" role="button">상품 상세정보</a>
+                        </li>
+                        <li class>
+                          <a href="#detail-info02" role="button">고객 리뷰</a>
+                        </li>
+                        <li class>
+                          <a href="#detail-info03" role="button">상품 Q&A</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </section>
+
+      </div>
+
       </div>
       <!-- <div class="info">
                     <div class="header">
@@ -51,9 +146,9 @@
     </div>
 
     <div class="d-flex justify-content-center">
-      <div class="content">
+      
         <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
-      </div>
+    
     </div>
   </div>
 
@@ -179,7 +274,9 @@ export default {
   mounted() {
     this.getReviewList();
   },
-
+  watch() {
+    this.updatePrice();
+  },
   methods: {
     setPage(page) {
       this.pageReviewList = []
@@ -325,7 +422,14 @@ export default {
           (this.isLiked = false);
       }
     },
-
+    updatePrice() {
+      if (!isNaN(this.total) && this.total > 0 && this.total <= this.goods.goods_cnt) {
+        this.totalPrice = this.total * this.goods.goods_price;
+      } else {
+        this.total = 1;
+        this.totalPrice = this.total * this.goods.goods_price;
+      }
+    },
     // 리뷰조회 dropdown 버튼
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
@@ -370,32 +474,79 @@ export default {
 </script>
 
 <style scoped>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
-}
 
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  unicode-bidi: isolate;  
+}
 .container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+  box-sizing: border-box;
+  display: block;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 13px;
+  line-height: 16.9px;
+  width: 905.6px;
+
 }
 
-.image {
-  flex: 1;
-  text-align: center;
+.content {
+  min-width: 1080px;
+  width: 1080px;
 }
+
+.brand_wrap {
+  align-items: center;
+  display: flex;
+  font-family: "Spoqa Han Sans Neo";
+  width: 1080px;
+  min-height: 30px;
+  line-height: 16.9px;
+  padding-top: 30px;
+
+}
+
+.product_wrapper {
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 13px;
+  height: 726.609px;
+  letter-spacing: -0.4px;
+  line-height: 16.9px;
+  margin-top: 15px;
+  position: relative;
+  width: 1080px;
+  z-index: 30;
+}
+
+.visual_area {
+  box-sizing: border-box;
+  display: block;
+  height: 510px;
+  letter-spacing: -0.4px;
+  line-height: 16.9px;
+  width: 510px;
+  position: relative;
+}
+
+
+.product-img {
+  box-sizing: border-box;
+  display: block;
+  width: 510px;
+  height: 510px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  letter-spacing: -0.4px;
+  position: relative;
+  unicode-bidi: isolate;
+  text-align: center;
+  word-break: break-all;
+
+}
+
 
 .details {
   flex: 2;
@@ -407,39 +558,381 @@ body {
   margin-bottom: 10px;
 }
 
-.details .price {
-  font-size: 24px;
-  color: #e67e22;
-  margin-bottom: 10px;
+.product-info_wrap {
+  box-sizing: border-box;
+  display: block;
+  font-family: "Spoqa Han Sans Neo";
+  height: 725.875px;
+  font-size: 13px;
+  line-height: 16.9px;
+  letter-spacing: -0.4px;
+  width: 540px;
+  position: relative;
+  word-break: break-all;
+  z-index: 0;
+  unicode-bidi: isolate;
+
+}
+.title_wrap {
+  box-sizing: border-box;
+  margin-top: 18px;
+  height: 60px;
+  width: 540px;
+  word-break: break-all;
 }
 
-.details .input-group {
+.like_box {
+  height: 30px;
+  top: 1px;
+  width: 30px;
+}
+
+.title {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 400;
+  height: 60px;
+  line-height: 30px;
+  width: 505px;
+  font-family: "Spoqa Han Sans Neo";
+}
+
+.price-box {
+  border-bottom-color: rgb(227, 227, 227);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  box-sizing: border-box;
+  display: block;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 13px;
+  line-height: 16.9px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  letter-spacing: -0.4px;
+
+}
+
+.price {
+  align-items: center;
+  box-sizing: border-box;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 30px;
+  line-height: 16.9px;
+  list-style-position: outside;
+  text-align: left;
+
+}
+
+.price_name {
+  display: block;
+  font-family: "Spoqa Han Sans Neo";
+  width: 100px;
+  list-style-position: outside;
+}
+
+.total {
+  display: block;
+  width: 200px;
+  padding-right: 18px;
+  text-align: left;
+}
+
+.price_list {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 13px;
+  height: 35px;
+  line-height: 16.9px;
+  list-style-position: outside;
+  width: 540px;
+}
+
+.detail-info-box {
+  border-bottom-color: rgb(227, 227, 227);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  box-sizing: border-box;
+  display: block;
+  font-family: "Spoqa Han Sans Neo";
+  font-size: 13px;
+  height: auto;
+  line-height: 16.9px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  letter-spacing: -0.4px;
+
+}
+
+.detail-info-tit{
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  display: block;
+  font-weight: 700;
+  width: 540px;
+  padding-bottom: 13px;
+  word-break: break-all;
+}
+
+
+.tit {
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  display: table-cell;
+  font-family: "Spoqa Han Sans Neo";
+  height: 33.8px;
+  line-height: 16.9px;
+  list-style-position: outside;
+  list-style-type: none;
+  text-align: left;
+  vertical-align: middle;
+  width: 120px;
+}
+
+.info_box {
+  box-sizing: border-box;
+  color: rgb(102, 102, 102);
+  display: table-cell;
+  font-family: "Spoqa Han Sans Neo";
+  height: 33.8px;
+  list-style-position: outside;
+  vertical-align: middle;
+}
+
+.detail-option-section {
+
+}
+
+.input-group {
+  background-color: rgb(227, 227, 227);
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  margin: 10px 0px;
+  height:50px;
+  padding-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
-.details .total-price {
+.input-group-price{
+  font-size:13px;
+  margin-right: 40px;
+}
+
+.label {
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn, .input-field {
+  width: 60px; /* 버튼과 입력 필드의 기본 크기 설정 */
+  height: 60px; /* 버튼과 입력 필드의 기본 크기 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   font-size: 20px;
-  color: #e74c3c;
-  margin-bottom: 20px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin: 0;
 }
 
-.details .description {
-  font-size: 16px;
-  line-height: 1.5;
+.input-field {
+  text-align: center;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  -moz-appearance: textfield;
+  box-shadow: none;
+  width: 40px;
+  height: 20px;
 }
 
-.details .quantity input {
-  width: 60px;
-  padding: 5px;
-  font-size: 16px;
+.input-field::-webkit-outer-spin-button,
+.input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-/* .btn {
-  align-content: end;
-} */
+.input-field {
+  -moz-appearance: textfield;
+}
 
+.btn {
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  box-shadow: none;
+  width: 20px;
+  height: 20px;
+}
+
+.btn:disabled {
+  background-color: transparent;
+  color: grey;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
+
+.increase {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+  
+}
+
+.decrease {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.detail-total-box {
+  font-family: "Spoqa Han Sans Neo";
+  display: block;
+  line-height: 23.4px;
+  padding-top: 20px;
+  text-align: right;
+}
+
+.total-txt {
+  display: inline;
+  font-size: 18px;
+  box-sizing: border-box;
+  height: auto;
+}
+
+.total-price {
+  font-size: 25px;
+  display: inline-block;
+  line-height: 23.4px;
+  width: auto;
+  min-width: 130px;
+  height: 30px;
+  padding-left: 10px;
+}
+
+.detail-buy-box {
+  display: flex;
+  padding-top: 20px;
+  line-height: 16.9px;
+
+}
+
+.add-to-cart {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  background: #fff;
+  font-weight: 500;
+  height: 53px;
+  font-size: 18px;
+  color: #000;
+
+}
+
+.buy-now {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  background: #000;
+  font-weight: 500;
+  height: 53px;
+  font-size: 18px;
+  color: #fff;
+  border-left: 0;
+}
+
+.cp-detail-info_inner {
+  box-sizing: border-box;
+  font-size: 13px;
+  font-family: "Spoqa Han Sans Neo";
+  line-height: 16.9px;
+
+}
+
+.cm-tab {
+  padding-top: 40px;
+}
+
+.cm-tab .tab__wrap {
+  z-index: auto;
+  position: relative;
+}
+
+
+.cm-tab .tab__wrap [data-sticky].is-fixed {
+  z-index: 50;
+}
+
+[data-sticky].is-fixed{
+  position: flex;
+}
+
+.cm-tab .tab-tit {
+  margin: 0;
+  border-bottom: 1px solid #333;
+}
+
+.cm-tab .tab-tit:before, .cm-tab .tab-tit::after{
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.cm-tab .size04 .tab-tit li {
+  width: 33%;
+}
+
+.cm-tab .tab-tit .active {
+  z-index: 30;
+}
+
+.cm-tab .tab-tit li {
+  float: left;
+  background: #fff;
+  margin-bottom: -1px;
+  position: relative;
+}
+
+.cm-tab .tab-tit .active a {
+  padding-top: 12px;
+  border-top: 2px solid #333;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  background: #fff;
+  color: #333;
+  font-weight: 800;
+
+}
+
+.cm-tab .tab-tit li a {
+  overflow: hidden;
+  display: block;
+  padding: 13px 5px;
+  border: 1px solid #d7d7d7;
+  font-size: 14px;
+  margin: 0 0 0 -1px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .review-none {
     font-size: medium;
