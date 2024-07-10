@@ -105,10 +105,21 @@ export default {
 
     created() {
         this.getOrderListGoods();
-        // this.getUser();
+        this.getUser();
     },
 
     methods: {
+
+        async getOrderListGoods() {
+            try {
+                const goodsno = this.$route.params.goods_no;
+                const response = await axios.get(`http://localhost:3000/review/getOrderGoods/${goodsno}`);
+                this.goodsno = response.data[0];
+            } catch(error) {
+                console.error(error);
+            }
+        },
+        
         // 별점 dropdown 버튼
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen;
@@ -157,53 +168,50 @@ export default {
         },
         
         onSubmitReview() {
-            axios({
-                url: `http://localhost:3000/review/addReviews`,
-                method: "POST",
-                data: {
-                    review_con: this.review.review_con,
-                    reveiw_img: this.review.review_img,
-                    review_rating: this.review.review_rating,
-                    user_no: this.review.user_no,
-                    goods_no: this.review_goods_no,
-                    order_trade_no: this.review_order_trade_no,
-                },
-            }).then((results) => {
-                console.log('결과', results);
-                this.addReviews = results.data;
-                alert('리뷰가 성공적으로 등록되었습니다.');
-                // this.goToNextStep();
+            if(this.user.user_no === '') {
+                alert('로그인 후 이용 가능합니다.');
+                this.$router.push({ path: '/login' });
+            } else {
+                axios({
+                    url: `http://localhost:3000/review/addReviews`,
+                    method: "POST",
+                    data: {
+                        review_con: this.review.review_con,
+                        reveiw_img: this.review.review_img,
+                        review_rating: this.review.review_rating,
+                        userno: this.review.user_no,
+                        goodsno: this.review.goods_no,
+                        order_trade_no: this.review.order_trade_no,
+                    },
+                }).then((results) => {
+                    console.log('결과', results);
+                    this.addReviews = results.data;
+                    alert('리뷰가 성공적으로 등록되었습니다.');
+                    // this.goToNextStep();
 
-            }).catch((error) => {
-                console.error(error);
-                alert('리뷰 등록에 실패하였습니다.');
-                // window.location.href = 'http://localhost:8080/mypage/reviewwrite'
-            });
+                }).catch((error) => {
+                    console.error(error);
+                    alert('리뷰 등록에 실패하였습니다.');
+                    // window.location.href = 'http://localhost:8080/mypage/reviewwrite'
+                })
+            }
         },
 
-        // async getUser() {
-        //     try {
-        //         const userno = this.$route.params.userno
-        //         const response = await axios.post(`http://localhost:3000/review/getUser/${userno}`);
-        //         this.userno = response.data;
-
-        //         if (response.data.userno) {
-        //             this.userno = response.data;
-        //         } else {
-        //             alert('로그인 상태가 아닙니다.');
-        //         }
-        //     } catch(error) {
-        //         console.error('사용자 정보 가져오기 오류:', error);
-        //     }
-        // },
-
-        async getOrderListGoods() {
+        async getUser() {
             try {
-                const goodsno = this.$route.params.goods_no
-                const response = await axios.post(`http://localhost:3000/review/getOrderGoods/${goodsno}`);
-                this.goodsno = response.data;
+                const user_no = this.$route.params.user_no;
+                console.log('user_no:', user_no);
+                const response = await axios.get(`http://localhost:3000/review/getUser/${user_no}`);
+                console.log('response.data:', response.data);
+                this.user_no = response.data;
+
+                if (response.data && response.data.length > 0) {
+                    this.user_no = response.data[0].user_no;
+                } else {
+                    alert('로그인 상태가 아닙니다.');
+                }
             } catch(error) {
-                console.error(error);
+                console.error('사용자 정보 가져오기 오류:', error);
             }
         },
         
