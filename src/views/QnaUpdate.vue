@@ -14,16 +14,16 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><label for="subject">제목</label></th>
+                    <td><input type="text" id="subject" name="subject" required></td>
+                </tr>
+                <tr>
                     <th><label for="writer">작성자</label></th>
-                    <td><input type="text" id="writer" name="writer" v-model="user.user_nm"></td>
+                    <td><input type="text" id="writer" name="writer" v-model="user_nm" required></td>
                 </tr>
                 <tr>
                     <th><label for="phone">휴대폰</label></th>
-                    <td><input type="tel" id="phone" name="phone" value="010-1234-5678" required></td>
-                </tr>
-                <tr>
-                    <th><label for="subject">제목</label></th>
-                    <td><input type="text" id="subject" name="subject" required></td>
+                    <td><input type="tel" id="phone" name="phone" v-model="user_phone" required></td>
                 </tr>
                 <tr>
                     <th><label for="content">본문</label></th>
@@ -45,63 +45,44 @@ export default {
     components:{},
     data() {
         return {
-           qnaUpdateList: {},
-        //    user: {
-        //     user_nm: '',
-        //     user_phone: '',
-        //    },
+           qnaUpdateList: [],
+           user_nm:"",
+           user_phone:""
         };
     },
     computed: {
         user() {
             return this.$store.state.user;
-        }
+        },
     },
     created(){
         this.getQnaUpdateList();
     },
     mounted(){
-        // if (this.user.user_no == '') {
-        //     // 일단은 로그인 상태 체크 
-        //     this.$swal("로그인 이후 사용가능합니다.");
-        //     this.$router.push({ path: '/login' });
-        // }
+        if (this.user.user_no == '') {
+            this.$swal("로그인 이후 사용가능합니다.");
+            this.$router.push({ path: '/login' });
+        }
     },
     methods: {
-
-        getQnaUpdateList() {
+    getQnaUpdateList() {
         axios({
-            url: "http://localhost:3000/qna/updateQna",
+            url: "http://localhost:3000/qna/selectQnaUser",
             method: "POST",
             data: {
-                user_no: this.user.user_no // 클라이언트에서 필요한 데이터를 전송
+                user_no: this.user.user_no 
             }
         }).then(response => {
-            // 서버에서 받은 데이터를 변수에 할당
-            this.qnaUpdateList = response.data;
-
-            // 테스트를 위해 콘솔에도 출력
-            console.log(this.qnaUpdateList);
+            this.qnaUpdateList = response.data.results;
+            this.user_nm = this.qnaUpdateList[0].USER_NM;
+            this.user_phone = this.qnaUpdateList[0].USER_PHONE;
         }).catch(error => {
             console.error('Error fetching data:', error);
         });
-    }
+    },
+    
 
-        // getQnaUpdateList(){
-        //     console.log(this.qnaUpdateList);
-        //     axios({
-        //         url:"http://localhost:3000/qna/updateQna",
-        //         method:"POST",
-        //         data: {
-        //         user_no: this.user.user_no // 클라이언트에서 필요한 데이터를 전송
-        //     }
-        //     }).then(results => {
-        //         this.qnaUpdateList = results.data;
-        //     }).catch(error => {
-        //     console.error('Error fetching data:', error);
-        // });
-        // }
-    }
+}
 }
 </script>
 <style scoped>
