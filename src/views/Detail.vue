@@ -249,7 +249,7 @@
       <br/>
       <tbody>
           <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
-              <th class="qna_no value">{{  }}</th> 
+              <th class="qna_no value">QNA 번호</th> 
               <th class="qna_now value">{{  }}</th>
               <th class="qna_menu value">{{  }}</th>
               <th class="qna_title value">{{  }}</th>
