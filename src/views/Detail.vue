@@ -204,7 +204,10 @@
               <th class="review-no value">{{ review.review_no }}</th> 
               <th class="review-star value">{{ review.review_rating }}</th>
               <th class="review-user value">{{ review.user_nm }}</th>
-              <th class="review-photo value">{{ review.review_img }}</th>
+              <th class="review-photo value">
+                <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+              </th>
+                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
               <th class="review-date value">{{ review.review_create }}</th>
           </tr>
@@ -940,6 +943,8 @@ li {
 }
 
 .dropdown {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
     text-align: end;
     padding-right: 50px;
     position: relative;
@@ -956,18 +961,23 @@ li {
   color: #fff; /* 텍스트 색상 */
   border: none; /* 테두리 제거 */
   border-radius: 4px; /* 둥근 테두리 */
+  /* float: right; 버튼을 오른쪽으로 정렬 */
 }
 
 /* Optional: Adjust dropdown list items */
 .dropdown-menu {
   width: 150px; /* 너비 */
   right: 0;
+  top: 100%;
 }
 
 /* Optional: Change dropdown items style */
 .dropdown-menu .dropdown-item {
   font-size: 14px; /* 폰트 크기 */
   padding: 10px 15px; /* 패딩 */
+  right: 0;
+  float: right;
+  top: 100%;
 }
 
 
@@ -1030,6 +1040,11 @@ li {
 
 .page-item.active {
     font-weight: bold;
+}
+
+.review-img {
+  width: 100px; /* 너비를 100px로 설정 */
+  height: auto; /* 높이를 자동으로 설정하여 비율을 유지 */
 }
 
 </style>
