@@ -93,7 +93,7 @@ export default {
     },
 
     mounted() {
-        this.user_nm;
+        
     },
 
     created() {

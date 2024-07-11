@@ -87,12 +87,12 @@ export default {
             })
         },
 
-        goToReviewWrite() {
+        goToReviewWrite() { // 리뷰작성 폼으로 라우팅
             const order_trade_no = this.order_trade_no;
             axios({
                 url: `http://localhost:3000/review/addReviews/${order_trade_no}`,
                 methods: "POST",
-                data: {
+                data: { // 리뷰폼으로 보내야하는 데이터들
                     goods_no: this.goods_no,
                     order_trade_no: this.order_trade_no
                 }
