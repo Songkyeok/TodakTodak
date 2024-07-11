@@ -32,6 +32,7 @@ import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 import ReviewWrite from "../mypages/ReviewWrite.vue";
 import Check from "../mypages/Check.vue";
+import review from "../mypages/review.vue";
 
 // admin page
 import UserList from "../admin/UserList.vue";
@@ -156,6 +157,11 @@ const routes = [
         path: "orderList",
         name: "orderList",
         component: orderList,
+      },
+      {
+        path: 'review',
+        name: "review",
+        component: review
       },
     ]
   },

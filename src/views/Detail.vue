@@ -139,26 +139,7 @@
       <section id="tab-flexbox">
 
         <!-- 리뷰 넣으시면 됩니다. -->
-
-      </section>     
-      <section id="tab-react">
-
-        <!-- QnA 넣으시면 됩니다. -->
-
-      </section>
-
-      
-    </div>
-    </div>
-
-
-
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <!-- 상품리뷰 리스트 -->
+<!-- 상품리뷰 리스트 조회 -->
 <div>
   <div class="review-list">
     <h2>고객 리뷰</h2>
@@ -186,12 +167,12 @@
     <table class="review-content-list" v-else>
       <thead>
           <tr class="user-review-title">
-              <th class="review-no">리뷰 번호</th>
-              <th class="review-star">별점</th>
+              <th class="review-no">번호</th>
+              <th class="review-star">만족도</th>
               <th class="review-user">작성자</th>
-              <th class="review-photo">리뷰 포토</th>
+              <th class="review-photo">포토 리뷰</th>
               <th class="review-content">내용</th>
-              <th class="review-date">날짜</th>
+              <th class="review-date">등록 날짜</th>
           </tr>
       </thead>
       <br />
@@ -207,7 +188,7 @@
               </th>
                 <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
-              <th class="review-date value">{{ review.review_create }}</th>
+              <th class="review-date value">{{ new Date(review.review_create).toISOString().split('T')[0] }}</th>
           </tr>
       </tbody>
     </table>
@@ -222,6 +203,19 @@
     <br />
   </div>
 </div>
+
+
+
+      </section>     
+      <section id="tab-react">
+
+        <!-- QnA 넣으시면 됩니다. -->
+
+      </section>
+
+      
+    </div>
+    </div>
 
 <br />
 <br />
@@ -273,8 +267,6 @@
     <br />
   </div>
 </div>
-
-
 </template>
 
 <script>
@@ -1000,7 +992,7 @@ li {
 
 .dropdown {
     display: flex;
-    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    /* justify-content: flex-end; 버튼을 오른쪽으로 정렬 */
     text-align: end;
     padding-right: 50px;
     position: relative;
@@ -1023,17 +1015,18 @@ li {
 /* Optional: Adjust dropdown list items */
 .dropdown-menu {
   width: 150px; /* 너비 */
-  right: 0;
+  /* right: 0;
   top: 100%;
+  float: right; */
 }
 
 /* Optional: Change dropdown items style */
 .dropdown-menu .dropdown-item {
   font-size: 14px; /* 폰트 크기 */
   padding: 10px 15px; /* 패딩 */
-  right: 0;
-  float: right;
-  top: 100%;
+  /* right: 0; */
+  /* float: right;
+  top: 100%; */
 }
 
 
@@ -1054,7 +1047,7 @@ li {
 }
 
 .review-star {
-    width: 3%;
+    width: 5%;
     padding-bottom: 20px;
     padding-top: 20px;
 }
