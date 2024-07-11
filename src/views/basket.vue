@@ -186,9 +186,8 @@ export default {
                 console.log("selectedCarts", selectedCarts)
                 console.log("basketNos", basketNos)
                 console.log("basketCount", basketCount)
-                if(this.user.user_no === ''){
-                    alert('로그인해주셈');
-                    this.$router.push({ path: '/login'});
+                if(basketNos.length === 0){
+                    this.$swal('결제할 상품을 선택해주세요');
                 }else{
                     axios({
                         url: "http://localhost:3000/goods/updateBasket",
