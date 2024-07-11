@@ -104,10 +104,14 @@
             </div>
           </div>
         
-          <section class="cp-detail-info">
-            <div class="cp-detail-info_inner">
-              <div class="cm-tab">
-                <div class="tab__wrap size04" data-sticky-tab>
+  
+
+      </div>
+
+
+      </div>
+                <div class="cm-tab" style="position: sticky; padding-top: 20px; margin: 0 auto; z-index: 15; top: 0; left: 0; right: 0; width: 1080px;">
+
                   <div class="sticky-wrap" style="height: 46px;">
                     <div class="et-hero-tabs-container">
                       <a class="et-hero-tab" href="#tab-es6">상품 상세정보</a>
@@ -116,14 +120,8 @@
                       <span class="et-hero-tab-slider"></span>
                     </div>
                   </div>
-                </div>
-              </div> 
-            </div>
-          </section>
-
-      </div>
-
-      </div>
+                
+              </div>         
       <!-- <div class="info">
                     <div class="header">
                     <h2>{{categoryType(goods.goods_category)}}/{{goods.goods_nm}}</h2>
@@ -134,7 +132,7 @@
                     </div>
                     </div> -->
       <section class="et-slide" id="tab-es6">
-        <div style="text-align : center; padding-left: 100px; margin-top: 30px;">
+        <div style="text-align : center; margin-top: 30px;">
             <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
         </div>
       </section>
@@ -224,6 +222,7 @@
     <br />
   </div>
 </div>
+ 
 </template>
 
 <script>
@@ -496,13 +495,14 @@ li {
   font-family: "Spoqa Han Sans Neo";
   font-size: 13px;
   line-height: 16.9px;
-  width: 905.6px;
+  width: auto;
 
 }
 
 .content {
   min-width: 1080px;
   width: 1080px;
+  margin : 0 auto;
 }
 
 .brand_wrap {
@@ -537,7 +537,7 @@ li {
   height: 510px;
   letter-spacing: -0.4px;
   line-height: 16.9px;
-  width: 510px;
+  width: 540px;
   position: relative;
 }
 
@@ -545,7 +545,7 @@ li {
 .product-img {
   box-sizing: border-box;
   display: block;
-  width: 510px;
+  width: 540px;
   height: 510px;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -865,6 +865,8 @@ li {
   border-left: 0;
 }
 
+
+
 .cp-detail-info_inner {
   box-sizing: border-box;
   font-size: 13px;
@@ -872,6 +874,7 @@ li {
   line-height: 16.9px;
 
 }
+
 
 .et-hero-tabs,
 .et-slide {
@@ -910,7 +913,8 @@ li {
     color: #000;
     letter-spacing: 0.1rem;
     transition: all 0.5s ease;
-    font-size: 0.8rem;
+    font-size: 15px;
+    font-weight: 500;
     &:hover {
       color:white;
       background: rgba(102,177,241,0.8);
