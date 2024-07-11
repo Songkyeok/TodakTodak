@@ -103,37 +103,25 @@
               </div>
             </div>
           </div>
+        
+  
 
-          <section class="cp-detail-info">
-            <div class="cp-detail-info_inner">
-              <div class="cm-tab">
-                <div class="tab__wrap size04" data-sticky-tab>
+      </div>
+
+
+      </div>
+                <div class="cm-tab" style="position: sticky; padding-top: 20px; margin: 0 auto; z-index: 15; top: 0; left: 0; right: 0; width: 1080px;">
+
                   <div class="sticky-wrap" style="height: 46px;">
-                    <div data-sticky style="width: 1080px; top: 154px;"  class="is-down is-fixed">
-                      <ul class="tab-tit">
-                        
-                        <li class="active">
-                          <a href="#detail-info01" role="button">상품 상세정보</a>
-                        </li>
-                        <li class>
-                          <a href="#detail-info02" role="button">고객 리뷰</a>
-                        </li>
-                        <li class>
-                          <a href="#detail-info03" role="button">상품 Q&A</a>
-                        </li>
-                        
-                      </ul>
+                    <div class="et-hero-tabs-container">
+                      <a class="et-hero-tab" href="#tab-es6">상품 상세정보</a>
+                      <a class="et-hero-tab" href="#tab-flexbox">고객리뷰</a>
+                      <a class="et-hero-tab" href="#tab-react">상품 Q&A</a>
+                      <span class="et-hero-tab-slider"></span>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-            </div>
-          </section>
-
-      </div>
-
-      </div>
+                
+              </div>         
       <!-- <div class="info">
                     <div class="header">
                     <h2>{{categoryType(goods.goods_category)}}/{{goods.goods_nm}}</h2>
@@ -143,14 +131,26 @@
                     <h4>{{like}}</h4>
                     </div>
                     </div> -->
+      <section class="et-slide" id="tab-es6">
+        <div style="text-align : center; margin-top: 30px;">
+            <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
+        </div>
+      </section>
+      <section id="tab-flexbox">
+
+        <!-- 리뷰 넣으시면 됩니다. -->
+
+      </section>     
+      <section id="tab-react">
+
+        <!-- QnA 넣으시면 됩니다. -->
+
+      </section>
+
+      
+    </div>
     </div>
 
-    <div class="d-flex justify-content-center">
-      
-        <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
-    
-    </div>
-  </div>
 
 
   <br />
@@ -202,7 +202,10 @@
               <th class="review-no value">{{ review.review_no }}</th> 
               <th class="review-star value">{{ review.review_rating }}</th>
               <th class="review-user value">{{ review.user_nm }}</th>
-              <th class="review-photo value">{{ review.review_img }}</th>
+              <th class="review-photo value">
+                <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+              </th>
+                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
               <th class="review-date value">{{ review.review_create }}</th>
           </tr>
@@ -219,6 +222,7 @@
     <br />
   </div>
 </div>
+
 <br />
 <br />
 <br />
@@ -269,6 +273,7 @@
     <br />
   </div>
 </div>
+
 
 </template>
 
@@ -526,6 +531,11 @@ export default {
 
 <style scoped>
 
+.detail {
+  font-family: "Spoqa Han Sans Neo";
+  
+}
+
 li {
   display: list-item;
   text-align: -webkit-match-parent;
@@ -537,13 +547,14 @@ li {
   font-family: "Spoqa Han Sans Neo";
   font-size: 13px;
   line-height: 16.9px;
-  width: 905.6px;
+  width: auto;
 
 }
 
 .content {
   min-width: 1080px;
   width: 1080px;
+  margin : 0 auto;
 }
 
 .brand_wrap {
@@ -558,7 +569,7 @@ li {
 }
 
 .product_wrapper {
-  align-items: flex-start;
+  /* align-items: flex-start; */
   box-sizing: border-box;
   display: flex;
   font-family: "Spoqa Han Sans Neo";
@@ -578,7 +589,7 @@ li {
   height: 510px;
   letter-spacing: -0.4px;
   line-height: 16.9px;
-  width: 510px;
+  width: 540px;
   position: relative;
 }
 
@@ -586,7 +597,7 @@ li {
 .product-img {
   box-sizing: border-box;
   display: block;
-  width: 510px;
+  width: 540px;
   height: 510px;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -752,9 +763,6 @@ li {
   vertical-align: middle;
 }
 
-.detail-option-section {
-
-}
 
 .input-group {
   background-color: rgb(227, 227, 227);
@@ -909,6 +917,8 @@ li {
   border-left: 0;
 }
 
+
+
 .cp-detail-info_inner {
   box-sizing: border-box;
   font-size: 13px;
@@ -917,72 +927,60 @@ li {
 
 }
 
-.cm-tab {
-  padding-top: 40px;
-}
 
-.cm-tab .tab__wrap {
-  z-index: auto;
-  position: relative;
-}
-
-
-.cm-tab .tab__wrap [data-sticky].is-fixed {
-  z-index: 50;
-}
-
-[data-sticky].is-fixed{
-  position: flex;
-}
-
-.cm-tab .tab-tit {
-  margin: 0;
-  border-bottom: 1px solid #333;
-}
-
-.cm-tab .tab-tit:before, .cm-tab .tab-tit::after{
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.cm-tab .size04 .tab-tit li {
-  width: 33%;
-}
-
-.cm-tab .tab-tit .active {
-  z-index: 30;
-}
-
-.cm-tab .tab-tit li {
-  float: left;
-  background: #fff;
-  margin-bottom: -1px;
-  position: relative;
-}
-
-.cm-tab .tab-tit .active a {
-  padding-top: 12px;
-  border-top: 2px solid #333;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-  border-bottom: 1px solid #333;
-  background: #fff;
-  color: #333;
-  font-weight: 800;
+.et-hero-tabs,
+.et-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: #fff;
+    text-align: center;
+    padding: 0 2em;
 
 }
 
-.cm-tab .tab-tit li a {
-  overflow: hidden;
-  display: block;
-  padding: 13px 5px;
-  border: 1px solid #d7d7d7;
-  font-size: 14px;
-  margin: 0 0 0 -1px;
-  text-align: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.et-hero-tabs-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    z-index: 10;
+    &--top {
+        position: fixed;
+        top: 0;
+    }
+}
+
+.et-hero-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    color: #000;
+    letter-spacing: 0.1rem;
+    transition: all 0.5s ease;
+    font-size: 15px;
+    font-weight: 500;
+    &:hover {
+      color:white;
+      background: rgba(102,177,241,0.8);
+      transition: all 0.5s ease;
+    }
+}
+
+.et-hero-tab-slider {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 6px;
+    background: #66B1F1;
+    transition: left 0.3s ease;
 }
 
 .review-none {
@@ -1001,6 +999,8 @@ li {
 }
 
 .dropdown {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
     text-align: end;
     padding-right: 50px;
     position: relative;
@@ -1017,18 +1017,23 @@ li {
   color: #fff; /* 텍스트 색상 */
   border: none; /* 테두리 제거 */
   border-radius: 4px; /* 둥근 테두리 */
+  /* float: right; 버튼을 오른쪽으로 정렬 */
 }
 
 /* Optional: Adjust dropdown list items */
 .dropdown-menu {
   width: 150px; /* 너비 */
   right: 0;
+  top: 100%;
 }
 
 /* Optional: Change dropdown items style */
 .dropdown-menu .dropdown-item {
   font-size: 14px; /* 폰트 크기 */
   padding: 10px 15px; /* 패딩 */
+  right: 0;
+  float: right;
+  top: 100%;
 }
 
 
@@ -1093,6 +1098,7 @@ li {
     font-weight: bold;
 }
 
+
 .qna_no {
     width: 5%;
     padding-bottom: 20px;
@@ -1127,6 +1133,12 @@ li {
     width: 6%;
     padding-bottom: 20px;
     padding-top: 20px;
+}
+
+.review-img {
+  width: 100px; /* 너비를 100px로 설정 */
+  height: auto; /* 높이를 자동으로 설정하여 비율을 유지 */
+
 }
 
 </style>
