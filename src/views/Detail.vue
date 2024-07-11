@@ -219,6 +219,57 @@
     <br />
   </div>
 </div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>
+  <div class="review-list">
+    <h2>QnA</h2>
+    <br />
+    <br />
+    <br />
+    <div class="review-none" >등록된 상품 Q&A가 없습니다.</div>
+    <table class="review-content-list" >
+      <thead>
+          <tr class="user-review-title">
+              <th class="qna_no">번호</th>
+              <th class="qna_now">답변상태</th>
+              <th class="qna_menu">문의 유형</th>
+              <th class="qna_title">제목</th>
+              <th class="qna_user">작성자</th>
+              <th class="qna_date">작성일</th>
+          </tr>
+      </thead>
+      <br/>
+      <tbody>
+          <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
+              <th class="qna_no value">{{  }}</th> 
+              <th class="qna_now value">{{  }}</th>
+              <th class="qna_menu value">{{  }}</th>
+              <th class="qna_title value">{{  }}</th>
+              <th class="qna_user value">{{  }}</th>
+              <th class="qna_date value">{{  }}</th>
+          </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+              </ul>
+          </ul>
+      </nav>
+    <br />
+  </div>
+</div>
+
 </template>
 
 <script>
@@ -1040,6 +1091,42 @@ li {
 
 .page-item.active {
     font-weight: bold;
+}
+
+.qna_no {
+    width: 5%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_now {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_menu {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_title {
+    width: 30%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_user {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_date {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 </style>

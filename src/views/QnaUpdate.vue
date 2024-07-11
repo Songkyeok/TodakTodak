@@ -2,33 +2,34 @@
     <div class="container">
         <h1>상품 문의</h1>
         <form action="submit_form.php" method="post">
+            <hr class="black-line">
             <table>
                 <tr>
-                    <th><label for="inquiryType">말머리</label></th>
-                    <td>
-                        <select id="inquiryType" name="inquiryType">
-                            <option value="">문의내용</option>
-                            <option value="">주문확인</option>
-                            <option value="">기타</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label for="subject">제목</label></th>
-                    <td><input type="text" id="subject" name="subject" required></td>
-                </tr>
-                <tr>
                     <th><label for="writer">작성자</label></th>
-                    <td><input type="text" id="writer" name="writer" v-model="user_nm" required></td>
+                    <td class="text_font">{{ user_nm }}</td>
+                    <!-- <td><input type="text" id="writer" name="writer" v-model="user_nm" required></td> -->
                 </tr>
                 <tr>
                     <th><label for="phone">휴대폰</label></th>
-                    <td><input type="tel" id="phone" name="phone" v-model="user_phone" required></td>
+                    <td class="text_font">{{ user_phone }}</td>
+                    <!-- <td><input type="tel" id="phone" name="phone" v-model="user_phone" required></td> -->
+                </tr>
+                <tr>
+                    <th><label for="subject">제목</label></th>
+                    <td><input type="text" id="subject" name="subject" v-model="qna_title" required></td>
                 </tr>
                 <tr>
                     <th><label for="content">본문</label></th>
-                    <td><textarea id="content" name="content" rows="10" required></textarea></td>
+                    <td><textarea id="content" name="content" rows="10" v-model="qna_content" required></textarea></td>
                 </tr>
+                <tr class="form-group">
+                  <th><label for="is_secret" class="secret">비밀글</label></th>
+                  <th><input type="checkbox" v-model="is_secret" class="checkbox" id="is_secret"></th>
+                </tr>
+                <!-- <tr>
+                    <th>비밀글 여부</th>
+                    <th><input class="box" type="checkbox" name="checkbox" @click="1" /></th>
+                </tr> -->
             </table>
             <div class="btn-container">
                 <button type="button" onclick="history.back()">이전</button>
@@ -45,9 +46,13 @@ export default {
     components:{},
     data() {
         return {
-           qnaUpdateList: [],
-           user_nm:"",
-           user_phone:""
+        qnaUpdateList: [],
+        user_nm:"",
+        user_phone:"",
+        qna_title: '',
+        qna_content: '',
+        is_secret: false, // 비밀글 옵션 추가
+
         };
     },
     computed: {
@@ -64,6 +69,7 @@ export default {
             this.$router.push({ path: '/login' });
         }
     },
+    //유저 정보 조회
     methods: {
     getQnaUpdateList() {
         axios({
@@ -80,7 +86,24 @@ export default {
             console.error('Error fetching data:', error);
         });
     },
-    
+    //QnA 정보 입력
+    intoQna(){
+        axios({
+            url: "http://localhost:3000/qna/intoQna",
+            method: "POST",
+            data: {
+                user_no : this.user.user_no,
+                qna_title: this.qna_title,
+                qna_content: this.qna_content,
+                qna_secret: this.qna_secret,
+                goods_no: this.goods_no
+            }
+        }).then(results => {
+            this.qna = results.data;
+            console.log(qna)
+            this.$swal("작성 완료");
+        })
+    }
 
 }
 }
@@ -137,5 +160,13 @@ button {
     font-size: 16px;
     background-color:black;
     color: #FFFFFF;
+}
+hr.black-line {
+            border: 0;
+            height: 1px;
+            background-color: black;
+}
+.text_font{
+    font-size: 17px;
 }
 </style>
