@@ -104,10 +104,14 @@
             </div>
           </div>
         
-          <section class="cp-detail-info">
-            <div class="cp-detail-info_inner">
-              <div class="cm-tab">
-                <div class="tab__wrap size04" data-sticky-tab>
+  
+
+      </div>
+
+
+      </div>
+                <div class="cm-tab" style="position: sticky; padding-top: 20px; margin: 0 auto; z-index: 15; top: 0; left: 0; right: 0; width: 1080px;">
+
                   <div class="sticky-wrap" style="height: 46px;">
                     <div class="et-hero-tabs-container">
                       <a class="et-hero-tab" href="#tab-es6">상품 상세정보</a>
@@ -116,14 +120,8 @@
                       <span class="et-hero-tab-slider"></span>
                     </div>
                   </div>
-                </div>
-              </div> 
-            </div>
-          </section>
-
-      </div>
-
-      </div>
+                
+              </div>         
       <!-- <div class="info">
                     <div class="header">
                     <h2>{{categoryType(goods.goods_category)}}/{{goods.goods_nm}}</h2>
@@ -134,7 +132,7 @@
                     </div>
                     </div> -->
       <section class="et-slide" id="tab-es6">
-        <div style="text-align : center; padding-left: 100px; margin-top: 30px;">
+        <div style="text-align : center; margin-top: 30px;">
             <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
         </div>
       </section>
@@ -207,6 +205,7 @@
 </div>
 
 
+
       </section>     
       <section id="tab-react">
 
@@ -217,6 +216,57 @@
       
     </div>
     </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>
+  <div class="review-list">
+    <h2>QnA</h2>
+    <br />
+    <br />
+    <br />
+    <div class="review-none" >등록된 상품 Q&A가 없습니다.</div>
+    <table class="review-content-list" >
+      <thead>
+          <tr class="user-review-title">
+              <th class="qna_no">번호</th>
+              <th class="qna_now">답변상태</th>
+              <th class="qna_menu">문의 유형</th>
+              <th class="qna_title">제목</th>
+              <th class="qna_user">작성자</th>
+              <th class="qna_date">작성일</th>
+          </tr>
+      </thead>
+      <br/>
+      <tbody>
+          <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
+              <th class="qna_no value">QNA 번호</th> 
+              <th class="qna_now value">{{  }}</th>
+              <th class="qna_menu value">{{  }}</th>
+              <th class="qna_title value">{{  }}</th>
+              <th class="qna_user value">{{  }}</th>
+              <th class="qna_date value">{{  }}</th>
+          </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+              </ul>
+          </ul>
+      </nav>
+    <br />
+  </div>
+</div>
 </template>
 
 <script>
@@ -489,13 +539,14 @@ li {
   font-family: "Spoqa Han Sans Neo";
   font-size: 13px;
   line-height: 16.9px;
-  width: 905.6px;
+  width: auto;
 
 }
 
 .content {
   min-width: 1080px;
   width: 1080px;
+  margin : 0 auto;
 }
 
 .brand_wrap {
@@ -530,7 +581,7 @@ li {
   height: 510px;
   letter-spacing: -0.4px;
   line-height: 16.9px;
-  width: 510px;
+  width: 540px;
   position: relative;
 }
 
@@ -538,7 +589,7 @@ li {
 .product-img {
   box-sizing: border-box;
   display: block;
-  width: 510px;
+  width: 540px;
   height: 510px;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -858,6 +909,8 @@ li {
   border-left: 0;
 }
 
+
+
 .cp-detail-info_inner {
   box-sizing: border-box;
   font-size: 13px;
@@ -865,6 +918,7 @@ li {
   line-height: 16.9px;
 
 }
+
 
 .et-hero-tabs,
 .et-slide {
@@ -903,7 +957,8 @@ li {
     color: #000;
     letter-spacing: 0.1rem;
     transition: all 0.5s ease;
-    font-size: 0.8rem;
+    font-size: 15px;
+    font-weight: 500;
     &:hover {
       color:white;
       background: rgba(102,177,241,0.8);
@@ -1036,9 +1091,47 @@ li {
     font-weight: bold;
 }
 
+
+.qna_no {
+    width: 5%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_now {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_menu {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_title {
+    width: 30%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_user {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_date {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
 .review-img {
   width: 100px; /* 너비를 100px로 설정 */
   height: auto; /* 높이를 자동으로 설정하여 비율을 유지 */
+
 }
 
 </style>
