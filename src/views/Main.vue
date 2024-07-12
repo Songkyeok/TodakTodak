@@ -13,51 +13,54 @@
                 </splide-slide>
             </splide>
         </div>
-        <hr>
-        <div class="d-flex justify-content-left">
-            <div class="content cate-list">
-                <h2 class="home_title">BEST SELLER</h2>
-                <!-- <div class="card" v-for="(goods, index) in filteredGoodsList(1),slice(0,4)" :key="index">
-                </div> -->
-            </div>
-        </div>
-        <hr>
-
-        <div v-if="bestGoods.length>0">
-            <div class="best_container" v-for="(goods, index) in bestGoods" :key="index">
-                <div class="img">
-                    <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                         <img class="img"
-                            :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
-                            alt="상품 이미지">
-                    </a>
-                </div>
-                <div class="name">{{ goods.goods_nm }}</div>
-                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}원</div>
-
-            </div>
-        </div>
-        <hr>
-        <div class="d-flex justify-content-left">
-            <div class="content cate-list">
-                <h2 class="home_title">NEW</h2>
-                <!-- <div class="card" v-for="(goods, index) in filteredGoodsList(1),slice(0,4)" :key="index">
-                </div> -->
-            </div>
-        </div>
-        <hr>
-        <div v-if="newGoods.length>0">
-            <div class="best_container" v-for="(data, index) in newGoods" :key="index">
+        <div class="main_product_inner">
                 <div>
-                    <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
-                        <img class="img"
-                            :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
-                            alt="상품 이미지">
-                    </a>
-                    <a @click="goToDetil()"></a>
+                    <h2 class="home_title">BEST SELLER</h2>
+                    <!-- <div class="card" v-for="(goods, index) in filteredGoodsList(1),slice(0,4)" :key="index">
+                    </div> -->
                 </div>
-                <div class="name">{{ newGoods[index].goods_nm }}</div>
-                <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price) }}</div>
+        
+            <div class="goods_inner">
+                <div class="goods_tab">
+                    <div class="goods_list">
+                        <div v-if="bestGoods.length>0">
+                            <div class="best_img" v-for="(goods, index) in bestGoods" :key="index">
+                                <div class="img">
+                                    <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
+                                        <img class="img"
+                                            :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                                            alt="상품 이미지">
+                                    </a>
+                                </div>
+                                <div class="name">{{ goods.goods_nm }}</div>
+                                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}원</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div>
+                        <h2 class="home_title">NEW</h2>
+                        <!-- <div class="card" v-for="(goods, index) in filteredGoodsList(1),slice(0,4)" :key="index">
+                        </div> -->
+                    </div>
+                
+                
+                    <div v-if="newGoods.length>0">
+                        <div class="best_container" v-for="(data, index) in newGoods" :key="index">
+                            <div>
+                                <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
+                                    <img class="img"
+                                        :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                                        alt="상품 이미지">
+                                </a>
+                                <a @click="goToDetil()"></a>
+                            </div>
+                            <div class="name">{{ newGoods[index].goods_nm }}</div>
+                            <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price) }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -141,6 +144,11 @@ export default {
         border: 3px solid black;
     }
 
+    .element.style{
+        min-height: 1px;
+    }
+
+
     .slider-image {
         width: 100%;
         height: 600px;
@@ -149,14 +157,63 @@ export default {
         display: block;
     }
 
+    .main_product_inner {
+        padding: 30px 0;
+        font-size: 13px;
+        font-family: "Spoqa Han Sans Neo";
+        box-sizing: border-box;
+        display: block;
+        padding-bottom: 70px;
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    .content-cate-list {
+        
+    }
+
     .home_title {
         font-size: 30px;
         font-weight: bold;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+        border-top: 1px solid rgb(240, 240, 240);
+        border-bottom: 1px solid rgb(240, 240, 240);
+        
+    }
+
+    .goods_inner {
+        width: 1080px;
+        position: relative;
+    }
+
+    .goods_tab {
+        
+    }
+    .goods_list {
+        box-sizing: border-box;
+        display: block;
+        list-style-position: outside;
+        padding-bottom: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 275px;
+
+    }
+
+    .best_img {
+        border-radius: 6px;
+        width: 255px;
     }
 
     .img {
+        border-radius: 6px;
         height: 310px;
         width: 236px;
+        display: block;
     }
 
     .name {
