@@ -9,26 +9,35 @@
         <tr class="userlist-title">
           <th class="user-number">회원번호</th>
           <th class="user-name">회원이름</th>
-          <th class="user-address">주소</th>
+          <th class="user-address">주소</th> 
           <th class="user-email">이메일</th>
           <th class="user-phone">번호</th>
           <th class="user-point">포인트</th>
           <th class="user-delete">삭제</th>
         </tr>
-        <tr class="user-list" v-for="(user, i) in selectUser" :key="i">
+        </thead>
+        <tbody>
+        <tr class="user-list" v-for="(user, i) in pageSelectUser" :key="i">
             <!-- 반복문이고 selectUser를 배열로 받아왔으므로 [i]를 넣어야 됨 -->
              <!-- 아래 값에서 selectUser[i]와 v-for에서 user의 값이 동일함. 그래서 바꿔서 사용해도 됨 -->
-              <th class="user-number value">{{ selectUser[i].user_no }}</th>
-              <th class="user-name value">{{ selectUser[i].user_nm }}</th>
-              <th class="user-address value">{{ selectUser[i].user_zipcode }} {{ selectUser[i].user_adr1 }}<br>{{ selectUser[i].user_adr2 }}</th>
-              <th class="user-email value">{{ selectUser[i].user_email }}</th>
-              <th class="user-phone value">{{ selectUser[i].user_phone }}</th>
-              <th class="user-point value">{{ selectUser[i].user_point }}포인트</th>
-              <th><button type="button" class="user-delete-btn" @click="goToDelete(selectUser[i].user_no)">삭제</button></th>
+              <th class="user-number value">{{ user.user_no }}</th>
+              <th class="user-name value">{{ user.user_nm }}</th>
+              <th class="user-address value">{{ user.user_zipcode }} {{ user.user_adr1 }}<br>{{ user.user_adr2 }}</th>
+              <th class="user-email value">{{ user.user_email }}</th>
+              <th class="user-phone value">{{ user.user_phone }}</th>
+              <th class="user-point value">{{ user.user_point }}포인트</th>
+              <th><button type="button" class="user-delete-btn" @click="goToDelete(user.user_no)">삭제</button></th>
         </tr>
         <br />
-      </thead>
+      </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li v-for="i in pageCnt" :key="i" class="page-item">
+          <a href="#" class="page-link" :class="{ active: i === pageNum + 1 }" @click.prevent="setPage(i)">{{ i }}</a>
+        </li> 
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -45,6 +54,12 @@ export default {
     return {
       selectUser: [],
       deleteUser: [],
+      
+      // 페이징
+      pageSelectUser: [], // 한 페이지에 보여줄 유저리스트를 잘라 담을 새 리스트
+      pageNum: 0,
+      pageCnt: 0,
+      onePageCnt: 10,
     };
   },
 
@@ -58,9 +73,21 @@ export default {
         url: `http://localhost:3000/admin/selectUser`,
         method: "POST",
       }).then((results) => {
-        console.log(results);
+        // console.log(results);
         this.selectUser = results.data;
+        this.pageCnt = Math.ceil(this.selectUser.length / this.onePageCnt)
+        this.setPage(1)
       });
+    },
+
+    setPage(page) {
+      this.pageNum = page - 1;
+      this.sliceList();
+    },
+    
+    sliceList() {
+      const start = 0 + this.pageNum * this.onePageCnt;
+      this.pageSelectUser = this.selectUser.slice(start, start + this.onePageCnt);
     },
 
     goToDelete(user_n) {
@@ -74,6 +101,7 @@ export default {
         }).then((results) => {
             console.log(results);
             this.deleteUser = results.data;
+            this.AllSelectUser(); // 유저 삭제 후 목록을 갱신
             window.location.href = `http://localhost:8080/admin/userlist`;
             })
             .catch((error) => {

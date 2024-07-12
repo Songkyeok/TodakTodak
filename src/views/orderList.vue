@@ -50,7 +50,7 @@
                                         <button @click="2" class="d" type="button">취소 신청</button>
                                     </td>
                                     <td>
-                                        <button @click="3" class="f" type="button">리뷰 작성</button>
+                                        <button class="review" type="button" @click="goToReviewWrite()">리뷰 작성</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,7 +73,8 @@ export default {
     components:{},
     data() {
         return {
-            sampleData: ''
+            sampleData: '',
+            order_trade_no: 0
         };
     },
     mounted(){
@@ -83,6 +84,20 @@ export default {
         orderPage(){
             axios({
                 url:"http//localhost:3000/"
+            })
+        },
+
+        goToReviewWrite() { // 리뷰작성 폼으로 라우팅
+            const order_trade_no = this.order_trade_no;
+            axios({
+                url: `http://localhost:3000/review/addReviews/${order_trade_no}`,
+                methods: "POST",
+                data: { // 리뷰폼으로 보내야하는 데이터들
+                    goods_no: this.goods_no,
+                    order_trade_no: this.order_trade_no
+                }
+            }).then(data => {
+                window.location.href = '/mypage/reviewwrite';
             })
         }
     }

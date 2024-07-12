@@ -19,6 +19,7 @@ import CategoryGoodsList from "../views/CategoryGoodsList.vue";
 import EventList from "../views/EventList.vue";
 import GoodsDetail from "../views/Detail.vue";
 import OrderPay from "../views/orderPay.vue";
+import QnaUpdate from "../views/QnaUpdate.vue";
 
 // 404 page
 import NotFoundPage from "../views/NotFoundPage.vue";
@@ -30,6 +31,8 @@ import DeleteProfile from "../mypages/DeleteProfile.vue"
 import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 import ReviewWrite from "../mypages/ReviewWrite.vue";
+import Check from "../mypages/Check.vue";
+import review from "../mypages/review.vue";
 
 // admin page
 import UserList from "../admin/UserList.vue";
@@ -40,7 +43,7 @@ import GoodsUpdate from "../admin/goodsUpdate.vue";
 import OrderManagement from "../admin/orderManagement.vue";
 import { compile } from "vue";
 
-import QnaUpdate from "../views/QnaUpdate.vue";
+
 
 const routes = [
   {
@@ -88,11 +91,6 @@ const routes = [
         component: Basket,
       },
       {
-        path: "/orderList",
-        name: "orderList",
-        component: orderList,
-      },
-      {
         path: "/goodsDetail/:goodsno",
         name: "GoodsDetail",
         component: GoodsDetail,
@@ -111,6 +109,11 @@ const routes = [
         path: '/orderpay/:ordertp/:goodsno/:total',
         name: "OrderPay",
         component: OrderPay
+      },
+      {
+        path: "/qnaupdate",
+        name: "QnaUpdate",
+        component: QnaUpdate
       },
     ]
   },
@@ -147,6 +150,20 @@ const routes = [
         path: 'reviewwrite',
         name: "ReviewWrite",
         component: ReviewWrite
+      },
+      {
+        path: 'check',
+        component: Check
+      },
+      {
+        path: "orderList",
+        name: "orderList",
+        component: orderList,
+      },
+      {
+        path: 'review',
+        name: "review",
+        component: review
       },
     ]
   },

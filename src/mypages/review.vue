@@ -1,50 +1,48 @@
+<!-- 나의 리뷰 조회 및 삭제 -->
 <template>
-    <main class="mt-3">
-        <div class="container">
-            <div class="myinfo">
-                <div>
-                    <h2>나의 리뷰</h2>
-                </div>
-                <div class="empty" v-if="reviewList.length == 0">
-                    <p>아직 작성한 리뷰가 없습니다. <br>
-                        주문 내역에서 리뷰를 작성해주세요. </p>
-                </div>
-                <div v-else class="cardList">
-                    <div v-for="(review, index) in reviewList" :key="index">
-                        <div class="card" @click="goToDetail(review.goods_no)">
-                            <div class="card-body">
-                                <div class="card-header">
-                                    <img v-if="!review.review_img" src="../assets/imgEmptyInput.png" alt="...">
-                                    <img v-else
-                                        :src="require(`../../../TodakTodak_Backend/uploads/uploadReview/${review.review_img}`)"
-                                        alt="..." :width="300">
-                                </div>
-                                <div class="card-body-header">
-                                    <h1>{{ review.goods.nm }}</h1>
-                                    <div class="star-rating">
-                                        <div class="star" v-for="score in 5" :key="score">
-                                            <span v-if="score < review.review_rating + 1"><i class="fa fa-star"></i></span>
-                                            <span v-if="score >= review.review_rating + 1"><i
-                                                    class="fa fa-star-o"></i></span>
-                                        </div>
-                                        <span style="padding-left: 5px;">({{ review.review_rating }})</span>
-                                    </div>
-                                </div>
-                                <div class="card-body-description">
-                                    <p>{{ review.review_con }}</p>
-                                </div>
-                                <div class="card-body-footer">
-                                    <i class="reg_date"> {{ formatDateTime(review.review_create) }} </i>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div class="my-review-list">
+        <h2>나의 리뷰</h2>
+        <br />
+        <br />
+        <br />
+            <div class="review-none" v-if="myreviewList.length === 0">나의 리뷰가 없습니다.</div>
+            <table class="review-content-list" v-else>
+                <thead>
+                    <tr class="user-review-title">
+                        <th class="review-star">별점</th>
+                        <th class="review-user">작성자</th>
+                        <th class="review-img">포토</th>
+                        <th class="review-content">내용</th>
+                        <th class="review-date">작성 날짜</th>
+                        <th class="user-delete">리뷰 삭제</th>
+                    </tr>
+                </thead>
+        <br />
+    <tbody>
+          <tr class="user-review-content"  v-for="(myreview, i) in pageMyReviewList" :key="i">
+              <th class="review-star value">{{ myreview.review_rating }}</th>
+              <th class="review-user value">{{ myreview.user_nm }}</th>
+              <th class="review-photo value">
+                <router-link :to="'/goodsDetail/' + myreview.goods_no">
+                    <img class="review-img" :src="myreview.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${myreview.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+                </router-link>
+              </th>
+                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
+              <th class="review-content value">{{ myreview.review_con }}</th>
+              <th class="review-date value">{{ new Date(myreview.review_create).toISOString().split('T')[0] }}</th>
+              <th><button type="button" class="user-delete-btn" @click="goToDelete(myreview.review_no)">삭제</button></th>
+          </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li v-for="i in pageCnt" :key="i" class="page-item">
+          <a href="#" class="page-link" :class="{ active: i === pageNum + 1 }" @click.prevent="setPage(i)">{{ i }}</a>
+        </li> 
+      </ul>
+    </nav>
+    <br />
+    </div>
 </template>
 
 <script>
@@ -53,160 +51,105 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            loginUser: {},
-            reviewList: [],
+            cnt: 1,
+            myreviewList: [],
+            pageNum: 0,
+            mageCnt: 0,
+            onePageCnt: 5,
+            review_no: [],
+            pageMyReviewList: [],
         };
     },
+
     computed: {
         user() {
             return this.$store.state.user;
-        }
+        },
     },
-    created() {
-        this.getReviewList();
+
+    mounted() {
+        this.getMyReviewList();
     },
+
     methods: {
-        goToDetail(goods_no){
-            window.location.href = `http://localhost:8080/goodsDetail/${goods_no}`;
+        setPage(page) {
+            this.pageMyReviewList = []
+            this.pageNum = page - 1;
+            this.sliceList()
         },
-        async getReviewList() {
-            try {
-                const response = await axios.get(`http://localhost:3000/profile/review/${this.user.user_no}`);
-                this.reviewList = response.data;
-                console.log(this.reviewList);
-            } catch (error) {
+
+        sliceList() {
+            const start = 0 + this.pageNum * this.onePageCnt
+            this.pageMyReviewList = this.myreviewList.slice(start, start + this.onePageCnt);
+        },
+
+        getMyReviewList() {
+            const user_no = this.$store.state.user.user_no; // 가져다 사용하는 것이므로 user_no를 추가해야 됨
+            axios({
+                url: `http://localhost:3000/review/myreviewList/${user_no}`,
+                method: "GET",
+                // params: {
+                //     user_no: this.$store.state.user.user_no, // url에서 ${user_no}로 보냈으므로 params로 안보내도 됨
+                // }
+            }).then((results) => {
+                this.myreviewList = results.data;
+                console.log(results);
+                this.pageCnt = parseInt(this.myreviewList.length / this.onePageCnt) + 1
+                this.setPage(1)
+            }).catch(error => {
                 console.error(error);
-            }
+            });
         },
-        formatDateTime(dateTime) {
-            const date = new Date(dateTime);
-            const options = {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-            };
-            const formattedDateTime = date.toLocaleDateString("ko-KR", options);
-            return formattedDateTime;
+
+        goToDelete(review_n) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                axios({
+                    url: `http://localhost:3000/review/deleteReview`,
+                    method: "POST",
+                    data: {
+                        review_no: review_n,
+                    }
+                }).then((results) => {
+                    console.log(results);
+                    this.deleteReview = results.data;
+                    this.getMyReviewList(); // 리뷰 삭제 후 목록 갱신
+                    window.location.href = `http://localhost:8080/mypage/review`;
+                })
+                .catch((error) => {
+                    console.error('error');
+                });
+            } else {
+                window.location.href = `http://localhost:8080/mypage/review`;
+            }
         },
     },
 };
 </script>
-  
+
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-}
-
-.empty {
-    max-width: 1200px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    height: 400px;
-}
-
-.empty p {
-    color: black;
-    font-size: 16px;
-    text-align: center;
-    padding-top: 180px;
-}
-
-.cardList {
-    margin: -40px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.card {
-    height: 500px;
-    width: 300px;
-    border-radius: 15px;
+.my-review-list {
+    width: 1500px;
+    /* width: 80%; */
+    margin-top: 100px;
+    padding: 0 5% 0 5%;
     display: inline-block;
-    position: relative;
-    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-    overflow: hidden;
-    scale: 0.8;
+    vertical-align: top;
 }
 
-.card:hover {
-    transform: scale(1.04);
-    transition: all 0.06s linear;
-}
-
-.card-header {
-    transition: 0.5s;
-    width: 100%;
-    height: 300px;
-    border-radius: 15px 15px 0 0;
-    background-size: 100% 280px;
-    background-repeat: no-repeat;
-}
-
-.card-header img {
-    height: 300px;
-    object-fit: cover;
-}
-
-h1 {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.card-body-header {
-    line-height: 25px;
-    margin: 10px 20px 0px 20px;
-}
-
-.card-body-header h1 {
-    font-size: 19px;
-}
-
-.star-rating {
+.pagination {
+    justify-content: center;
     display: flex;
-    padding-top: 9px;
-    font-size: 20px;
-    color: #000;
+    margin-top: 80px;
 }
 
-.card-body-description {
-    margin: 5px 20px;
-    font-size: 14px;
-    overflow: hidden;
-    max-height: 70px;
-}
-
-.card-body-description p {
-    font-size: 13px;
-}
-
-.card-body-footer {
-    position: absolute;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    bottom: 0;
-    left: 160px;
-    width: 314px;
-    font-size: 14px;
-    color: #000;
-    padding: 0 15px;
-}
-
-.card img {
-    max-width: 300px;
-}
-
-.container {
-    margin: 40px 30px;
-    font-family: unset;
-}
-
-h2 {
-    margin: 20px 0;
-}
-
-.myinfo {
-    margin-top: 30px;
+.user-delete-btn {
+    border: none;
+    width: 25%;
+    border: solid 2px rgb(151, 235, 118);
+    border-radius: 7px;
+    background-color: rgb(151, 235, 118);
+    color: rgb(0, 0, 0);
+    padding: 7px 0;
+    font-weight: 600;
 }
 </style>

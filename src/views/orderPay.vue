@@ -283,7 +283,8 @@ export default {
             }
 
             const total = amount; //이후 포인트 추가
-
+            
+            //결제데모를 사용 시 실제로 결제가 되기 때문에 앞쪽으로 빼놓음.
             axios({
                         url: "http://localhost:3000/goods/orderPay",
                         method: "POST",
