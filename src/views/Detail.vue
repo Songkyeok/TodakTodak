@@ -31,8 +31,6 @@
                   </span>
                 </div>
                 <div class="detail_wrap">
-                
-                  <h4>{{ like }}</h4>
                   <div class="price-box">
                     <li class="price_list">
                       <div class="price_name">
@@ -797,7 +795,7 @@ li {
 
 
 .input-group {
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(235, 235, 235);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -843,7 +841,7 @@ li {
   text-align: center;
   font-size: 13px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 0;
   -moz-appearance: textfield;
   box-shadow: none;
   width: 40px;
@@ -878,15 +876,14 @@ li {
 }
 
 .increase {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: none;
+  border-radius: 0;
+  border-radius: 0;
   
 }
 
 .decrease {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-radius: 0;
+  border-radius: 0;
 }
 
 .detail-total-box {
