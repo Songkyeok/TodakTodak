@@ -53,7 +53,7 @@ export default {
     },
     goToStatus() {
       this.$router.push({
-        path: '/admin/status'
+        path: '/admin/orderlist'
       });
     },
     goToUserList() {
@@ -82,7 +82,7 @@ export default {
   width: 10%;
   position: relative;
   background-color: rgb(255, 255, 255);
-  margin: 80px 5% 0 5%;
+  margin: 80px 2% 0 5%;
   min-height: 250px;
   display: inline-block;
 }

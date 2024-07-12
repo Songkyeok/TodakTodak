@@ -8,12 +8,16 @@
           </div>
           <div class="product_wrapper">
             <div class="visual_area">
+              <div class="event" v-if="goods.goods_category === 7">
+                <img src="/event.png">
+              </div>              
                 <img class="product-img" :src="goods.goods_img? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): '/goodsempty.jpg'" alt="상품 이미지"/>
             </div>
             <div class="product-info_wrap">
               <div class="details">
                 <div class="title_wrap">
-                  <strong class="title">{{ goods.goods_nm }}</strong>
+                  <!-- <strong class="title">{{ goods.goods_nm }}</strong> -->
+                  <strong class="title"><strong v-if="goods.goods_category === 7" class="eventTitle">[EVENT]</strong>{{goods.goods_nm}}</strong>
                   <span class="like_box">
                   <button v-if="user.user_no === ''" class="heart-button" @click="likeInsert">
                     <i class="far fa-heart heart-icon"></i>
@@ -32,7 +36,7 @@
                   <div class="price-box">
                     <li class="price_list">
                       <div class="price_name">
-                        <span>판매가</span>
+                        <span><span v-if="goods.goods_category === 7">할인</span>판매가</span>
                       </div>
                         <span class="price">
                         <strong>{{ getCurrencyFormat(goods.goods_price) }}</strong>
@@ -532,6 +536,7 @@ li {
 }
 
 .visual_area {
+  position: relative;
   box-sizing: border-box;
   display: block;
   height: 510px;
@@ -539,6 +544,15 @@ li {
   line-height: 16.9px;
   width: 540px;
   position: relative;
+}
+
+.event img{
+  position: absolute;
+  z-index: 15;
+  width: 120px;
+  height: 120px;
+  margin-left: 10px;
+  margin-top: -10px;
 }
 
 
@@ -606,6 +620,18 @@ li {
   line-height: 30px;
   width: 505px;
   font-family: "Spoqa Han Sans Neo";
+}
+
+.eventTitle {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 24px;
+  font-family: "Spoqa Han Sans Neo";
+  background: linear-gradient(90deg, #ffcc00, #ff33cc, #00ccff, #ffcc00);
+            background-size: 200% 200%;
+            animation: shine 2s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
 }
 
 .price-box {
