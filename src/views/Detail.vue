@@ -183,10 +183,11 @@
           <!-- 반복문이고 reviewList를 배열로 받아왔으므로 [i]를 넣어야 됨 => for in에서 in에 있는 내용을 가져다 쓸 때만 [i]를 넣으면 됨 -->
            <!-- pageReviewList[i] = v-for에 있는 review와 같음 -->
               <th class="review-no value">{{ review.review_no }}</th> 
-              <th class="review-star value">{{ review.review_rating }}</th>
+              <th class="review-star value">{{ getStarRating(review.review_rating) }}</th>
               <th class="review-user value">{{ review.user_nm }}</th>
               <th class="review-photo value">
-                <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+                <img v-if="review.review_img.length > 0" class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+                <p v-else></p>
               </th>
                 <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
@@ -514,6 +515,10 @@ export default {
     },
     changePage(page) {
       this.currentPage = page;
+    },
+
+    getStarRating(rating) {
+      return '★'.repeat(rating) + '☆'.repeat(5 - rating);
     },
     // 리뷰 불러오는 실제 정렬 로직
     getReviewList(sortNum) {

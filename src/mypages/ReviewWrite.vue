@@ -149,7 +149,7 @@ export default {
                 data: formData
             }).then ((results)=> {
                 if (results.data.message === 'success') {
-                    this.$swal("이미지 등록 성공");
+                    this.$swal("이미지 등록 성공!");
 
                     if (type == 0) {
                         this.review.review_img = name;
@@ -168,6 +168,9 @@ export default {
             if(this.user.user_no === '') {
                 alert('로그인 후 이용 가능합니다.');
                 this.$router.push({ path: '/login' });
+            } else if (!this.review.review_con) {
+                this.$swal("내용입력은 필수입니다!");
+                return;
             } else {
                 axios({
                     url: `http://localhost:3000/review/addReviews`,
@@ -184,6 +187,7 @@ export default {
                     console.log('결과', results);
                     this.addReviews = results.data;
                     alert('리뷰가 성공적으로 등록되었습니다.');
+                    window.location.href = 'http://localhost:8080/mypage/review'
                     // this.goToNextStep();
 
                 }).catch((error) => {
@@ -218,7 +222,7 @@ export default {
         },
 
         goToNextStep() {
-            // window.location.href = 'http://localhost:8080/mypage/review';
+
         }
     },    
 };
