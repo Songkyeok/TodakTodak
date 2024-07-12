@@ -25,7 +25,7 @@
           후기 관리
           <ul>
             <li>
-              <span @click="goToReview">- 리뷰 관리</span>
+              <span @click="goToOrder">- 주문 관리</span>
             </li>
             <li>
               <span @click="goToQna">- Q&amp;A 관리</span>
@@ -48,7 +48,7 @@ export default {
   methods: {
     goToGoods() {
       this.$router.push({
-        path: '/admin'
+        path: '/admin/goods'
       });
     },
     goToStatus() {
@@ -66,8 +66,8 @@ export default {
         path: '/admin/event'
       });
     },
-    goToReview() {
-      this.$router.push({ path: '/admin/review' });
+    goToOrder() {
+      this.$router.push({ path: '/admin/order' });
     },
     goToQna() {
       this.$router.push({ path: '/admin/qna' });

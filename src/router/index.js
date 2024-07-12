@@ -40,6 +40,8 @@ import QnA from "../admin/QnA.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
+import OrderManagement from "../admin/orderManagement.vue";
+import { compile } from "vue";
 
 
 
@@ -171,7 +173,7 @@ const routes = [
     component: AdminpageSidebar,
     children: [
       {
-        path: "",
+        path: "goods",
         component: selectGoods,
       },
       {
@@ -193,6 +195,10 @@ const routes = [
         name: "UserList",
         component: UserList
       },
+      {
+        path: "order",
+        component: OrderManagement,
+      }
     ]
   },
   {
