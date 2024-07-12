@@ -40,8 +40,10 @@ import QnA from "../admin/QnA.vue";
 import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
+import AdminOrderList from "../admin/orderList.vue";
+
 import OrderManagement from "../admin/orderManagement.vue";
-import { compile } from "vue";
+
 
 
 
@@ -194,6 +196,11 @@ const routes = [
         path: "userlist",
         name: "UserList",
         component: UserList
+      },
+      {
+        path: "orderlist",
+        name: "orderList",
+        component: AdminOrderList,
       },
       {
         path: "order",
