@@ -985,11 +985,9 @@ li {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     background: #fff;
     z-index: 10;
-    &--top {
-        position: fixed;
-        top: 0;
-    }
+    
 }
+
 
 .et-hero-tab {
     display: flex;
@@ -1001,11 +999,12 @@ li {
     transition: all 0.5s ease;
     font-size: 15px;
     font-weight: 500;
-    &:hover {
-      color:white;
+}
+
+.et-hero-tab:hover {
+    color:white;
       background: rgba(102,177,241,0.8);
       transition: all 0.5s ease;
-    }
 }
 
 .et-hero-tab-slider {
