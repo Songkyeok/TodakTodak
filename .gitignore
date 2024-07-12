@@ -24,3 +24,5 @@ pnpm-debug.log*
 # dependencies
 */node_modules
 package-lock.json
+
+src/assets/*
