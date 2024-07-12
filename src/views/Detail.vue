@@ -143,26 +143,7 @@
       <section id="tab-flexbox">
 
         <!-- 리뷰 넣으시면 됩니다. -->
-
-      </section>     
-      <section id="tab-react">
-
-        <!-- QnA 넣으시면 됩니다. -->
-
-      </section>
-
-      
-    </div>
-    </div>
-
-
-
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <!-- 상품리뷰 리스트 -->
+<!-- 상품리뷰 리스트 조회 -->
 <div>
   <div class="review-list">
     <h2>고객 리뷰</h2>
@@ -190,12 +171,12 @@
     <table class="review-content-list" v-else>
       <thead>
           <tr class="user-review-title">
-              <th class="review-no">리뷰 번호</th>
-              <th class="review-star">별점</th>
+              <th class="review-no">번호</th>
+              <th class="review-star">만족도</th>
               <th class="review-user">작성자</th>
-              <th class="review-photo">리뷰 포토</th>
+              <th class="review-photo">포토 리뷰</th>
               <th class="review-content">내용</th>
-              <th class="review-date">날짜</th>
+              <th class="review-date">등록 날짜</th>
           </tr>
       </thead>
       <br />
@@ -211,7 +192,7 @@
               </th>
                 <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
-              <th class="review-date value">{{ review.review_create }}</th>
+              <th class="review-date value">{{ new Date(review.review_create).toISOString().split('T')[0] }}</th>
           </tr>
       </tbody>
     </table>
@@ -226,7 +207,70 @@
     <br />
   </div>
 </div>
- 
+
+
+
+      </section>     
+      <section id="tab-react">
+
+        <!-- QnA 넣으시면 됩니다. -->
+
+      </section>
+
+      
+    </div>
+    </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>
+  <div class="review-list">
+    <h2>QnA</h2>
+    <br />
+    <br />
+    <br />
+    <div class="review-none" >등록된 상품 Q&A가 없습니다.</div>
+    <table class="review-content-list" >
+      <thead>
+          <tr class="user-review-title">
+              <th class="qna_no">번호</th>
+              <th class="qna_now">답변상태</th>
+              <th class="qna_menu">문의 유형</th>
+              <th class="qna_title">제목</th>
+              <th class="qna_user">작성자</th>
+              <th class="qna_date">작성일</th>
+          </tr>
+      </thead>
+      <br/>
+      <tbody>
+          <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
+              <th class="qna_no value">QNA 번호</th> 
+              <th class="qna_now value">{{  }}</th>
+              <th class="qna_menu value">{{  }}</th>
+              <th class="qna_title value">{{  }}</th>
+              <th class="qna_user value">{{  }}</th>
+              <th class="qna_date value">{{  }}</th>
+          </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
+                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
+                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+              </ul>
+          </ul>
+      </nav>
+    <br />
+  </div>
+</div>
 </template>
 
 <script>
@@ -240,6 +284,7 @@ export default {
       totalPrice: 0,
       cnt: 1,
       isLiked: false,
+      like: 0,
       sortCase: '정렬 기준', // 리뷰조회 dropdown
       isDropdownOpen: false,
       reviewList: [],
@@ -277,6 +322,7 @@ export default {
   created() {
     this.getGoods();
     this.likeCheck();
+    this.getLike();
   },
 
   mounted() {
@@ -307,6 +353,18 @@ export default {
         console.error(error);
       }
     },
+    async getLike() {
+            try {
+                const goodsno = this.$route.params.goodsno;
+                const response = await axios.get(`http://localhost:3000/goods/likeCount/${goodsno}`);
+                this.like = response.data;
+                if (this.like === null) {
+                    this.like = 0;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+      },
     calculatePrice(cnt) {
       const total = this.total + cnt;
       if (total < 1) total = 1;
@@ -974,7 +1032,7 @@ li {
 
 .dropdown {
     display: flex;
-    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    /* justify-content: flex-end; 버튼을 오른쪽으로 정렬 */
     text-align: end;
     padding-right: 50px;
     position: relative;
@@ -997,17 +1055,18 @@ li {
 /* Optional: Adjust dropdown list items */
 .dropdown-menu {
   width: 150px; /* 너비 */
-  right: 0;
+  /* right: 0;
   top: 100%;
+  float: right; */
 }
 
 /* Optional: Change dropdown items style */
 .dropdown-menu .dropdown-item {
   font-size: 14px; /* 폰트 크기 */
   padding: 10px 15px; /* 패딩 */
-  right: 0;
-  float: right;
-  top: 100%;
+  /* right: 0; */
+  /* float: right;
+  top: 100%; */
 }
 
 
@@ -1028,7 +1087,7 @@ li {
 }
 
 .review-star {
-    width: 3%;
+    width: 5%;
     padding-bottom: 20px;
     padding-top: 20px;
 }
@@ -1072,9 +1131,47 @@ li {
     font-weight: bold;
 }
 
+
+.qna_no {
+    width: 5%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_now {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_menu {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_title {
+    width: 30%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_user {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.qna_date {
+    width: 6%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
 .review-img {
   width: 100px; /* 너비를 100px로 설정 */
   height: auto; /* 높이를 자동으로 설정하여 비율을 유지 */
+
 }
 
 </style>

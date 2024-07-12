@@ -28,7 +28,7 @@
               <span @click="goToQna">- 문의 내역</span>
             </li>
             <li>
-              <span @click="goToReview">- 리뷰 관리</span>
+              <span @click="goToReview()">- 리뷰 관리</span>
             </li>
           </ul>
         </li>

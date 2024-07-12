@@ -32,6 +32,7 @@ import MypageMain from "../mypages/MypageMain.vue"
 import UpdatePw from "../mypages/UpdatePw.vue";
 import ReviewWrite from "../mypages/ReviewWrite.vue";
 import Check from "../mypages/Check.vue";
+import review from "../mypages/review.vue";
 
 // admin page
 import UserList from "../admin/UserList.vue";
@@ -40,6 +41,9 @@ import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
 import AdminOrderList from "../admin/orderList.vue";
+
+import OrderManagement from "../admin/orderManagement.vue";
+
 
 
 
@@ -158,6 +162,11 @@ const routes = [
         name: "orderList",
         component: orderList,
       },
+      {
+        path: 'review',
+        name: "review",
+        component: review
+      },
     ]
   },
   {
@@ -166,7 +175,7 @@ const routes = [
     component: AdminpageSidebar,
     children: [
       {
-        path: "",
+        path: "goods",
         component: selectGoods,
       },
       {
@@ -192,6 +201,10 @@ const routes = [
         path: "orderlist",
         name: "orderList",
         component: AdminOrderList,
+      },
+      {
+        path: "order",
+        component: OrderManagement,
       }
     ]
   },
