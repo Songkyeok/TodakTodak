@@ -1,6 +1,6 @@
 <template>
-    <main class="mt-3">
-        <div class="container goods_add">
+   
+        <div class="container_goods_add">
             <h2 class="text-center"  style="margin: 30px">제품 등록</h2>
 
             <div class="mb-3 row">
@@ -101,7 +101,6 @@
                 </div>
             </div>
 
-        </div>
         <div class="mb-3 row">
             <div class="col-6 d-grid p-1">
                 <button type="button" class="btn btn-lg btn-light" @click="goToList">취소하기</button>
@@ -110,7 +109,7 @@
                 <button type="button" class="btn btn-lg btn-danger" @click="goodsInsert">저장하기</button>
             </div>
         </div> 
-    </main>
+        </div>
 </template>
 <script>
 import axios from 'axios';
@@ -264,6 +263,19 @@ export default {
 
 </script>
 <style scoped>
+
+.container_goods_add {
+    display: inline-block;
+    width: 80%;
+    min-width: 80%;
+    margin-top: 50px;
+    padding: 0 10% 0 5%;
+    display: inline-block;
+    vertical-align: top;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
 .inputRadio .btn-group-toggle .btn {
     margin-bottom: 10px;
 }

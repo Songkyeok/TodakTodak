@@ -31,8 +31,6 @@
       </div>
     </div>
     <h1>주문관리</h1>
-    <br />
-    <br />
     <table>
       <thead v-if="selectOrder.length > 0">
         <tr class="orderlist-title">
@@ -203,16 +201,15 @@ export default {
     padding-bottom: 10px;
     margin-left: 20px;
     margin-right: 20px; */
-    width: 1080px;
-    min-width: 1080px;
+    width: 80%;
+    min-width: 80%;
     margin-top: 100px;
-    /* display: inline-block; */
-    float: right ;
+    padding: 0 10% 0 5%;
+    display: inline-block;
     vertical-align: top;
     overflow-x: auto;
     flex-wrap: nowrap;
     box-sizing: border-box;
-    margin-right:  100px;
 }
 
 .order-management h1 {
@@ -227,19 +224,20 @@ export default {
     font-size: large;
     color: #999696;
     text-align: center;
+
 }
 
 .order-number {
     width: 162px;
-    padding: 38px;
+    padding: 20px;
     align-items: center;
     cursor: pointer;
-    &:hover {
-      color:white;
-      background: rgba(102,177,241,0.8);
-      transition: all 0.5s ease;
-    }
 
+}
+.order-number:hover {
+  color:white;
+  background: rgba(102,177,241,0.8);
+  transition: all 0.5s ease;
 }
 
 .order-name {

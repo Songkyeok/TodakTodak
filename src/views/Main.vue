@@ -20,17 +20,21 @@
                     </div> -->
                 </div>
         
+        
             <div class="goods_inner">
                 <div class="goods_tab">
-                    <div class="goods_list">
-                        <div v-if="bestGoods.length>0">
+                    <div v-if="bestGoods.length>0">
+                        <div class="goods_list">
                             <div class="best_img" v-for="(goods, index) in bestGoods" :key="index">
-                                <div class="img">
+                                <div class="imgbox">
                                     <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                                         <img class="img"
                                             :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
                                             alt="상품 이미지">
                                     </a>
+                                    <div class="goods_ranking">
+                                    <span>{{index + 1}}</span>
+                                    </div>
                                 </div>
                                 <div class="name">{{ goods.goods_nm }}</div>
                                 <div class="span">{{ getCurrencyFormat(goods.goods_price)}}원</div>
@@ -47,17 +51,22 @@
                 
                 
                     <div v-if="newGoods.length>0">
-                        <div class="best_container" v-for="(data, index) in newGoods" :key="index">
-                            <div>
-                                <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
-                                    <img class="img"
-                                        :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
-                                        alt="상품 이미지">
-                                </a>
-                                <a @click="goToDetil()"></a>
+                        <div class="goods_list">
+                            <div class="best_img" v-for="(data, index) in newGoods" :key="index">
+                                <div>
+                                    <a :href="'http://localhost:8080/goodsDetail/' + newGoods[index].goods_no">
+                                        <img class="img"
+                                            :src="newGoods[index].goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${newGoods[index].goods_img}`) : '/goodsempty.jpg'"
+                                            alt="상품 이미지">
+                                    </a>
+                                    <a @click="goToDetil()"></a>
+                                    <div class="goods_ranking">
+                                    <span>{{index + 1}}</span>
+                                    </div>
+                                </div>
+                                <div class="name">{{ newGoods[index].goods_nm }}</div>
+                                <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price)}}<span>원</span></div>
                             </div>
-                            <div class="name">{{ newGoods[index].goods_nm }}</div>
-                            <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price) }}</div>
                         </div>
                     </div>
                 </div>
@@ -162,6 +171,7 @@ export default {
         font-size: 13px;
         font-family: "Spoqa Han Sans Neo";
         box-sizing: border-box;
+        position: relative;
         display: block;
         padding-bottom: 70px;
         width: 1200px;
@@ -191,39 +201,70 @@ export default {
     }
 
     .goods_tab {
-        
+            
     }
     .goods_list {
         box-sizing: border-box;
-        display: block;
-        list-style-position: outside;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        justify-content: center;
         padding-bottom: 40px;
         padding-left: 10px;
         padding-right: 10px;
-        width: 275px;
+        width: 1200px;
 
     }
 
     .best_img {
         border-radius: 6px;
         width: 255px;
+        display: block;
+        position: relative;
+        unicode-bidi: isolate;
+        box-sizing: border-box;
+        margin: 10px;
+    }
+
+    .goods_ranking{
+        z-index: 50;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        align-items: center;
+        border-radius: 5px 0;
+        background-color: #000;
+        justify-content: center;
+        display: flex;
+        height: 30px;
+        min-width: 30px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        box-sizing: border-box;
     }
 
     .img {
         border-radius: 6px;
-        height: 310px;
-        width: 236px;
+        height: 255px;
+        width: 255px;
         display: block;
+        position: relative;
     }
+
+
 
     .name {
         height: 58px;
-        width: 236px;
+        
     }
 
     .span {
         height: 50px;
-        width: 236px;
+        font-size: 20px;
+        align-items: center;
+        padding-bottom: 5px;
     }
 
     .best_container {

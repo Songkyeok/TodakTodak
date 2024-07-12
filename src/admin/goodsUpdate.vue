@@ -1,6 +1,5 @@
 <template>
-    <main class="mt-3">
-        <div class="container goods_update">
+        <div class="container_goods_update">
             <h2 class="text-center" style="margin: 30px">상품 수정</h2>
 
             <div v-if="goods.goods_img">
@@ -86,7 +85,6 @@
             </div>
             </div>
         </div>
-    </main>
 </template>
 <script>
 import axios from 'axios';
@@ -216,6 +214,18 @@ export default {
 }
 </script>
 <style scoped>
+.container_goods_update{
+    display: inline-block;
+    width: 80%;
+    min-width: 80%;
+    margin-top: 50px;
+    padding: 0 10% 0 5%;
+    display: inline-block;
+    vertical-align: top;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
 .inputRadio .btn-group-toggle .btn {
     margin-bottom: 10px;
 }
