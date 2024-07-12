@@ -58,6 +58,19 @@ export default{
             }
 
             return prefix + currency + String(v) + String(d);
+        },
+
+        formatDateTime(dateTimeString) {
+            const dateObj = new Date(dateTimeString);
+
+            const year = dateObj.getFullYear();
+            const month = `${dateObj.getMonth() + 1}`.padStart(2, '0');
+            const day = `${dateObj.getDate()}`.padStart(2, '0');
+            const hours = `${dateObj.getHours()}`.padStart(2, '0');
+            const minutes = `${dateObj.getMinutes()}`.padStart(2, '0');
+            const seconds = `${dateObj.getSeconds()}`.padStart(2, '0');
+            
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
     }
 }

@@ -178,7 +178,8 @@ export default {
                     method: "POST",
                     data: {
                         user_id: email,
-                        user_nm: nickname
+                        user_nm: nickname,
+                        user_no: res.message
                     }
                 }).then(res => {
                     if(res.data.message == "저장완료") {
@@ -227,6 +228,7 @@ export default {
                 naverlogin: this.naverLogin.user,
             },
         }).then(res => {
+          // console.log("res", res)
             if (res.data.message == '저장완료') {
                 this.$swal({
                     position: 'top',
@@ -238,8 +240,7 @@ export default {
             } else {
                 this.$store.commit("user", {
                     user_id: this.naverLogin.user.id,
-                    user_email: this.naverLogin.user.email,
-                    user_nm: this.naverLogin.user.name
+                    user_no: res.data.message
                 })
 
                 this.$swal({
@@ -247,7 +248,7 @@ export default {
                     icon: 'success',
                     title: '네이버 로그인 하였습니다.',
                     showConfirmButton: false,
-                    timer: 1000,
+                    timer: 1000
                 }).then(() => {
                     window.location.href = "http://localhost:8080";
                 })

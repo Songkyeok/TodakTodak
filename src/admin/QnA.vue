@@ -22,7 +22,7 @@
                             <td v-else>답변없음</td>
                             <td class="qwer">
                                 <button v-if="qna.qna_answer_admin" class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">답변삭제</button>
-                                <button v-else class="btn btn-light" @click="1">답변작성</button>
+                                <button v-else class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
                             </td>
                     </tr>
                 </tbody>
@@ -125,6 +125,10 @@ export default {
             const end = start + this.itemsPerPage; // 끝 인덱스 계산
             this.pageqnaList = this.qnaList.slice(start, end); // 페이지에 맞는 목록 추출
         },
+        // qna 답변
+        goToWriteQna(qna_no) {
+            this.$router.push({name: "WriteQna", query: {qna_no: qna_no}});
+        }
     }
 }
 </script>

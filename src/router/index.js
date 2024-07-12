@@ -41,7 +41,7 @@ import selectGoods from "../admin/selectGoods.vue";
 import GoodsAdd from "../admin/goodsAdd.vue";
 import GoodsUpdate from "../admin/goodsUpdate.vue";
 import AdminOrderList from "../admin/orderList.vue";
-
+import WriteQna from "../admin/WriteQna.vue"
 import OrderManagement from "../admin/orderManagement.vue";
 
 
@@ -205,7 +205,12 @@ const routes = [
       {
         path: "order",
         component: OrderManagement,
-      }
+      },
+      {
+        path: "writeqna",
+        name: "WriteQna",
+        component: WriteQna
+      },
     ]
   },
   {
