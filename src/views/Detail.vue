@@ -30,6 +30,7 @@
                   </button>
                   </span>
                 </div>
+                <h4 style="margin-left:40px;">{{like}}</h4>
                 <div class="detail_wrap">
                   <div class="price-box">
                     <li class="price_list">
@@ -1213,6 +1214,31 @@ li {
   width: 100px; /* 너비를 100px로 설정 */
   height: auto; /* 높이를 자동으로 설정하여 비율을 유지 */
 
+}
+
+.heart-icon {
+    font-size: 1em;
+}
+
+.like-heart-icon {
+    font-size: 1em;
+    color: red;
+}
+
+.like_box button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.like_box button i {
+    font-size: 2em;
+}
+
+.like_box button span {
+    font-size: 1em;
 }
 
 </style>
