@@ -175,6 +175,10 @@ const routes = [
     component: AdminpageSidebar,
     children: [
       {
+        path: "",
+        redirect: "/admin/goods",
+      },
+      {
         path: "goods",
         component: selectGoods,
       },
