@@ -5,7 +5,7 @@
         <br />
         <br />
         <table>
-            <thead v-if="pageGoodsList.length > 0">
+            <thead>
                 <tr class="goodslist-title">
                     <th class="goods-img">이미지</th>
                     <th class="goods-name">상품명</th>
