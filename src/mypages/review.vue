@@ -154,10 +154,10 @@ export default {
 
 <style scoped>
 .my-review-list {
-    width: 1500px;
-    /* width: 80%; */
+    /* width: 1500px; */
+    width: 80%;
     margin-top: 100px;
-    padding: 0 5% 0 5%;
+    padding: 0 5% 0 0%;
     display: inline-block;
     vertical-align: top;
 }
