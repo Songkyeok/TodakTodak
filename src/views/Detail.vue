@@ -235,33 +235,37 @@
     <br />
     <br />
     <br />
-    <div class="review-none" v-if="qnaList.length === 0">등록된 상품 Q&A가 없습니다.</div>
-    <table class="review-content-list" >
+    <div class="review-none" v-if="pageQnaList.length === 0">등록된 상품 Q&A가 없습니다.</div>
+    <table class="review-content-list" v-else>
       <thead>
           <tr class="user-review-title">
               <th class="qna_no">번호</th>
+              <th class="qna_now">답변상태</th>
               <th class="qna_title">제목</th>
               <th class="qna_user">작성자</th>
+              <th class="qna_menu">비밀글 여부</th>
               <th class="qna_date">작성일</th>
           </tr>
       </thead>
       <br/>
       <tbody>
-          <tr class="user-review-content"  v-for="(qna, i) in qnaList" :key="i">
+          <tr class="user-review-content"  v-for="(qna, index) in pageQnaList" :key="index">
               <th class="qna_no value">{{ qna.qna_no }}</th> 
-              <th class="qna_now value">{{ qna.qna_title }}</th>
-              <th class="qna_menu value">{{  }}</th>
-              <th class="qna_title value">{{  }}</th>
-              <th class="qna_user value">{{  }}</th>
-              <th class="qna_date value">{{  }}</th>
+              <th class="qna_now value" v-if="qna.qna_answer_admin">답변대기</th>
+              <th class="qna_now value" v-else>답변완료</th>
+              <th class="qna_title value">{{ qna.qna_title }}</th>
+              <th class="qna_user value">{{ qna.user_nm }}</th>
+              <th class="qna_menu" v-if="qna.qna_secret">비밀글</th>
+              <th class="qna_menu" v-else>공개글</th>
+              <th class="qna_date value">{{ formatDateTime(qna.qna_create) }}</th>
           </tr>
       </tbody>
     </table>
     <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-              <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
-                  <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
-                  <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
+              <ul v-for="index in qnaPageCnt" :key="index" class="pagination justify-content-center">
+                  <li v-if="index != qnaPageNum + 1" class="page-item page-link" @click="qnaSetPage(index)">{{ index }}</li>
+                  <li v-else class="page-item page-link active" @click="qnaSetPage(index)">{{ index }}</li>
               </ul>
           </ul>
       </nav>
@@ -296,6 +300,10 @@ export default {
 
       //qna
       qnaList: [],
+      pageQnaList: [],
+      qnaPageNum:0,
+      qnaPageCnt:0,
+      qnaOnePageCnt:5,
       // qna_no : '',
       // qna_title : '',
     };
@@ -329,6 +337,7 @@ export default {
 
   mounted() {
     this.getReviewList();
+    this.getQnaList();
   },
   watch() {
     this.updatePrice();
@@ -339,9 +348,18 @@ export default {
       this.pageNum = page - 1;
       this.sliceList()
     },
+    qnaSetPage(qnaPage) {
+      this.pageQnaList = []
+      this.qnaPageNum = qnaPage - 1;
+      this.qnaSliceList()
+    },
     sliceList() {
         const start = 0 + this.pageNum * this.onePageCnt
         this.pageReviewList = this.reviewList.slice(start, start + this.onePageCnt);
+    },
+    qnaSliceList() {
+        const qnastart = 0 + this.qnaPageNum * this.qnaOnePageCnt
+        this.pageQnaList = this.qnaList.slice(qnastart, qnastart + this.qnaOnePageCnt);
     },
     async getGoods() {
       try {
@@ -519,6 +537,9 @@ export default {
     changePage(page) {
       this.currentPage = page;
     },
+    qnaChangePage(qnaPage) {
+      this.qnaCurrentPage = qnaPage;
+    },
 
     getStarRating(rating) {
       return '★'.repeat(rating) + '☆'.repeat(5 - rating);
@@ -542,25 +563,20 @@ export default {
       });
     },
     getQnaList() {
-
+      const goods_no = this.$route.params.goodsno;
       axios({
-        url: `http://localhost:3000/qna/qnaList/${goods_no}`,
-        method: "POST",
-        data: {
-          goods_no: this.goods_no,
-          qna_no : this.qna_no
-      }
-      }).then((results) => {
-        this.qnaList = results.data;
-        console.log(results)
-        // this.pageCnt1 = parseInt1(this.qnaList.length / this.onePageCnt1) + 1
-        // this.setPage1(1)
-        // this.qna_no = this.qnaList[0].QNA_NO;
-        // this.qna_title = this.qnaList[0].QNA_TITLE;
+        url: `http://localhost:3000/qna/detailQnaSelect/${goods_no}`,
+        method: "GET",
+
+      }).then((res) => {
+        this.qnaList = res.data.data;
+        console.log("this.qnaList ==>>", this.qnaList)
+        this.qnaPageCnt = parseInt(this.qnaList.length / this.qnaOnePageCnt) + 1
+        this.qnaSetPage(1)
       })
-      .catch((error) => {
-      console.error('Error fetching QnA list:', error);  // 에러 출력
-      });
+       .catch((error) => {
+         console.error('Error fetching QnA list:', error);  // 에러 출력
+       });
       }
     },
 };
