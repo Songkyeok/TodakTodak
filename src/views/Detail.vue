@@ -238,13 +238,11 @@
     <br />
     <br />
     <br />
-    <div class="review-none" >등록된 상품 Q&A가 없습니다.</div>
+    <div class="review-none" v-if="qnaList.length === 0">등록된 상품 Q&A가 없습니다.</div>
     <table class="review-content-list" >
       <thead>
           <tr class="user-review-title">
               <th class="qna_no">번호</th>
-              <th class="qna_now">답변상태</th>
-              <th class="qna_menu">문의 유형</th>
               <th class="qna_title">제목</th>
               <th class="qna_user">작성자</th>
               <th class="qna_date">작성일</th>
@@ -252,9 +250,9 @@
       </thead>
       <br/>
       <tbody>
-          <tr class="user-review-content"  v-for="(review, i) in pageReviewList" :key="i">
-              <th class="qna_no value">QNA 번호</th> 
-              <th class="qna_now value">{{  }}</th>
+          <tr class="user-review-content"  v-for="(qna, i) in qnaList" :key="i">
+              <th class="qna_no value">{{ qna.qna_no }}</th> 
+              <th class="qna_now value">{{ qna.qna_title }}</th>
               <th class="qna_menu value">{{  }}</th>
               <th class="qna_title value">{{  }}</th>
               <th class="qna_user value">{{  }}</th>
@@ -299,6 +297,11 @@ export default {
       pageNum: 0,
       pageCnt: 0,
       onePageCnt: 5,
+
+      //qna
+      qnaList: [],
+      // qna_no : '',
+      // qna_title : '',
     };
   },
   computed: {
@@ -525,7 +528,28 @@ export default {
         console.error(error);
       });
     },
-  },
+    getQnaList() {
+
+      axios({
+        url: `http://localhost:3000/qna/qnaList/${goods_no}`,
+        method: "POST",
+        data: {
+          goods_no: this.goods_no,
+          qna_no : this.qna_no
+      }
+      }).then((results) => {
+        this.qnaList = results.data;
+        console.log(results)
+        // this.pageCnt1 = parseInt1(this.qnaList.length / this.onePageCnt1) + 1
+        // this.setPage1(1)
+        // this.qna_no = this.qnaList[0].QNA_NO;
+        // this.qna_title = this.qnaList[0].QNA_TITLE;
+      })
+      .catch((error) => {
+      console.error('Error fetching QnA list:', error);  // 에러 출력
+      });
+      }
+    },
 };
 </script>
 
