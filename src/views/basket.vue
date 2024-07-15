@@ -25,7 +25,7 @@
                                     <input class="check" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
                                     <td>
                                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                                            <img class="img" :src="goods.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.basket_img}`) : '/goodsempty.jpg'" alt="상품 이미지" />
+                                            <img class="img" :src="goods.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.basket_img}`) : require('../assets/goodsempty.jpg')" alt="상품 이미지" />
                                         </a>
                                     </td>
                                     <td class="basketName">{{ goods.basket_nm }}</td>

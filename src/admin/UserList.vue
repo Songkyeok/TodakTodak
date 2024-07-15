@@ -135,7 +135,7 @@ export default {
 .user-management h1 {
   text-align: left;
   border-bottom: 1px solid #d4cdcd;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 }
 
 .userlist-title {
@@ -144,6 +144,7 @@ export default {
     font-size: large;
     color: #999696;
     text-align: center;
+    background-color: #f8f7f7;
 }
 
 .user-number {

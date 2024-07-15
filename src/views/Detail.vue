@@ -9,9 +9,9 @@
           <div class="product_wrapper">
             <div class="visual_area">
               <div class="event" v-if="goods.goods_category === 7">
-                <img src="/event.png">
+                <img src="../assets/event.png">
               </div>              
-                <img class="product-img" :src="goods.goods_img? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): '/goodsempty.jpg'" alt="상품 이미지"/>
+                <img class="product-img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): require('../assets/goodsempty.jpg')" alt="상품 이미지"/>
             </div>
             <div class="product-info_wrap">
               <div class="details">
@@ -135,7 +135,7 @@
                     </div> -->
       <section class="et-slide" id="tab-es6">
         <div style="text-align : center; margin-top: 30px;">
-            <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): '/goodsempty.jpg'" alt="상품 디테일 이미지"/>
+            <img :width="550" :src=" goods.goods_content ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_content}`): require('../assets/goodsempty.jpg')" alt="상품 디테일 이미지"/>
         </div>
       </section>
       <section id="tab-flexbox">
@@ -186,10 +186,10 @@
               <th class="review-star value">{{ getStarRating(review.review_rating) }}</th>
               <th class="review-user value">{{ review.user_nm }}</th>
               <th class="review-photo value">
-                <img v-if="review.review_img.length > 0" class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+                <img v-if="review.review_img.length > 0" class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): require('../assets/goodsempty.jpg')" alt="사진 미첨부"/>
                 <p v-else></p>
               </th>
-                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
+                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): require('../assets/goodsempty.jpg')" alt="리뷰 이미지"/> -->
               <th class="review-content value">{{ review.review_con }}</th>
               <th class="review-date value">{{ new Date(review.review_create).toISOString().split('T')[0] }}</th>
           </tr>
@@ -232,7 +232,7 @@
       <tbody>
           <tr class="user-qna-content"  v-for="(qna, index) in pageQnaList" :key="index">
               <th class="qna_no value">{{ qna.qna_no }}</th> 
-              <th class="qna_now value" v-if="qna.qna_answer_admin">답변대기</th>
+              <th class="qna_now value" v-if="qna.qna_answer_admin == '미답변'">미답변</th>
               <th class="qna_now value" v-else>답변완료</th>
               <th class="qna_title value">{{ qna.qna_title }}</th>
               <th class="qna_user value">{{ qna.user_nm }}</th>
@@ -254,22 +254,8 @@
   </div>
 </div>
 </section>
-
-      
     </div>
     </div>
-
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div>
-</div>
 </template>
 
 <script>
@@ -562,7 +548,7 @@ export default {
         console.error(error);
       });
     },
-    //Qna 목록 조회
+
     getQnaList() {
       const goods_no = this.$route.params.goodsno;
       axios({
@@ -571,6 +557,7 @@ export default {
 
       }).then((res) => {
         this.qnaList = res.data.data;
+        console.log("this.qnaList ==>>", this.qnaList)
         this.qnaPageCnt = parseInt(this.qnaList.length / this.qnaOnePageCnt) + 1
         this.qnaSetPage(1)
       })
@@ -578,18 +565,18 @@ export default {
          console.error('Error fetching QnA list:', error);  // 에러 출력
        });
       },
-    //Qna 입력 
-    async goToAddQna() {
-      if (this.user.user_no === "") {
-          alert("로그인해주셈");
-          this.$router.push({ path: "/login" });
-      } else {
-      const goods_no = this.goods.goods_no;
-      window.location.href = `http://localhost:8080/qnaupdate/${goods_no}`;
+
+  async goToAddQna() {
+        if (this.user.user_no === "") {
+            alert("로그인해주셈");
+            this.$router.push({ path: "/login" });
+        } else {
+        const goods_no = this.goods.goods_no;
+        window.location.href = `http://localhost:8080/qnaupdate/${goods_no}`;
+        }
       }
     }
   }
-}
 </script>
 
 <style scoped>
