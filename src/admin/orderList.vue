@@ -1,5 +1,4 @@
 <template>
-
   <div class="order-management">
     <div v-if="isVisibleGoods" class="goods-overlay">
       <div class="goods-popup">
@@ -41,7 +40,11 @@
           <th class="user-email">결제상태</th>
           <th class="user-email">배송상태</th>
         </tr>
-        </thead>
+      </thead>
+      <thead v-if="selectOrder.length == 0">
+        <br>
+        <h1>주문이 없습니다.</h1>
+      </thead>
         <tbody>
         <tr class="order-list" v-for="(order, i) in pageSelectOrder" :key="i">
             <!-- 반복문이고 selectUser를 배열로 받아왔으므로 [i]를 넣어야 됨 -->

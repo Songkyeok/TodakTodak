@@ -153,6 +153,10 @@ export default {
         border: 3px solid black;
     }
 
+    body {
+        font-family: "Spoqa Han Sans Neo";
+    }
+
     .element.style{
         min-height: 1px;
     }
@@ -188,6 +192,7 @@ export default {
         padding-bottom: 20px;
         padding-top: 20px;
         margin-bottom: 30px;
+        width: 1200px;
         text-align: center;
         position: relative;
         border-top: 1px solid rgb(240, 240, 240);
@@ -257,6 +262,7 @@ export default {
 
     .name {
         height: 58px;
+        font-size: 15px;
         
     }
 
