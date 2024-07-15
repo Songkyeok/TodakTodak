@@ -27,13 +27,13 @@
                     <div class="mb-3">
                         <label class="form-label"><strong>주소</strong></label>
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="userInfo.user_zipcode" placeholder="우편번호" :disabled="useDefaultAddress"
+                            <input type="text" class="form-control" v-model="userInfo.user_zipcode" placeholder="우편번호"
                                 @input="updateOrderInfo" />
-                            <button class="btn btn-outline-secondary" type="button" @click="zipload" :disabled="useDefaultAddress" >우편번호 찾기</button>
+                            <button class="btn btn-outline-secondary" type="button" @click="zipload">우편번호 찾기</button>
                         </div>
-                        <input type="text" class="form-control mt-2" v-model="userInfo.user_adr1" placeholder="기본 주소" :disabled="useDefaultAddress"
+                        <input type="text" class="form-control mt-2" v-model="userInfo.user_adr1" placeholder="기본 주소" 
                             @input="updateOrderInfo" />
-                        <input type="text" class="form-control mt-2" v-model="userInfo.user_adr2" placeholder="상세 주소" :disabled="useDefaultAddress"
+                        <input type="text" class="form-control mt-2" v-model="userInfo.user_adr2" placeholder="상세 주소"
                             @input="updateOrderInfo" />
                     </div>
                     <div class="mb-3">
@@ -94,14 +94,13 @@
                 <div v-if="this.$route.params.ordertp === '1'">
                     <div class="d-flex mb-3 orderinfo" v-for="(cart, i) in cartList" :key="i">
                         <div class="me-3">
-                            <img :width="80"
+                            <img class="img_cart"
                                 :src="cart.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${cart.basket_img}`) : '/goodsempty.jpg'"
                                 alt="상품 이미지">
                         </div>
                         <div class="me-3">
                             <strong>{{ cart.basket_nm }}</strong><br>
                             수량: {{ cart.basket_cnt }}개
-                            {{cart.goods_no}}
                         </div>
                         <div class="ms-auto">
                             <strong>총 {{ getCurrencyFormat(cart.basket_cnt * cart.basket_price) }}</strong>
@@ -354,15 +353,19 @@ export default {
                 alert('로그인해주셈');
                 this.$router.push({ path: '/login'});
             }else{
+                const goods_no = this.$route.params.goodsno.split(',');
+                console.log('gggggggggg>> ', goods_no)
                 axios({
-                    url: "http://localhost:3000/goods/basketList",
+                    url: "http://localhost:3000/goods/orderpayBasket",
                     method: "POST",
                     data: {
-                        user_no: this.user.user_no
+                        user_no: this.user.user_no,
+                        goods_no : goods_no,
                     }
                 })
                 .then(results => {
                     this.cartList = results.data;
+                    console.log('>>>>>>>>>>>>>',results.data);
                 })
             }
         },
@@ -370,7 +373,8 @@ export default {
             if(this.$route.params.ordertp === '0'){
                 const totalPrice = this.goods.goods_price * this.$route.params.total;
                 return totalPrice
-            }else if(this.$route.params.ordertp === '1'){
+            }
+            else if(this.$route.params.ordertp === '1'){
                 const totalPrice = this.cartList.reduce((total, cart) =>  total + (cart.basket_cnt * cart.basket_price),0);
                 return totalPrice;
             }else {
@@ -424,16 +428,23 @@ export default {
             }
             if ((this.useDefaultAddress && (this.userInfo.user_adr1 === "" || this.userInfo.user_adr1 == null)) ||
                 (!this.useDefaultAddress && (this.newOrderInfo.user_adr1 === "" || this.newOrderInfo.user_adr1 == null))) {
-                this.$swal("집주소를 입력하세요.");
+                this.$swal("주소를 입력하세요.");
                 return false;
             }
-            if ((this.useDefaultAddress && (this.userInfo.user_adr2 === "" || this.userInfo.user_adr2 == null)) ||
-                (!this.useDefaultAddress && (this.newOrderInfo.user_adr2 === "" || this.newOrderInfo.user_adr2 == null))){
-                this.$swal("상세 주소를 입력하세요.");
-                return false;
-            }
+            
             return true;
         }
     },
 }
 </script>
+<style scoped>
+
+.img_cart {
+
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+
+}
+
+</style>

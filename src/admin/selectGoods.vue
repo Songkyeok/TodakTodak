@@ -2,12 +2,10 @@
     
     <div class="goods-management">
         <h1>상품관리</h1>
-        <br />
-        <br />
         <table>
             <thead v-if="pageGoodsList.length > 0">
                 <tr class="goodslist-title">
-                    <th class="goods-img">이미지</th>
+                    <th class="goods-img-title">이미지</th>
                     <th class="goods-name">상품명</th>
                     <th class="goods-category">카테고리</th>
                     <th class="goods-price">가격</th>
@@ -18,7 +16,7 @@
                 <tr class="goods-list" v-for="(goods, i) in pageGoodsList" :key="i">
                     <th class="goods-img value">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                        <img :height="100" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'" alt="상품 이미지">
+                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'" alt="상품 이미지">
                         </a>
                     </th>
                     <th class="goods-name value">{{pageGoodsList[i].goods_nm}}</th>
@@ -190,10 +188,14 @@ export default {
     margin-left: 20px;
     margin-right: 20px; */
     width: 80%;
+    min-width: 80%;
     margin-top: 100px;
     padding: 0 10% 0 5%;
     display: inline-block;
     vertical-align: top;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
 }
 
 .goods-management h1 {
@@ -210,9 +212,15 @@ export default {
     text-align: center;
 }
 
+.goods-img-title {
+    width: 15%;
+    padding: 23px;
+    align-items: center;
+}
+
 .goods-img {
-    width: 20%;
-    padding: 38px;
+    height: 150px;
+    width: 230px;
     align-items: center;
 }
 
@@ -243,6 +251,11 @@ export default {
     color: #5d5b5b;
     text-align: center;
     font-weight: 50px;
+}
+
+.img{
+    height: 100px;
+    width: 100px;
 }
 
 .goods-create-btn {
