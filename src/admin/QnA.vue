@@ -18,11 +18,11 @@
                             <td>{{ qna.goods_nm }}</td>
                             <td>{{ qna.qna_title }}</td>
                             <td>{{ qna.user_nm}}</td>
-                            <td v-if="qna.qna_answer_admin">답변완료</td>
-                            <td v-else>답변없음</td>
+                            <td v-if="qna.qna_answer_admin == '미답변'">미답변</td>
+                            <td v-else>답변완료</td>
                             <td class="qwer">
-                                <button v-if="qna.qna_answer_admin" class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">답변삭제</button>
-                                <button v-else class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
+                                <button v-if="qna.qna_answer_admin == '미답변'" class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
+                                <button v-else class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">답변삭제</button>                               
                             </td>
                     </tr>
                 </tbody>
