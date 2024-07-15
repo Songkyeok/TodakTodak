@@ -43,7 +43,7 @@ export default {
         user_phone:"",
         qna_title: '',
         qna_content: '',
-        is_secret: false, // 비밀글 옵션 추가
+        qna_secret: false, // 비밀글 옵션 추가
 
         };
     },
