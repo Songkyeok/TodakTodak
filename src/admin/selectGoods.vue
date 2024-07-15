@@ -16,7 +16,7 @@
                 <tr class="goods-list" v-for="(goods, i) in pageGoodsList" :key="i">
                     <th class="goods-img value">
                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '../goodsempty.jpg'" alt="상품 이미지">
+                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : require('../assets/goodsempty.jpg')" alt="상품 이미지">
                         </a>
                     </th>
                     <th class="goods-name value">{{pageGoodsList[i].goods_nm}}</th>
