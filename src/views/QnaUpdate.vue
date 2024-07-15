@@ -42,8 +42,6 @@
 import axios from 'axios';
 
 export default {	
-    name:'',
-    components:{},
     data() {
         return {
         qnaUpdateList: [],
@@ -79,6 +77,7 @@ export default {
                 user_no: this.user.user_no 
             }
         }).then(response => {
+            
             this.qnaUpdateList = response.data.results;
             this.user_nm = this.qnaUpdateList[0].USER_NM;
             this.user_phone = this.qnaUpdateList[0].USER_PHONE;

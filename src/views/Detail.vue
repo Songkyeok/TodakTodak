@@ -212,10 +212,49 @@
 
       </section>     
       <section id="tab-react">
-
-        <!-- QnA 넣으시면 됩니다. -->
-
-      </section>
+        <div>
+  <div class="review-list">
+    <h2>QnA</h2>
+    <br />
+    <div class="goods-none"><button type="button" class="goods-create-btn" @click="goToAddQna()">게시글 작성</button></div>
+    <div class="review-none" v-if="pageQnaList.length === 0">등록된 상품 Q&A가 없습니다.</div>
+    <table class="qna-content-list" v-else>
+      <thead>
+          <tr class="user-review-title">
+              <th class="qna_no">번호</th>
+              <th class="qna_now">답변상태</th>
+              <th class="qna_title">제목</th>
+              <th class="qna_user">작성자</th>
+              <th class="qna_menu">비밀글 여부</th>
+              <th class="qna_date">작성일</th>
+          </tr>
+      </thead>
+      <br/>
+      <tbody>
+          <tr class="user-qna-content"  v-for="(qna, index) in pageQnaList" :key="index">
+              <th class="qna_no value">{{ qna.qna_no }}</th> 
+              <th class="qna_now value" v-if="qna.qna_answer_admin">답변대기</th>
+              <th class="qna_now value" v-else>답변완료</th>
+              <th class="qna_title value">{{ qna.qna_title }}</th>
+              <th class="qna_user value">{{ qna.user_nm }}</th>
+              <th class="qna_menu" v-if="qna.qna_secret">비밀글</th>
+              <th class="qna_menu" v-else>공개글</th>
+              <th class="qna_date value">{{ formatDateTime2(qna.qna_create) }}</th>
+          </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+              <ul v-for="index in qnaPageCnt" :key="index" class="pagination justify-content-center">
+                  <li v-if="index != qnaPageNum + 1" class="page-item page-link" @click="qnaSetPage(index)">{{ index }}</li>
+                  <li v-else class="page-item page-link active" @click="qnaSetPage(index)">{{ index }}</li>
+              </ul>
+          </ul>
+      </nav>
+    <br />
+  </div>
+</div>
+</section>
 
       
     </div>
@@ -231,47 +270,6 @@
 <br />
 <br />
 <div>
-  <div class="review-list">
-    <h2>QnA</h2>
-    <br />
-    <br />
-    <br />
-    <div class="review-none" v-if="pageQnaList.length === 0">등록된 상품 Q&A가 없습니다.</div>
-    <table class="review-content-list" v-else>
-      <thead>
-          <tr class="user-review-title">
-              <th class="qna_no">번호</th>
-              <th class="qna_now">답변상태</th>
-              <th class="qna_title">제목</th>
-              <th class="qna_user">작성자</th>
-              <th class="qna_menu">비밀글 여부</th>
-              <th class="qna_date">작성일</th>
-          </tr>
-      </thead>
-      <br/>
-      <tbody>
-          <tr class="user-review-content"  v-for="(qna, index) in pageQnaList" :key="index">
-              <th class="qna_no value">{{ qna.qna_no }}</th> 
-              <th class="qna_now value" v-if="qna.qna_answer_admin">답변대기</th>
-              <th class="qna_now value" v-else>답변완료</th>
-              <th class="qna_title value">{{ qna.qna_title }}</th>
-              <th class="qna_user value">{{ qna.user_nm }}</th>
-              <th class="qna_menu" v-if="qna.qna_secret">비밀글</th>
-              <th class="qna_menu" v-else>공개글</th>
-              <th class="qna_date value">{{ formatDateTime(qna.qna_create) }}</th>
-          </tr>
-      </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-              <ul v-for="index in qnaPageCnt" :key="index" class="pagination justify-content-center">
-                  <li v-if="index != qnaPageNum + 1" class="page-item page-link" @click="qnaSetPage(index)">{{ index }}</li>
-                  <li v-else class="page-item page-link active" @click="qnaSetPage(index)">{{ index }}</li>
-              </ul>
-          </ul>
-      </nav>
-    <br />
-  </div>
 </div>
 </template>
 
@@ -563,6 +561,7 @@ export default {
         console.error(error);
       });
     },
+
     getQnaList() {
       const goods_no = this.$route.params.goodsno;
       axios({
@@ -578,9 +577,19 @@ export default {
        .catch((error) => {
          console.error('Error fetching QnA list:', error);  // 에러 출력
        });
+      },
+
+  async goToAddQna() {
+        if (this.user.user_no === "") {
+            alert("로그인해주셈");
+            this.$router.push({ path: "/login" });
+        } else {
+        const goods_no = this.goods.goods_no;
+        window.location.href = `http://localhost:8080/qnaupdate/${goods_no}`;
+        }
       }
-    },
-};
+    }
+  }
 </script>
 
 <style scoped>
@@ -1120,7 +1129,18 @@ li {
 .user-review-content {
     border-bottom: 1px solid #bbb8b8;
     font-size: small;
+    font-size: 14px;
+    font-family: 'Source Sans Pro', sans-serif;
 }
+.user-review-title th {
+  text-align: center;
+}
+.qna-content-list{
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
 
 .review-no {
     width: 5%;
@@ -1239,6 +1259,21 @@ li {
 
 .like_box button span {
     font-size: 1em;
+}
+.goods-none{
+  text-align: right;
+}
+.goods-create-btn {
+    border: none;
+    width: 11%;
+    border: solid 3px #828282;
+    border-radius: 5px;
+    background-color: #828282;
+    color: black;
+    padding: 8px 0;
+    font-weight: 600;
+    font-size: 15px;
+    /* text-align: right; */
 }
 
 </style>
