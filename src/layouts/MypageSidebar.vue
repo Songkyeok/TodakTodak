@@ -16,6 +16,9 @@
             <li>
               <span @click="goToDeleteProfile">- 회원 탈퇴</span>
             </li>
+            <li>
+              <span @click="logout">- 로그아웃</span>
+            </li>
           </ul>
         </li>
         <li>
@@ -41,6 +44,11 @@
 import Header from "../layouts/header.vue";
 
 export default {
+  computed: {
+    user() {
+        return this.$store.state.user;
+    }
+  },
   components: {
     Header,
   },
@@ -62,6 +70,18 @@ export default {
     },
     goToReview() {
       this.$router.push({ path: '/mypage/review' });
+    },
+    logout() {
+        this.$store.commit("user", {});
+        this.$swal({
+            position: 'top',
+            icon: 'success',
+            title: '로그아웃되셨습니다.',
+            showConfirmButton: false,
+            timer: 1000
+        }).then(() => {
+            window.location.href = "http://localhost:8080";
+        })
     },
   }
 }

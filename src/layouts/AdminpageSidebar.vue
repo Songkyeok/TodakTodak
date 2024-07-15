@@ -16,17 +16,9 @@
             <li>
               <span @click="goToUserList">- 고객 관리</span>
             </li>
-            <li>
+            <!-- <li>
               <span @click="goToEvent">- 이벤트 관리</span>
-            </li>
-          </ul>
-        </li>
-        <li>
-          후기 관리
-          <ul>
-            <li>
-              <span @click="goToOrder">- 주문 관리</span>
-            </li>
+            </li> -->
             <li>
               <span @click="goToQna">- Q&amp;A 관리</span>
             </li>
@@ -61,14 +53,11 @@ export default {
         path: '/admin/userlist'
       });
     },
-    goToEvent() {
-      this.$router.push({
-        path: '/admin/event'
-      });
-    },
-    goToOrder() {
-      this.$router.push({ path: '/admin/order' });
-    },
+    // goToEvent() {
+    //   this.$router.push({
+    //     path: '/admin/event'
+    //   });
+    // },
     goToQna() {
       this.$router.push({ path: '/admin/qna' });
     },

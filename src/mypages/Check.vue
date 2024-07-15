@@ -34,8 +34,8 @@
                                         <p v-else>-</p>
                                     </td>
                                     <td>
-                                        <!-- 리뷰 작성 됐으면 작성된 버튼 보여주기 -->
-                                            <button v-if="ordered.order_status == 2" @click="goToReview(ordered.goods_no, ordered.order_trade_no)">리뷰 작성</button>
+                                        <button v-if="ordered.order_status == 2 && ordered.hasReview == 0" @click="goToReview(ordered.goods_no, ordered.order_trade_no)">리뷰 작성</button>
+                                        <p v-else-if="ordered.hasReview == 1">작성완료</p>
                                         <p v-else>-</p>
                                     </td>
                                 </tr>
@@ -210,6 +210,11 @@ img {
 td {
     background: #fff;
     vertical-align: middle;
+}
+td p {
+    color: #212529;
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 button {
