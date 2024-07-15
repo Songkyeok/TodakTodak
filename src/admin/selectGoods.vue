@@ -30,15 +30,12 @@
             </thead>
         </table>
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
-                    <a href="" style="text-decoration: none;">
-                        <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
-                        <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
-                    </a>
-                </ul>
-            </ul>
-        </nav>
+      <ul class="pagination justify-content-center">
+        <li v-for="i in pageCnt" :key="i" class="page-item">
+          <a href="#" class="page-link" :class="{ active: i === pageNum + 1 }" @click.prevent="setPage(i)">{{ i }}</a>
+        </li> 
+      </ul>
+    </nav>
     </div>          
 </template>
 
