@@ -164,7 +164,10 @@ export default {
             }else if(results.isDenied){
                 console.log('배송완료');
                 status = 2;
-            }else if(results.isDismissed){
+            } else if (results.dismiss === this.$swal.DismissReason.close) {
+                // X 버튼을 눌렀을 때 아무 동작도 하지 않습니다.
+                window.location.reload();
+            } else if (results.dismiss === this.$swal.DismissReason.cancel) {
                 console.log('배송취소');
                 status = 3;
             }
