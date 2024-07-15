@@ -16,9 +16,6 @@
             <li>
               <span @click="goToUserList">- 고객 관리</span>
             </li>
-            <li>
-              <span @click="goToEvent">- 이벤트 관리</span>
-            </li>
           </ul>
         </li>
         <li>
@@ -59,11 +56,6 @@ export default {
     goToUserList() {
       this.$router.push({
         path: '/admin/userlist'
-      });
-    },
-    goToEvent() {
-      this.$router.push({
-        path: '/admin/event'
       });
     },
     goToAnalytics() {

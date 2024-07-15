@@ -183,7 +183,12 @@ const routes = [
     children: [
       {
         path: "",
-        redirect: "/admin/goods",
+        redirect: "/admin/analytics",
+      },
+      {
+        path: "analytics",
+        name: "Analytics",
+        component: Analytics
       },
       {
         path: "goods",
@@ -217,11 +222,6 @@ const routes = [
         path: "writeqna",
         name: "WriteQna",
         component: WriteQna
-      },
-      {
-        path: "analytics",
-        name: "Analytics",
-        component: Analytics
       },
     ]
   },
