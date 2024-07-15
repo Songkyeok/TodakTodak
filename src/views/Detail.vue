@@ -232,7 +232,7 @@
       <tbody>
           <tr class="user-qna-content"  v-for="(qna, index) in pageQnaList" :key="index">
               <th class="qna_no value">{{ qna.qna_no }}</th> 
-              <th class="qna_now value" v-if="qna.qna_answer_admin">답변대기</th>
+              <th class="qna_now value" v-if="!qna.qna_answer_admin">답변대기</th>
               <th class="qna_now value" v-else>답변완료</th>
               <th class="qna_title value">{{ qna.qna_title }}</th>
               <th class="qna_user value">{{ qna.user_nm }}</th>
@@ -1124,6 +1124,7 @@ li {
 .user-review-title {
     border-bottom: 1px solid #817f7f;
     font-size: large;
+    text-align: center;
 }
 
 .user-review-content {
@@ -1131,6 +1132,7 @@ li {
     font-size: small;
     font-size: 14px;
     font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
 }
 .user-review-title th {
   text-align: center;
@@ -1146,6 +1148,7 @@ li {
     width: 5%;
     padding-bottom: 20px;
     padding-top: 20px;
+   
 }
 
 .review-star {
@@ -1161,7 +1164,7 @@ li {
 }
 
 .review-photo {
-    width: 17%;
+    width: 15%;
     padding-bottom: 20px;
     padding-top: 20px;
 }

@@ -2,9 +2,6 @@
 <template>
     <div class="my-review-list">
         <h2>나의 리뷰</h2>
-        <br />
-        <br />
-        <br />
             <div class="review-none" v-if="myreviewList.length === 0">나의 리뷰가 없습니다.</div>
             <table class="review-content-list" v-else>
                 <thead>
@@ -155,7 +152,7 @@ export default {
 <style scoped>
 .my-review-list {
     /* width: 1500px; */
-    width: 80%;
+    width: 75%;
     margin-top: 100px;
     padding: 0 5% 0 0%;
     display: inline-block;
@@ -164,7 +161,7 @@ export default {
 
 .my-review-list h2 {
     border-bottom: 1px solid #d4cdcd;
-    padding-bottom: 15px;
+    padding-bottom: 100px;
 }
 
 .pagination {
@@ -175,13 +172,14 @@ export default {
 
 .review-delete-btn {
     border: none;
-    width: 25%;
+    width: 50%;
     border: solid 2px rgb(151, 235, 118);
     border-radius: 7px;
     background-color: rgb(151, 235, 118);
     color: rgb(0, 0, 0);
-    padding: 7px 0;
+    padding: 5px 0;
     font-weight: 600;
+    text-align: center;
 }
 
 .user-review-title {
@@ -190,12 +188,13 @@ export default {
     font-size: large;
     color: #999696;
     text-align: left;
+    background-color: #efecec;
 }
 
 .review-star {
     width: 12%;
-    padding: 38px;
-    align-items: center;
+    padding: 30px;
+    align-items: left;
 }
 
 .review-user {
