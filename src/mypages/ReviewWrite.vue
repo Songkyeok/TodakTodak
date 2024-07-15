@@ -180,8 +180,8 @@ export default {
                         review_img: this.review.review_img,
                         review_rating: this.review.review_rating,
                         user_no:  this.$store.state.user.user_no,
-                        goods_no: $this.$route.query.goods_no,
-                        order_trade_no: $this.$route.query.order_trade_no,
+                        goods_no: this.$route.query.goods_no,
+                        order_trade_no: this.$route.query.order_trade_no,
                     },
                 }).then((results) => {
                     console.log('결과', results);
