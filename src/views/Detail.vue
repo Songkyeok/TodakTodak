@@ -20,17 +20,16 @@
                   <strong class="title"><strong v-if="goods.goods_category === 7" class="eventTitle">[EVENT]</strong>{{goods.goods_nm}}</strong>
                   <span class="like_box">
                   <button v-if="user.user_no === ''" class="heart-button" @click="likeInsert">
-                    <i class="far fa-heart heart-icon"></i>
+                    <i class="far fa-heart heart-icon"></i><span style="font-size:20px; margin-left:5px;">{{like}}</span>
                   </button>
                   <button v-else-if="!isLiked" class="heart-button" @click="likeInsert">
-                    <i class="far fa-heart heart-icon"></i>
+                    <i class="far fa-heart heart-icon"></i><span style="font-size:20px; margin-left:5px;">{{like}}</span>
                   </button>
                   <button v-else class="heart-button" @click="likeDelete">
-                    <i class="fas fa-heart like-heart-icon"></i>
+                    <i class="fas fa-heart like-heart-icon"></i><span style="font-size:20px; margin-left:5px;">{{like}}</span>
                   </button>
                   </span>
                 </div>
-                <h4 style="margin-left:40px;">{{like}}</h4>
                 <div class="detail_wrap">
                   <div class="price-box">
                     <li class="price_list">
@@ -490,7 +489,8 @@ export default {
             goods_no: this.goods.goods_no,
           },
         }),
-          (this.isLiked = true);
+          this.isLiked = true;
+          this.like += 1;
       }
     },
     likeDelete() {
@@ -506,7 +506,8 @@ export default {
             goods_no: this.goods.goods_no,
           },
         }),
-          (this.isLiked = false);
+          this.isLiked = false;
+          this.like -= 1;
       }
     },
     updatePrice() {
@@ -720,7 +721,7 @@ li {
   font-weight: 400;
   height: 60px;
   line-height: 30px;
-  width: 505px;
+  width: 490px;
   font-family: "Spoqa Han Sans Neo";
 }
 
@@ -1217,11 +1218,11 @@ li {
 }
 
 .heart-icon {
-    font-size: 1em;
+    font-size: 20px;
 }
 
 .like-heart-icon {
-    font-size: 1em;
+    font-size: 20px;
     color: red;
 }
 
@@ -1229,16 +1230,20 @@ li {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    display: flex;
+    /* display: flex; */
     align-items: center;
 }
 
 .like_box button i {
-    font-size: 2em;
+    font-size: 20px;
 }
 
 .like_box button span {
-    font-size: 1em;
+    font-size: 20px;
+}
+
+button.heart-button {
+  width: 50px;
 }
 
 </style>
