@@ -181,6 +181,7 @@ export default {
 
                 const selectedCarts = this.basketList.filter(goods => goods.checked);
                 const basketNos = selectedCarts.map(goods => goods.basket_no);
+                const goodsNos = selectedCarts.map(goods => goods.goods_no);
                 const basketCount = selectedCarts.map(goods => goods.basket_cnt);
                 const price = selectedCarts.map(goods => goods.basket_price);
                 console.log("selectedCarts", selectedCarts)
@@ -200,7 +201,7 @@ export default {
                     .then(res => {
 
                         if (res.data.message === '장바구니 업데이트 성공') {
-                            location.href = `http://localhost:8080/orderpay/1/${basketNos}/${basketCount}`;
+                            location.href = `http://localhost:8080/orderpay/1/${goodsNos}/${basketCount}`;
 
                         } else {
                             this.$swal('결제 실패');

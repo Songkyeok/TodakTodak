@@ -2,8 +2,6 @@
 
   <div class="user-management">
     <h1>회원관리</h1>
-    <br />
-    <br />
     <table>
       <thead v-if="selectUser.length > 0">
         <tr class="userlist-title">
@@ -22,7 +20,7 @@
              <!-- 아래 값에서 selectUser[i]와 v-for에서 user의 값이 동일함. 그래서 바꿔서 사용해도 됨 -->
               <th class="user-number value">{{ user.user_no }}</th>
               <th class="user-name value">{{ user.user_nm }}</th>
-              <th class="user-address value">{{ user.user_zipcode }} {{ user.user_adr1 }}<br>{{ user.user_adr2 }}</th>
+              <th class="user-address value">{{ user.user_zipcode }} <br> {{ user.user_adr1 }}<br>{{ user.user_adr2 }}</th>
               <th class="user-email value">{{ user.user_email }}</th>
               <th class="user-phone value">{{ user.user_phone }}</th>
               <th class="user-point value">{{ user.user_point }}포인트</th>
@@ -124,10 +122,14 @@ export default {
     margin-left: 20px;
     margin-right: 20px; */
     width: 80%;
+    min-width: 80%;
     margin-top: 100px;
     padding: 0 10% 0 5%;
     display: inline-block;
     vertical-align: top;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
 }
 
 .user-management h1 {
@@ -146,7 +148,7 @@ export default {
 
 .user-number {
     width: 12%;
-    padding: 38px;
+    padding: 23px;
     align-items: center;
 }
 
