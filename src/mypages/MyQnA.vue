@@ -24,8 +24,7 @@
               <th class="qna-title value">
                 <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.qna_title }}</router-link>
               </th>
-              <th class="qna-content value">
-                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.qna_content }}</router-link>
+              <th class="qna-content value">{{ myqna.qna_content }}
               </th>
               <th class="qna-admin-answer value" v-if="myqna.qna_answer_admin == '미답변'"></th>
               <th class="qna-admin-answer value" v-else>{{myqna.qna_answer_admin}}</th>

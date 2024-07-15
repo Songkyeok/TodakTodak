@@ -8,7 +8,7 @@
                     <tr class="user-review-title">
                         <th class="review-star">별점</th>
                         <th class="review-goods">상품명</th>
-                        <th class="review-img">포토</th>
+                        <th class="review-img">포토 리뷰</th>
                         <th class="review-content">내용</th>
                         <th class="review-date">작성 날짜</th>
                         <th class="review-delete">리뷰 삭제</th>

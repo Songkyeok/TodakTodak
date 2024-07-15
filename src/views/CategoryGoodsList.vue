@@ -122,32 +122,26 @@ export default {
 
 
 .products-container {
-    /* margin-left: 11%;
-    margin-right: 5%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px; /* 아이템 간격 조정 */
-    /* justify-content: space-between; */
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
     justify-content: center;
-    /* padding-bottom: 40px;
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 1200px; */
+}
+
+
+.products-container > div {
+    display: flex;
 }
 
 .category-container-item {
-    flex: 1 1 calc(20% - 25px);
-    max-width: calc(20% - 25px);
-    padding: 25px;
+    width: 255px;
+    margin-right: 15px;
     /* border: 1px solid #ddd; */
     /* border-radius: 8px; */
-    text-align: center;
+    text-align: left;
     display: inline-block;
     border-radius: 6px;
+}
+.category-container-item:last-child {
+    margin-right: 0;
 }
 
 .img {
@@ -163,7 +157,6 @@ export default {
 .name {
     height: 58px;
     font-size: 15px;
-        
 }
 
 .span {
@@ -194,4 +187,14 @@ export default {
     letter-spacing: -0.2px;
     font-size: small;
 }
+
+.best_img {
+        border-radius: 6px;
+        width: 255px;
+        display: block;
+        position: relative;
+        unicode-bidi: isolate;
+        box-sizing: border-box;
+        margin: 10px;
+    }
 </style>
