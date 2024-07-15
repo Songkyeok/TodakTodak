@@ -36,9 +36,15 @@
                                     <span>{{index + 1}}</span>
                                     </div>
                                 </div>
-                                <div class="name">{{ goods.goods_nm }}</div>
-                                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}원</div>
-
+                                <div class="name">{{ goods.goods_nm }}
+                                    
+                                </div>
+                                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}<span class="span_price">원</span></div>
+                                <div class="box_tag">
+                                    <span v-if="(index + 1) === 1" >BEST</span>
+                                    <span v-if="(index + 1) < 3">HIT</span>
+                                    <span>무료배송</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +71,12 @@
                                     </div>
                                 </div>
                                 <div class="name">{{ newGoods[index].goods_nm }}</div>
-                                <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price)}}<span>원</span></div>
+                                <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price)}}<span class="span_price">원</span></div>
+                                <div class="box_tag">
+                                    <span v-if="(index + 1) === 1" >NEW</span>
+                                    <span v-if="(index + 1) < 3">BEST</span>
+                                    <span>무료배송</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -267,10 +278,33 @@ export default {
     }
 
     .span {
-        height: 50px;
+        height: 30px;
         font-size: 20px;
         align-items: center;
-        padding-bottom: 5px;
+        font-weight: 600;
+        font-family: "Spoqa Han Sans Neo";
+        
+    }
+
+    .span_price {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .box_tag {
+        margin-top: 6px;
+    }
+
+    .box_tag span{
+        box-sizing: inline-block;
+        background: #f1f1f1;
+        padding: 4px 7px 5px;
+        border-radius: 100px;
+        margin: 0 3px 3px 0;
+        line-height: 1;
+        color: #999;
+        letter-spacing: -0.2px;
+        cursor: pointer;
     }
 
     .best_container {

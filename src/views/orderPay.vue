@@ -391,13 +391,24 @@ export default {
         },
         zipload() {
             if (window.daum && window.daum.Postcode) {
-                new daum.Postcode({
-                    oncomplete: (data) => {
-                    this.newOrderInfo.user_zipcode = data.zonecode;
-                    this.newOrderInfo.user_adr1 = data.address;
-                    this.newOrderInfo.user_adr2 = "";
-                    }
-                }).open();
+                if(!this.useDefaultAddress){
+                    new daum.Postcode({
+                        oncomplete: (data) => {
+                        this.newOrderInfo.user_zipcode = data.zonecode;
+                        this.newOrderInfo.user_adr1 = data.address;
+                        this.newOrderInfo.user_adr2 = "";
+                        }
+                    }).open();
+                }else {
+                    new daum.Postcode({
+                        oncomplete: (data) => {
+                        this.userInfo.user_zipcode = data.zonecode;
+                        this.userInfo.user_adr1 = data.address;
+                        this.userInfo.user_adr2 = "";
+                        }
+                    }).open();
+                }
+
             } else {
             console.error("Daum Postcode 스크립트가 로드되지 않았습니다.");
             }
