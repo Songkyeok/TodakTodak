@@ -27,7 +27,7 @@
                         <div class="goods_list">
                             <div class="best_img" v-for="(goods, index) in bestGoods" :key="index">
                                 <div class="imgbox">
-                                        <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
+                                        <a :href="'http://localhost:8080/goodsDetail/' + goods.GOODS_NO">
                                         <img class="img" :src="goods.GOODS_IMG ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.GOODS_IMG}`) : require('../assets/goodsempty.jpg')" alt="상품 이미지">
                                         </a>
                                     <div class="goods_ranking">
