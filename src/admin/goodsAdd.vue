@@ -176,7 +176,11 @@ export default {
 
     },
     goodsInsert(){
-      
+        
+        if(!this.Check()){
+            return;
+        }
+
         axios({
           url: "http://localhost:3000/goods/addGoods",
           method: "POST",
@@ -206,7 +210,7 @@ export default {
       
     },
     Check(){
-      if (this.goods.goods_nm == ""){
+            if (this.goods.goods_nm == ""){
                 alert("제품명은 필수 입력값입니다.");
                 return false;
             }

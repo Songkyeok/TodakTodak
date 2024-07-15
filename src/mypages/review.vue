@@ -24,11 +24,11 @@
               <th class="review-user value">{{ myreview.goods_nm }}</th>
               <th class="review-img value">
                 <router-link :to="'/goodsDetail/' + myreview.goods_no">
-                    <img v-if="myreview.review_img.length > 0" class="review-img" :src="myreview.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${myreview.review_img}`): '/goodsempty.jpg'" alt="사진 미첨부"/>
+                    <img v-if="myreview.review_img.length > 0" class="review-img" :src="myreview.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${myreview.review_img}`): '../goodsempty.jpg'" alt="사진 미첨부"/>
                     <p v-else>-</p>    
                 </router-link>
               </th>
-                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '/goodsempty.jpg'" alt="리뷰 이미지"/> -->
+                <!-- <img class="review-img" :src="review.review_img? require(`../../../TodakTodak_Backend/uploads/uploadReviews/${review.review_img}`): '../goodsempty.jpg'" alt="리뷰 이미지"/> -->
               <th class="review-content value">
                 <router-link :to="'/goodsDetail/' + myreview.goods_no">
                     {{ myreview.review_con }}
