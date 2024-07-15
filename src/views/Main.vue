@@ -27,17 +27,20 @@
                         <div class="goods_list">
                             <div class="best_img" v-for="(goods, index) in bestGoods" :key="index">
                                 <div class="imgbox">
-                                    <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                                        <img class="img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : require('../assets/goodsempty.jpg')" alt="상품 이미지">
+
+                                    <a :href="'http://localhost:8080/goodsDetail/' + goods.GOODS_NO">
+                                        <img class="img"
+                                            :src="goods.GOODS_IMG ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.GOODS_IMG}`) : '/goodsempty.jpg'"
+                                            alt="상품 이미지">
                                     </a>
                                     <div class="goods_ranking">
                                     <span>{{index + 1}}</span>
                                     </div>
                                 </div>
-                                <div class="name">{{ goods.goods_nm }}
+                                <div class="name">{{ goods.GOODS_NM }}
                                     
                                 </div>
-                                <div class="span">{{ getCurrencyFormat(goods.goods_price)}}<span class="span_price">원</span></div>
+                                <div class="span">{{ getCurrencyFormat(goods.GOODS_PRICE)}}<span class="span_price">원</span></div>
                                 <div class="box_tag">
                                     <span v-if="(index + 1) === 1" >BEST</span>
                                     <span v-if="(index + 1) < 3">HIT</span>
