@@ -9,13 +9,14 @@
             <div class="event_cont">
                 <div class="board_img">
                     <a href="#">
-                        <img :src="require(`../../../TodakTodak_Backend/uploads/uploadGoods/${event.GOODS_IMG}`)" width="800" height="350" class="js_image_load">
+                      <!-- 800 x 350 -->
+                        <img :src="require(`../../../TodakTodak_Backend/uploads/uploadGoods/${event.GOODS_IMG}`)" @click="this.$router.push({ path: `/goodsDetail/${event.GOODS_NO}`})" width="800" height="350" class="js_image_load">
                     </a>
                 </div>
                 <div class="event_info_cont">
                     <div class="board_tit">
                         <p class="subject">
-                            <a href="#">
+                            <a href="#" @click="this.$router.push({ path: `/goodsDetail/${event.GOODS_NO}`})">
                                 {{ event.GOODS_NM }}
                             </a>
                         </p>

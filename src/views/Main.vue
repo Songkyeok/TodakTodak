@@ -3,13 +3,13 @@
         <div id="MainSlider">
             <splide :options="options">
                 <splide-slide>
-                    <img class="slider-image" src="../assets/banner1.png" alt="main1" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/1' })" class="slider-image" src="../assets/banner1.png" alt="배너 이미지1" />
                 </splide-slide>
                 <splide-slide>
-                    <img class="slider-image" src="../assets/banner2.png" alt="main1" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/2' })" class="slider-image" src="../assets/banner2.png" alt="배너 이미지2" />
                 </splide-slide>
                 <splide-slide>
-                    <img class="slider-image" src="../assets/banner3.png" alt="main2" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/3' })" class="slider-image" src="../assets/banner3.png" alt="배너 이미지3" />
                 </splide-slide>
             </splide>
         </div>
@@ -154,6 +154,9 @@ export default {
     #MainSlider {
         margin-bottom: 100px;
     }
+    #MainSlider img {
+        cursor: pointer;
+    }
     .hr {
         width: 100%;
         height: 10px;
@@ -189,10 +192,6 @@ export default {
         margin: 0 auto;
     }
 
-    .content-cate-list {
-        
-    }
-
     .home_title {
         font-size: 30px;
         font-weight: bold;
@@ -212,9 +211,6 @@ export default {
         position: relative;
     }
 
-    .goods_tab {
-            
-    }
     .goods_list {
         box-sizing: border-box;
         display: flex;
