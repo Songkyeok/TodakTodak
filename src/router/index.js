@@ -33,6 +33,7 @@ import UpdatePw from "../mypages/UpdatePw.vue";
 import ReviewWrite from "../mypages/ReviewWrite.vue";
 import Check from "../mypages/Check.vue";
 import review from "../mypages/review.vue";
+import MyQnA from "../mypages/MyQnA.vue";
 
 // admin page
 import UserList from "../admin/UserList.vue";
@@ -166,6 +167,11 @@ const routes = [
         path: 'review',
         name: "review",
         component: review
+      },
+      {
+        path: 'qna',
+        name: "MyQnA",
+        component: MyQnA
       },
     ]
   },

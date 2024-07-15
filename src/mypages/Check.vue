@@ -35,7 +35,8 @@
                                     </td>
                                     <td>
                                         <!-- 리뷰 작성 됐으면 작성된 버튼 보여주기 -->
-                                        <button @click="goToReview(ordered.goods_no, ordered.order_trade_no)">리뷰 작성</button>
+                                            <button v-if="ordered.order_status == 2" @click="goToReview(ordered.goods_no, ordered.order_trade_no)">리뷰 작성</button>
+                                        <p v-else>-</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -52,7 +53,7 @@ import axios from "axios";
 export default {
     data() {
         return {
-            orderedList: []
+            orderedList: [],
         }
     },
     mounted() {
@@ -114,6 +115,7 @@ export default {
                 }
             });
         },
+        
     }
 }
 </script>
