@@ -124,15 +124,15 @@
                     <tbody>
                         <tr>
                             <th scope="row" class="table-active">총 상품 금액</th>
-                            <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
+                            <td colspan="2"><strong>{{ getCurrencyFormat(getTotalPrice()) }}원</strong></td>
                         </tr>
                         <tr>
                             <th scope="row" class="table-active">사용적립금</th>
-                            <td colspan="2"><strong>{{ getCurrencyFormat(0) }}</strong></td>
+                            <td colspan="2"><strong>{{ getCurrencyFormat(usePoint) }}포인트</strong></td>
                         </tr>
                         <tr>
                             <th scope="row" class="table-active">총 결제 금액</th>
-                            <td colspan="2"><strong>{{ getCurrencyFormat(getTotalPrice()) }}원</strong></td>
+                            <td colspan="2"><strong>{{ getCurrencyFormat(getOrderTotalPrice()) }}원</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -167,6 +167,8 @@ export default {
             paymentInit: false,
             cartOrder: [],
             cartList: [],
+            pointInput: '',
+            usePoint: 0,
         };
     },
     computed: {
@@ -247,7 +249,6 @@ export default {
                 return;
             }
             this.updateOrderInfo();
-            console.log('orderInfo>>>>>>>>>>>>>>>>',this.order)
             
 
             let amount;
@@ -281,7 +282,7 @@ export default {
                 }
             }
 
-            const total = amount; //이후 포인트 추가
+            const total = amount - this.usePoint; //이후 포인트 추가
             
             //결제데모를 사용 시 실제로 결제가 되기 때문에 앞쪽으로 빼놓음.
             axios({
@@ -298,6 +299,7 @@ export default {
                             order_tp: total,
                             user_no: this.user.user_no,
                             ordertp: this.$route.params.ordertp,
+                            order_point: this.usePoint,
                             order_detail: order_detail,
                         }
                     })
@@ -354,7 +356,6 @@ export default {
                 this.$router.push({ path: '/login'});
             }else{
                 const goods_no = this.$route.params.goodsno.split(',');
-                console.log('gggggggggg>> ', goods_no)
                 axios({
                     url: "http://localhost:3000/goods/orderpayBasket",
                     method: "POST",
@@ -369,6 +370,25 @@ export default {
                 })
             }
         },
+        handlePointInput(){
+            this.pointInput = this.pointInput.replace(/[^0-9]/g, '');
+        },
+        pointUse() {
+            const inputPoint = parseInt(this.pointInput)
+
+            if(inputPoint > this.userInfo.user_point){
+                this.$swal('보유적립금을 초과합니다.')
+            }else if(inputPoint < 5000){
+                this.$swal('적립금 5,000부터 사용 가능합니다.')
+            }else if(inputPoint < this.getTotalPrice()){
+                this.$swal('사용 가능합니다.')
+                this.usePoint = inputPoint;
+            }else if(inputPoint > this.getTotalPrice()){
+                this.$swal('총 상품 금액보다 큽니다.')
+            }else{
+                this.$swal('숫자만 입력해주세요')
+            }
+        },
         getTotalPrice(){
             if(this.$route.params.ordertp === '0'){
                 const totalPrice = this.goods.goods_price * this.$route.params.total;
@@ -377,6 +397,29 @@ export default {
             else if(this.$route.params.ordertp === '1'){
                 const totalPrice = this.cartList.reduce((total, cart) =>  total + (cart.basket_cnt * cart.basket_price),0);
                 return totalPrice;
+
+            }else {
+                return 0;
+            }
+        },
+        getOrderTotalPrice(){
+            if(this.$route.params.ordertp === '0'){
+                if(this.usePoint >= 5000){
+                    const totalPrice = this.goods.goods_price * this.$route.params.total;
+                    return totalPrice - this.usePoint
+                }else{
+                    const totalPrice = this.goods.goods_price * this.$route.params.total;
+                    return totalPrice
+                }
+            }
+            else if(this.$route.params.ordertp === '1'){
+                if(this.usePoint >= 5000){
+                    const totalPrice = this.cartList.reduce((total, cart) =>  total + (cart.basket_cnt * cart.basket_price),0);
+                    return totalPrice - this.usePoint;
+                }else{
+                    const totalPrice = this.cartList.reduce((total, cart) =>  total + (cart.basket_cnt * cart.basket_price),0);
+                    return totalPrice
+                }
             }else {
                 return 0;
             }
