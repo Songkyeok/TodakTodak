@@ -71,6 +71,15 @@ export default{
             const seconds = `${dateObj.getSeconds()}`.padStart(2, '0');
             
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        },
+        formatDateTime2(dateTimeString) {
+            const dateObj = new Date(dateTimeString);
+
+            const year = dateObj.getFullYear();
+            const month = `${dateObj.getMonth() + 1}`.padStart(2, '0');
+            const day = `${dateObj.getDate()}`.padStart(2, '0');
+        
+            return `${year}-${month}-${day}`;
         }
     }
 }

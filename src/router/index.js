@@ -113,7 +113,7 @@ const routes = [
         component: OrderPay
       },
       {
-        path: "/qnaupdate",
+        path: "/qnaupdate/:goods_no",
         name: "QnaUpdate",
         component: QnaUpdate
       },
