@@ -230,6 +230,7 @@ export default {
     font-size: large;
     color: #999696;
     text-align: center;
+    background-color: #f8f7f7;
 
 }
 
