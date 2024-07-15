@@ -11,17 +11,19 @@
                 <h2>{{ getCategoryName(cate) }}</h2> 
                 <br>
             </div>
-            <div v-if="categoryGoods.length>0">
-                <div class="category_container" v-for="(goods, i) in categoryGoods" :key="i">
-                    <div class="img">
-                        <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
-                            <img class="img" :width="200" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
-                            alt="상품 이미지">
-                        </a> 
-                        <a @click="goToDetail()"></a>
+            <div class="products-container">
+                <div v-if="categoryGoods.length>0">
+                    <div class="category-container-item" v-for="(goods, i) in categoryGoods" :key="i">
+                        <div class="img">
+                            <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
+                                <img class="img" :width="200" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                                alt="상품 이미지">
+                            </a> 
+                            <a @click="goToDetail()"></a>
+                        </div>
+                        <div class="name">{{ goods.goods_nm }}</div>
+                        <div class="span">{{ $currencyFormat(goods.goods_price) }}원</div>
                     </div>
-                    <div class="name">{{ goods.goods_nm }}</div>
-                    <div class="span">{{ $currencyFormat(goods.goods_price) }}원</div>
                 </div>
             </div>
         </div>
@@ -91,3 +93,18 @@ export default {
     }
 }
 </script>
+
+
+
+<style scoped>
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* 아이템 간격 조정 */
+    justify-content: space-between;
+}
+
+.category-container-item {
+    flex: 1 1 calc(33.333% - 16px);
+}
+</style>

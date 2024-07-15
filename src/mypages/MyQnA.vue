@@ -2,9 +2,6 @@
 <template>
     <div class="my-qna-list">
         <h2>나의 QnA</h2>
-        <br />
-        <br />
-        <br />
             <div class="qna-none" v-if="myqnaList.length === 0">나의 QnA가 없습니다.</div>
             <table class="qna-content-list" v-else>
                 <thead>
@@ -20,19 +17,20 @@
         <br />
     <tbody>
           <tr class="user-qna-content"  v-for="(myqna, i) in pageMyQnaList" :key="i">
-              <th class="qna-user value">{{ myqna.goods_nm }}</th>
+              <th class="qna-goods value">
+                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.goods_nm }}</router-link>
+              </th>
               <th class="qna-title value">
-                <router-link :to="'/goodsDetail/' + myqna.goods_no">
-                    {{ myqna.qna_title }}
-                </router-link>
+                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.qna_title }}</router-link>
               </th>
               <th class="qna-content value">
-                <router-link :to="'/goodsDetail/' + myqna.goods_no">
-                    {{ myqna.qna_content }}
-                </router-link>
+                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.qna_content }}</router-link>
               </th>
               <th class="qna-date value">{{ new Date(myqna.qna_create).toISOString().split('T')[0] }}</th>
-              <th class="qna-secret value">{{ qna_secret }}</th>
+              <th class="qna-secret value">
+                <div v-if="qna_secret == 0">공개 문의</div>
+                <div v-else>비공개 문의</div>
+              </th>
               <th><button type="button" class="qna-delete-btn" @click="goToDelete(myqna.qna_no)">삭제</button></th>
           </tr>
       </tbody>
@@ -147,7 +145,7 @@ export default {
 <style scoped>
 .my-qna-list {
     /* width: 1500px; */
-    width: 80%;
+    width: 75%;
     margin-top: 100px;
     padding: 0 5% 0 0%;
     display: inline-block;
@@ -156,7 +154,7 @@ export default {
 
 .my-qna-list h2 {
     border-bottom: 1px solid #d4cdcd;
-    padding-bottom: 15px;
+    padding-bottom: 100px;
 }
 
 .pagination {
@@ -167,13 +165,15 @@ export default {
 
 .qna-delete-btn {
     border: none;
-    width: 25%;
+    width: 50%;
     border: solid 2px rgb(151, 235, 118);
     border-radius: 7px;
     background-color: rgb(151, 235, 118);
     color: rgb(0, 0, 0);
-    padding: 7px 0;
+    padding: 5px 0;
     font-weight: 600;
+    text-align: center;
+    margin-left: 30px;
 }
 
 .user-qna-title {
@@ -182,49 +182,49 @@ export default {
     font-size: large;
     color: #999696;
     text-align: left;
+    background-color: #efecec;
 }
 
+.qna-title {
+    width: 15%;
+    padding: 30px;
+}
 
-.qna-user {
+.qna-goods {
     width: 10%;
+    padding: 30px;
 }
 
-.review-img {
-    width: 20%;
-}
 
 .qna-content {
     width: 30%;
     word-wrap: break-word; /* 긴 단어가 있을 때 줄바꿈 */
     word-break: break-all; /* 긴 단어가 있을 때 줄바꿈 */
+    padding: 30px;
 }
 
 .qna-date {
     width: 10%;
+    padding: 30px;
+}
+
+.qna-secret {
+    width: 10%;
+    padding: 30px;
 }
 
 .qna-delete {
     width: 10%;
+    padding: 30px;
 }
+
 
 .user-qna-content {
     border-bottom: 1px solid #d4cdcd;
     padding-bottom: 20px;
     font-size: small;
     color: #5d5b5b;
-    text-align: left;
     font-weight: 50px;
-}
-
-.user-delete-btn {
-    border: none;
-    width: 25%;
-    border: solid 2px rgb(151, 235, 118);
-    border-radius: 5px;
-    background-color: rgb(151, 235, 118);
-    color: rgb(0, 0, 0);
-    padding: 7px 0;
-    font-weight: 600;
 }
 
 
