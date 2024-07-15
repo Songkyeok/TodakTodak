@@ -7,12 +7,10 @@
                 <tr>
                     <th><label for="writer">작성자</label></th>
                     <td class="text_font">{{ user_nm }}</td>
-                    <!-- <td><input type="text" id="writer" name="writer" v-model="user_nm" required></td> -->
                 </tr>
                 <tr>
                     <th><label for="phone">휴대폰</label></th>
                     <td class="text_font">{{ user_phone }}</td>
-                    <!-- <td><input type="tel" id="phone" name="phone" v-model="user_phone" required></td> -->
                 </tr>
                 <tr>
                     <th><label for="subject">제목</label></th>
@@ -24,16 +22,12 @@
                 </tr>
                 <tr class="form-group">
                   <th><label for="is_secret" class="secret">비밀글</label></th>
-                  <th><input type="checkbox" v-model="is_secret" class="checkbox" id="is_secret"></th>
+                  <th><input type="checkbox" class="checkbox" id="is_secret" v-model="qna_secret"></th>
                 </tr>
-                <!-- <tr>
-                    <th>비밀글 여부</th>
-                    <th><input class="box" type="checkbox" name="checkbox" @click="1" /></th>
-                </tr> -->
             </table>
             <div class="btn-container">
                 <button type="button" onclick="history.back()">이전</button>
-                <button type="submit">저장</button>
+                <button type="submit" @click="intoQna()">저장</button>
             </div>
         </form>
     </div>
@@ -91,17 +85,18 @@ export default {
             url: "http://localhost:3000/qna/intoQna",
             method: "POST",
             data: {
+                goods_no: this.$route.params.goods_no,
                 user_no : this.user.user_no,
                 qna_title: this.qna_title,
                 qna_content: this.qna_content,
-                qna_secret: this.qna_secret,
-                goods_no: this.goods_no
+                qna_secret: this.qna_secret
             }
         }).then(results => {
             this.qna = results.data;
-            console.log(qna)
             this.$swal("작성 완료");
         })
+        const goodsno = this.$route.params.goods_no
+        this.$router.push(`/goodsDetail/${goodsno}`);
     }
 
 }

@@ -562,7 +562,7 @@ export default {
         console.error(error);
       });
     },
-
+    //Qna 목록 조회
     getQnaList() {
       const goods_no = this.$route.params.goodsno;
       axios({
@@ -571,7 +571,6 @@ export default {
 
       }).then((res) => {
         this.qnaList = res.data.data;
-        console.log("this.qnaList ==>>", this.qnaList)
         this.qnaPageCnt = parseInt(this.qnaList.length / this.qnaOnePageCnt) + 1
         this.qnaSetPage(1)
       })
@@ -579,18 +578,18 @@ export default {
          console.error('Error fetching QnA list:', error);  // 에러 출력
        });
       },
-
-  async goToAddQna() {
-        if (this.user.user_no === "") {
-            alert("로그인해주셈");
-            this.$router.push({ path: "/login" });
-        } else {
-        const goods_no = this.goods.goods_no;
-        window.location.href = `http://localhost:8080/qnaupdate/${goods_no}`;
-        }
+    //Qna 입력 
+    async goToAddQna() {
+      if (this.user.user_no === "") {
+          alert("로그인해주셈");
+          this.$router.push({ path: "/login" });
+      } else {
+      const goods_no = this.goods.goods_no;
+      window.location.href = `http://localhost:8080/qnaupdate/${goods_no}`;
       }
     }
   }
+}
 </script>
 
 <style scoped>
