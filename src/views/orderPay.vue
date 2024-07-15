@@ -79,7 +79,7 @@
                     <div class="d-flex mb-3 orderinfo">
                         <div class="me-3">
                             <img :width="80"
-                                :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '/goodsempty.jpg'"
+                                :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`) : '../goodsempty.jpg'"
                                 alt="상품 이미지">
                         </div>
                         <div class="me-3">
@@ -95,7 +95,7 @@
                     <div class="d-flex mb-3 orderinfo" v-for="(cart, i) in cartList" :key="i">
                         <div class="me-3">
                             <img class="img_cart"
-                                :src="cart.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${cart.basket_img}`) : '/goodsempty.jpg'"
+                                :src="cart.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${cart.basket_img}`) : '../goodsempty.jpg'"
                                 alt="상품 이미지">
                         </div>
                         <div class="me-3">
