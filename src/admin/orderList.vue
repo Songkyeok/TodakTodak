@@ -54,7 +54,7 @@
               <th class="order-address value">{{ order.order_zipcode }}<br>{{ order.order_adr1 }}  {{ order.order_adr2 }}</th>
               <th class="order-phone value">{{ order.order_phone }}</th>
               <th class="order-status value">{{ getStatus(order.order_status) }}</th>
-              <th><button type="button" :class="{ order_delivery_btn: getStatus(order.order_status)==='배송중', order_complete_btn:getStatus(order.order_status)==='배송완료', order_cancel_btn:getStatus(order.order_status)==='배송취소', order_payment_btn:getStatus(order.order_status)==='결제완료' }" @click="updateStatus(order.order_trade_no)">{{ getStatus(order.order_status) }}</button></th>
+              <th><button type="button" :class="{ order_delivery_btn: getStatus(order.order_status)==='배송중', order_complete_btn:getStatus(order.order_status)==='배송완료', order_cancel_btn:getStatus(order.order_status)==='주문취소', order_payment_btn:getStatus(order.order_status)==='결제완료' }" @click="updateStatus(order.order_trade_no)">{{ getStatus(order.order_status) }}</button></th>
               <th><button type="button" class="order-delete-btn" @click="goToDelete(order.order_trade_no)">삭제</button></th>
         </tr>
         <br />
@@ -142,7 +142,7 @@ export default {
         }else if(status == 2){
             return "배송완료"
         }else if(status == 3){
-            return "배송취소"
+            return "주문취소"
         }
     },
     updateStatus(trade_no){
@@ -153,7 +153,7 @@ export default {
             showDenyButton: true,
             showConfirmButton: true,
             showCloseButton: true,
-            cancelButtonText: '배송취소',
+            cancelButtonText: '주문취소',
             denyButtonText: '배송완료',
             confirmButtonText: '배송중',
             
@@ -168,7 +168,7 @@ export default {
                 // X 버튼을 눌렀을 때 아무 동작도 하지 않습니다.
                 window.location.reload();
             } else if (results.dismiss === this.$swal.DismissReason.cancel) {
-                console.log('배송취소');
+                console.log('주문취소');
                 status = 3;
             }
             axios({

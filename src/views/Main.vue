@@ -69,8 +69,7 @@
                                 <div class="name">{{ newGoods[index].goods_nm }}</div>
                                 <div class="span">{{ getCurrencyFormat(newGoods[index].goods_price)}}<span class="span_price">원</span></div>
                                 <div class="box_tag">
-                                    <span v-if="(index + 1) === 1" >NEW</span>
-                                    <span v-if="(index + 1) < 3">BEST</span>
+                                    <span v-if="(index + 1) < 3" >NEW</span>
                                     <span>무료배송</span>
                                 </div>
                             </div>
@@ -152,7 +151,7 @@ export default {
 
 <style scoped>
     #MainSlider {
-        margin-bottom: 100px;
+        margin-bottom: 60px;
     }
     .hr {
         width: 100%;

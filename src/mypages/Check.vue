@@ -14,6 +14,7 @@
                                     <th>주문 번호</th>
                                     <th>상품명</th>
                                     <th>주문 가격</th>
+                                    <th>적립금 사용</th>
                                     <th>주문 수량</th>
                                     <th>주문 날짜</th>
                                     <th>주문 상태</th>
@@ -26,11 +27,12 @@
                                     <td>{{ordered.order_detail_no}}</td>
                                     <td>{{ordered.goods_nm}}</td>
                                     <td>{{ordered.ordered_price}}</td>
+                                    <td>{{ordered.order_point}}</td>
                                     <td>{{ordered.order_goods_cnt}}</td>
                                     <td>{{formatDateTime(ordered.order_create)}}</td>
                                     <td>{{formatStatus(ordered.order_status)}}</td>
                                     <td>
-                                        <button v-if="ordered.order_status == 0" @click="order_cancel(ordered.order_detail_no)">주문 취소</button>
+                                        <button v-if="ordered.order_status == 0" @click="order_cancel(ordered.order_detail_no, ordered.order_point)">주문 취소</button>
                                         <p v-else>-</p>
                                     </td>
                                     <td>
@@ -70,6 +72,7 @@ export default {
                 }
             }).then(res => {
                 this.orderedList = res.data;
+                console.log('rrrrrrrrrrrr',this.orderedList)
             });
         },
         formatStatus(status) {
@@ -86,22 +89,26 @@ export default {
                     return "관리자 문의";
             }
         },
-        order_cancel(order_detail_no) {
+        order_cancel(order_detail_no, order_point) {
             if (confirm('해당 상품과 관련된 결제 주문이 전부 취소 됩니다. 정말 주문을 취소 하시겠습니까?')) {
                 axios({
                     url: "http://localhost:3000/mypage/orderCancel",
                     method: "POST",
                     data: {
-                        order_detail_no: order_detail_no
+                        order_detail_no: order_detail_no,
+                        order_point: order_point,
+                        user_no : this.$store.state.user.user_no
                     }
                 }).then(res => {
                     if(res.data.message == 'success') {
                         this.$swal("주문이 취소되었습니다.");
                         this.selectCheck();
+                    
                     } else {
                         return;
                     }
                 })
+                window.location.reload();
             } else {
                 return;
             }
