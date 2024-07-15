@@ -688,3 +688,10 @@ Footer {
 .join li:nth-child(1) {
   margin: 0;
 }
+
+.gnb-list > div.cm-slider > ul > li:hover {
+  cursor: pointer;
+}
+.gnb-list > div.cm-slider > ul > li a {
+  text-decoration-line: none;
+}

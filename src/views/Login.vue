@@ -23,10 +23,9 @@
                       </div>
                       <!-- sns 로그인 추가 -->
                       <div>
-                          <a id="custom-login-btn" class="" @click="kakaoLogin()">
+                          <a id="custom-login-btn" class="" @click="kakaoLogin">
                               <img class="mt-2" src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222">
                           </a>
-                          <!-- <a @click="kakaoLogout()">로그아웃</a> -->
 
                           <div id="naverIdLogin" class="mt-2" @click="naverlogin" img src="../assets/naver.png"></div>
                       </div>
@@ -74,16 +73,15 @@ export default {
             color: "green", type: 3, height: 48,
         },
     });
-    // this.$store.commit("naverLogin", this.naverLogin);
 
     this.naverLogin.init();
 
     this.naverLogin.getLoginStatus((status) => {
         if (status) {
-            const id = this.naverLogin.user.id;
-            const email = this.naverLogin.user.email;
-            const name = this.naverLogin.user.name;
-
+            const user_id = this.naverLogin.user.id;
+            const user_nm = this.naverLogin.user.name;
+            const user_email = this.naverLogin.user.email;
+            
             // console.log("this.naverLogin.user.id ====>>>", id);
             // console.log("this.naverLogin.user.email ====>>>", email);
             // console.log("this.naverLogin.user.name ====>>>", name);
@@ -166,23 +164,21 @@ export default {
         window.Kakao.API.request({
             url: '/v2/user/me',
             success: res => {
-                const kakao_account = res.kakao_account
-                const nickname = kakao_account.profile.nickname
-                const email = kakao_account.email
-
-                // console.log("nickname ===>>> ", nickname);
-                // console.log("email ===>>> ", email);
+                const kakao_account = res.kakao_account;
+                const kakao_nickname = kakao_account.profile.nickname;
+                const kakao_email = kakao_account.email;
+                const kakao_id = res.id;
 
                 axios({
                     url: "http://localhost:3000/auth/kakaoLogin",
                     method: "POST",
                     data: {
-                        user_id: email,
-                        user_nm: nickname,
-                        user_no: res.message
+                        user_id: kakao_id,
+                        user_nm: kakao_nickname,
+                        user_email: kakao_email
                     }
                 }).then(res => {
-                    if(res.data.message == "저장완료") {
+                    if(res.data.message == '회원가입') {
                         this.$swal({
                             position: 'top',
                             icon: 'success',
@@ -190,10 +186,13 @@ export default {
                             showConfirmButton: false,
                             timer: 1000
                         });
-                    } else {
+                    } else if(res.data.message == '로그인') {
+                        const user_info = res.data.data[0];
+                        
                         this.$store.commit("user", {
-                            user_id: email,
-                            user_no: res.data.message
+                            user_id: user_info.USER_ID,
+                            user_no: user_info.USER_NO,
+                            user_tp: user_info.USER_TP
                         })
                         this.$swal({
                             position: 'top',
@@ -201,61 +200,54 @@ export default {
                             title: '로그인 하였습니다.',
                             showConfirmButton: false,
                             timer: 1000
-                        }).then(() => {
-                            window.location.href = "http://localhost:8080";
                         })
+
+                        this.$router.push({ name: 'Main' });
                     }
                 })
-                .catch(err => {
-                    console.log(err);
-                })
             },
-            fail: err => {
-                console.log(err);
-            }
-        })
-    },
-    kakaoLogout() {
-        window.Kakao.Auth.logout(res => {
-            console.log(res)
         })
     },
     naverlogin() {
+        const user_id = this.naverLogin.user.id;
+        const user_nm = this.naverLogin.user.name;
+        const user_email = this.naverLogin.user.email;
+
         axios({
             url: "http://localhost:3000/auth/naverlogin",
             method: "POST",
             data: {
-                naverlogin: this.naverLogin.user,
+                user_id: user_id,
+                user_nm: user_nm,
+                user_email: user_email,
             },
         }).then(res => {
-          // console.log("res", res)
-            if (res.data.message == '저장완료') {
+            if(res.data.message == '회원가입') {
                 this.$swal({
                     position: 'top',
                     icon: 'success',
-                    title: '네이버 회원 가입이 완료 되었습니다.',
+                    title: '회원 가입이 완료 되었습니다.',
                     showConfirmButton: false,
                     timer: 1000
                 });
-            } else {
+            } else if(res.data.message == '로그인') {
+                const user_info = res.data.data[0];
+                
                 this.$store.commit("user", {
-                    user_id: this.naverLogin.user.id,
-                    user_no: res.data.message
+                    user_id: user_info.USER_ID,
+                    user_no: user_info.USER_NO,
+                    user_tp: user_info.USER_TP
                 })
-
                 this.$swal({
                     position: 'top',
                     icon: 'success',
-                    title: '네이버 로그인 하였습니다.',
+                    title: '로그인 하였습니다.',
                     showConfirmButton: false,
                     timer: 1000
-                }).then(() => {
-                    window.location.href = "http://localhost:8080";
                 })
+
+                window.location.href = "http://localhost:8080";
             }
-        })
-        .catch(err => {
-            console.log(err);
         })
     },
   }

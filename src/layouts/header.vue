@@ -47,46 +47,46 @@
                             <nav class="gnb-list">
                                 <div class="cm-slider swiper-container main-slider swiper-container-initialized swiper-container-horizontal reach-end bg_r">
                                     <ul class="swiper-wrapper">
-                                        <li class="swiper-slide swiper-slide-active">
+                                        <li class="swiper-slide swiper-slide-active" @click="goToAbout()">
                                             <div class="slide-inner">
                                                 <a href="#">
-                                                    <span @click="goToAbout()">소개글</span>
+                                                    <span >소개글</span>
                                                 </a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide swiper-slide-next">
+                                        <li class="swiper-slide swiper-slide-next" @click="goToEvent()">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToEvent()">이벤트</span></a>
+                                                <a href="#"><span>이벤트</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(1)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(1)">유아식기</span></a>
+                                                <a href="#"><span>유아식기</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(2)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(2)">욕실용품</span></a>
+                                                <a href="#"><span>욕실용품</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(3)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(3)">외출용품</span></a>
+                                                <a href="#"><span>외출용품</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(4)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(4)">유아도서</span></a>
+                                                <a href="#"><span>유아도서</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(5)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(5)">위생용품</span></a>
+                                                <a href="#"><span>위생용품</span></a>
                                             </div>
                                         </li>
-                                        <li class="swiper-slide">
+                                        <li class="swiper-slide" @click="goToCategory(6)">
                                             <div class="slide-inner">
-                                                <a href="#"><span @click="goToCategory(6)">장난감</span></a>
+                                                <a href="#"><span>장난감</span></a>
                                             </div>
                                         </li>
                                     </ul>

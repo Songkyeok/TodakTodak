@@ -54,6 +54,7 @@ const routes = [
     children: [
       {
         path: "/",
+        name: "Main",
         component: Main
       },
       {
