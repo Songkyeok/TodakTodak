@@ -14,7 +14,6 @@
                         <th class="review-delete">리뷰 삭제</th>
                     </tr>
                 </thead>
-        <br />
     <tbody>
           <tr class="user-review-content"  v-for="(myreview, i) in pageMyReviewList" :key="i">
               <th class="review-star value">{{ getStarRating(myreview.review_rating) }}</th>
@@ -131,6 +130,7 @@ export default {
                     method: "POST",
                     data: {
                         review_no: review_n,
+                        user_no: this.$store.state.user.user_no,
                     }
                 }).then((results) => {
                     console.log(results);
@@ -143,6 +143,7 @@ export default {
                 });
             } else {
                 window.location.href = `http://localhost:8080/mypage/review`;
+                console.log('리뷰 삭제가 취소되었습니다.');
             }
         },
     },
