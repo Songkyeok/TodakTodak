@@ -53,7 +53,7 @@
             <div class="mypage_top_wallet">
                 <ul>
                     <li>
-                        <span><img src="../assets/img/mypage/icon_coupon.png" alt=""></span>
+                        <span><img src="../assets/img/mypage/icon_like.png" alt=""></span>
                         <span>
                             <em>LIKE</em>
                             <a href="http://localhost:8080/mypage/like">
