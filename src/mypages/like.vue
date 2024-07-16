@@ -268,7 +268,8 @@ img {
 }
 
 .value {
-    padding: 45px 0px 0px 0px;
+    /* padding: 45px 0px 0px 0px; */
+    vertical-align: middle;
 }
 
 </style>

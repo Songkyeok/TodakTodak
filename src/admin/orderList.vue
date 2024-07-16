@@ -221,7 +221,7 @@ export default {
 .order-management h1 {
   text-align: left;
   border-bottom: 1px solid #d4cdcd;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
 }
 
 .orderlist-title {

@@ -8,8 +8,8 @@
                     <tr class="user-qna-title">
                         <th class="qna-goods">상품명</th>
                         <th class="qna-title">제목</th>
-                        <th class="qna-content">내용</th>
-                        <th class="qna-admin-answer">답변</th>
+                        <!-- <th class="qna-content">내용</th> -->
+                        <!-- <th class="qna-admin-answer">답변</th> -->
                         <th class="qna-answer">답변 여부</th>
                         <th class="qna-date">공개 여부</th>
                         <th class="qna-date">작성 날짜</th>
@@ -22,12 +22,12 @@
                 <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.goods_nm }}</router-link>
               </th>
               <th class="qna-title value">
-                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.qna_title }}</router-link>
+                <a href="#" @click="toggleVisibility(i)">{{ myqna.qna_title }}</a>
               </th>
-              <th class="qna-content value">{{ myqna.qna_content }}
-              </th>
-              <th class="qna-admin-answer value" v-if="myqna.qna_answer_admin == '미답변'"></th>
-              <th class="qna-admin-answer value" v-else>{{myqna.qna_answer_admin}}</th>
+              <!-- <th class="qna-content value">{{ myqna.qna_content }}
+              </th> -->
+              <!-- <th class="qna-admin-answer value" v-if="myqna.qna_answer_admin == '미답변'"></th>
+              <th class="qna-admin-answer value" v-else>{{myqna.qna_answer_admin}}</th> -->
               <th class="qna-answer value" v-if="myqna.qna_answer_admin == '미답변'">미답변</th>
               <th class="qna-answer value" v-else>답변완료</th>
               <th class="qna-secret value">
@@ -36,6 +36,15 @@
               </th>
               <th class="qna-date value">{{ new Date(myqna.qna_create).toISOString().split('T')[0] }}</th>
               <th><button type="button" class="qna-delete-btn" @click="goToDelete(myqna.qna_no)">삭제</button></th>
+          </tr>
+          <tr v-show="isVisible[i]" class="qna_cont_wrap">
+            <td colspan="6">
+                <div class="qna_cont qna_btns">
+                    <p>ddd</p>
+                    <!-- <a href="#" @click.prevent="toggleVisibility" class="qna_q rv_up">{{myqna.qna_content}}</a> -->
+                    <!-- <a href="#" @click.prevent="toggleVisibility" class="qna_q rv_up">{{myqna.qna_answer_admin}}</a> -->
+                </div>
+            </td>
           </tr>
       </tbody>
     </table>
@@ -52,8 +61,21 @@
 
 <script>
 import axios from 'axios';
+import { ref } from 'vue';
 
 export default {
+//     setup() {
+//     const isVisible = ref([]);
+
+//     function toggleVisibility(index) {
+//       isVisible.value[index] = !isVisible.value[index];
+//     }
+
+//     return {
+//       isVisible,
+//       toggleVisibility,
+//     };
+//   },
     data() {
         return {
             cnt: 1,
@@ -63,6 +85,7 @@ export default {
             onePageCnt: 5,
             qna_no: [],
             pageMyQnaList: [],
+            isVisible: [],
         };
     },
 
@@ -92,7 +115,7 @@ export default {
 
     methods: {
         setPage(page) {
-            this.pageMyQnaList = []
+            // this.pageMyQnaList = []
             this.pageNum = page - 1;
             this.sliceList();
         },
@@ -100,6 +123,7 @@ export default {
         sliceList() {
             const start = 0 + this.pageNum * this.onePageCnt
             this.pageMyQnaList = this.myqnaList.slice(start, start + this.onePageCnt);
+            this.isVisible = new Array(this.pageMyQnaList.length).fill(false);
         },
 
 
@@ -114,7 +138,7 @@ export default {
             }).then((results) => {
                 this.myqnaList = results.data;
                 console.log(results);
-                this.pageCnt = parseInt(this.myqnaList.length / this.onePageCnt) + 1
+                this.pageCnt = Math.ceil(this.myqnaList.length / this.onePageCnt);
                 this.setPage(1)
             }).catch(error => {
                 console.error(error);
@@ -133,7 +157,7 @@ export default {
                     console.log(results);
                     this.deleteQna = results.data;
                     this.getMyQnaList(); // Qna 삭제 후 목록 갱신
-                    window.location.href = `http://localhost:8080/mypage/qna`;
+                    // window.location.href = `http://localhost:8080/mypage/qna`;
                 })
                 .catch((error) => {
                     console.error('error');
@@ -142,6 +166,11 @@ export default {
                 window.location.href = `http://localhost:8080/mypage/qna`;
             }
         },
+        toggleVisibility(index) {
+            // 해당 인덱스의 isVisible 상태를 토글
+            console.log("this.isVisible", this.isVisible);
+            this.isVisible[index] = !this.isVisible[index];
+        },
     },
 };
 </script>
@@ -149,16 +178,23 @@ export default {
 <style scoped>
 .my-qna-list {
     /* width: 1500px; */
-    width: 75%;
+    /* width: 75%;
     margin-top: 100px;
     padding: 0 5% 0 0%;
     display: inline-block;
+    vertical-align: top; */
+    width: 70%;
+    padding: 0 5%;
+    display: inline-block;
     vertical-align: top;
+    margin-top: 100px;
 }
 
 .my-qna-list h2 {
     border-bottom: 1px solid #d4cdcd;
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .pagination {
@@ -241,6 +277,14 @@ export default {
     font-size: small;
     color: #5d5b5b;
     font-weight: 50px;
+}
+
+.qna_cont_wrap {
+  display: none;
+}
+
+.qna_cont_wrap[style*="display: table-row"] {
+  display: table-row;
 }
 
 

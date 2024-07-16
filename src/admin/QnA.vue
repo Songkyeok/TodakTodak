@@ -1,34 +1,33 @@
 <template>
-    <main class="mt-3">
-        <div class="container">
-            <table class="table caption-top goodslist-table">
-                <thead class="table-light">
-                    <tr>
-                        <th scope="col">문의날짜</th>
-                        <th scope="col">상품명</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">답변상태</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody class="table-data" v-if="qnaList.length>0">
-                    <tr v-for="(qna, index) in qnaList" :key="index">
-                            <td>{{ qna.qna_create }}</td>
-                            <td>{{ qna.goods_nm }}</td>
-                            <td>{{ qna.qna_title }}</td>
-                            <td>{{ qna.user_nm}}</td>
-                            <td v-if="qna.qna_answer_admin == '미답변'">미답변</td>
-                            <td v-else>답변완료</td>
-                            <td class="qwer">
-                                <button v-if="qna.qna_answer_admin == '미답변'" class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
-                                <button v-else class="btn btn-outline-danger answer_btn" @click="answer_delete(qna.qna_answer_admin)">답변삭제</button>
-                                <button class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">삭제</button>
-                            </td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+    <main class="qna_container">
+        <h1>상품관리</h1>
+        <table class="table caption-top goodslist-table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">문의날짜</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">답변상태</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="table-data" v-if="qnaList.length>0">
+                <tr v-for="(qna, index) in qnaList" :key="index">
+                        <td>{{ qna.qna_create }}</td>
+                        <td>{{ qna.goods_nm }}</td>
+                        <td>{{ qna.qna_title }}</td>
+                        <td>{{ qna.user_nm}}</td>
+                        <td v-if="qna.qna_answer_admin == '미답변'">미답변</td>
+                        <td v-else>답변완료</td>
+                        <td class="qwer">
+                            <button v-if="qna.qna_answer_admin == '미답변'" class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
+                            <button v-else class="btn btn-outline-danger answer_btn" @click="answer_delete(qna.qna_answer_admin)">답변삭제</button>
+                            <button class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">삭제</button>
+                        </td>
+                </tr>
+            </tbody>
+            </table>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
@@ -137,6 +136,34 @@ export default {
 .goodslist-table {
     font-family: unset;
 }
+.qna_container {
+    width: 80%;
+    min-width: 80%;
+    margin-top: 100px;
+    padding: 0 10% 0 5%;
+    display: inline-block;
+    vertical-align: top;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+.qna_container h1 {
+    text-align: left;
+    border-bottom: 1px solid #d4cdcd;
+    padding-bottom: 30px;
+}
+.table-light tr {
+    border-bottom: 1px solid #d4cdcd;
+    padding-bottom: 20px;
+    font-size: large;
+    color: #999696;
+    text-align: center;
+    background-color: #f8f7f7;
+}
+.table-light tr th {
+    padding: 23px;
+}
+
 
 th,
 td {
