@@ -78,30 +78,30 @@
             </div>
             <div class="mypage_order_info_cont">
                 <ol>
-                    <li class="active">
+                    <!-- <li class="active">
                         <b>입금대기</b>
                         <strong>1</strong>
-                    </li>
-                    <li class="">
+                    </li> -->
+                    <li class="status">
                         <b>결제완료</b>
-                        <strong>0</strong>
+                        <strong>{{this.status0}}</strong>
                     </li>
-                    <li class="">
+                    <!-- <li class="">
                         <b>상품준비중</b>
                         <strong>0</strong>
-                    </li>
-                    <li class="">
+                    </li> -->
+                    <li class="status">
                         <b>배송중</b>
-                        <strong>0</strong>
+                        <strong>{{this.status1}}</strong>
                     </li>
-                    <li class="">
+                    <li class="status">
                         <b>배송완료</b>
-                        <strong>0</strong>
+                        <strong>{{this.status2}}</strong>
                     </li>
-                    <li class="">
+                    <!-- <li class="">
                         <b>구매확정</b>
                         <strong>0</strong>
-                    </li>
+                    </li> -->
                 </ol>
                 <!-- <div class="order_case_list">
                     <ul>
@@ -140,13 +140,19 @@ export default {
             user_nm: '',
             user_point: 0,
             user_grade: 0,
-            like_count: 0
+            like_count: 0,
+            order_status: {},
+            status0: 0,
+            status1: 0,
+            status2: 0,
+            status3: 0,
         }
     },
     mounted() {
     },
     created() {
         this.getInfo();
+        this.getOrder();
     },
     methods: {
         getInfo() {
@@ -171,6 +177,21 @@ export default {
             })
             
             
+        },
+        getOrder(){
+            const user_no = this.$store.state.user.user_no;
+            axios({
+                url:`http://localhost:3000/mypage/orderCount`,
+                method: "POST",
+                data: { user_no: user_no}
+            })
+            .then((res) => {
+                this.order_status = res.data;
+                this.status0 = this.order_status[0].status_count
+                this.status1 = this.order_status[1].status_count
+                this.status2 = this.order_status[2].status_count
+                this.status3 = this.order_status[3].status_count
+            })
         }
     },
     
@@ -256,6 +277,7 @@ export default {
     border: 1px solid #e3e3e3;
     border-top: 1px solid #999999;
     text-align: center;
+    
 }
 .mypage_order_info_cont ol {
     display: inline-block;
@@ -263,6 +285,7 @@ export default {
     font-size: 0;
     /* border-right: 1px solid #e3e3e3; */
     vertical-align: middle;
+    
 }
 .mypage_order_info_cont ol li {
     display: inline-block;
@@ -272,6 +295,7 @@ export default {
     font-size: 13px;
     background: url("../assets/img/mypage/mypgae_ing_next_bg.png") no-repeat left 50px;
     text-align: center;
+    
 }
 .mypage_order_info_cont ol li:first-child {
     padding-left: 10px;
@@ -292,7 +316,14 @@ export default {
     text-align: center;
     vertical-align: middle;
 }
+
+
 .mypage_order_info_cont .active strong {
     background: url("../assets/img/mypage/mypgae_ing_deliver_bg.png") no-repeat 0 0;
 }
+
+.status{
+    padding-right: 80px;
+}
+
 </style>
