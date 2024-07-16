@@ -11,11 +11,11 @@
                         <table class="table" v-else>
                             <thead>
                                 <tr>
+                                    <th>주문 날짜</th>
                                     <th>상품명</th>
                                     <th>주문 가격</th>
                                     <th>적립금 사용</th>
                                     <th>주문 수량</th>
-                                    <th>주문 날짜</th>
                                     <th>주문 상태</th>
                                     <th>주문 취소</th>
                                     <th>리뷰</th>
@@ -24,7 +24,11 @@
                             <tbody>
                                 <tr v-for="(ordered, i) in orderedList" :key="i">
                                     <td>{{formatDateTime(ordered.order_create)}}</td>
-                                    <td>{{ordered.goods_nm}}</td>
+                                    <td>
+                                        <a :href="'http://localhost:8080/goodsDetail/' + ordered.goods_no">
+                                            {{ordered.goods_nm}}
+                                        </a>
+                                    </td>
                                     <td>{{ordered.ordered_price}}</td>
                                     <td>{{ordered.order_point}}</td>
                                     <td>{{ordered.order_goods_cnt}}</td>
