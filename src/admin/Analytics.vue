@@ -96,7 +96,7 @@ export default {
     padding: 20px;
     display: inline-block;
     vertical-align: top;
-    margin: 100px auto;
+    margin: 100px 5%;
 }
 .analytics_title {
     margin-bottom: 20px;
