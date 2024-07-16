@@ -34,7 +34,9 @@
                                         <p v-else>-</p>
                                     </td>
                                     <td>
+                                        <!-- 배송완료 상태이고, 리뷰가 없으면 (hasReview == 0) 리뷰 작성 버튼 노출 -->
                                         <button v-if="ordered.order_status == 2 && ordered.hasReview == 0" @click="goToReview(ordered.goods_no, ordered.order_trade_no)">리뷰 작성</button>
+                                        <!-- hasReview ==1 => 리뷰가 있으면(1개) (sql에 count로 추가되어있음) 작성완료가 노출되게끔 -->
                                         <p v-else-if="ordered.hasReview == 1">작성완료</p>
                                         <p v-else>-</p>
                                     </td>

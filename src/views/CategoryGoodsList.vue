@@ -1,6 +1,5 @@
 <template>
-    <main class="mt-3">
-        <div>
+        <div class="cate-all-list">
             <div class="row mb-2">
                 <div class="col-12">
                 </div>
@@ -23,13 +22,12 @@
                         <div class="name">{{ goods.goods_nm }}</div>
                         <div class="span">{{ $currencyFormat(goods.goods_price) }}원</div>
                         <div class="box_tag">
-                            <span>무료배송</span>
+                            <span v-if="(i + 1) < 3" >BEST</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
 </template>
 
 <script>
@@ -99,6 +97,12 @@ export default {
 
 
 <style scoped>
+.cate-all-list {
+    width: 1200px;
+    margin: 0 auto;
+    font-family: "Spoqa Han Sans Neo";
+}
+
 .content-cate-list h2{
     /* margin-left: 30px;
     padding: 40px;
@@ -121,26 +125,27 @@ export default {
 }
 
 
-.products-container {
+/* .products-container {
     display: flex;
     justify-content: center;
-}
+} */
 
 
-.products-container > div {
+/* .products-container > div {
     display: flex;
-}
+} */
 
 .category-container-item {
     width: 255px;
-    margin-right: 15px;
+    margin-right: 60px;
     /* border: 1px solid #ddd; */
     /* border-radius: 8px; */
     text-align: left;
     display: inline-block;
     border-radius: 6px;
+    vertical-align: top;
 }
-.category-container-item:last-child {
+.category-container-item:nth-child(4n) {
     margin-right: 0;
 }
 
