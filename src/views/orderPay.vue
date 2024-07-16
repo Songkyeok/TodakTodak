@@ -380,7 +380,7 @@ export default {
                 this.$swal('보유적립금을 초과합니다.')
             }else if(inputPoint < 5000){
                 this.$swal('적립금 5,000부터 사용 가능합니다.')
-            }else if(inputPoint < this.getTotalPrice()){
+            }else if(inputPoint <= this.getTotalPrice()){
                 this.$swal('사용 가능합니다.')
                 this.usePoint = inputPoint;
             }else if(inputPoint > this.getTotalPrice()){
