@@ -206,15 +206,19 @@ export default {
 .qna-delete-btn {
     border: none;
     width: 50%;
-    border: solid 2px rgb(151, 235, 118);
     border-radius: 7px;
-    background-color: rgb(151, 235, 118);
-    color: rgb(0, 0, 0);
-    padding: 5px 0;
+    background-color: #767070;
+    color: #fff;
+    padding: 9px 8px;
     font-weight: 600;
     text-align: center;
     margin-left: 30px;
 }
+button:hover {
+    background-color: #0068FF;
+    cursor: pointer;
+}
+
 
 .user-qna-title {
     border-bottom: 1px solid #d4cdcd;
