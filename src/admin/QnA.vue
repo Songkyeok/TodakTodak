@@ -9,7 +9,7 @@
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">답변상태</th>
-                    <th scope="col"></th>
+                    <th scope="col">삭제</th>
                 </tr>
             </thead>
             <tbody class="table-data" v-if="qnaList.length>0">
@@ -23,7 +23,7 @@
                         <td class="qwer">
                             <button v-if="qna.qna_answer_admin == '미답변'" class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
                             <button v-else class="btn btn-outline-danger answer_btn" @click="answer_delete(qna.qna_answer_admin)">답변삭제</button>
-                            <button class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">삭제</button>
+                            <button class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">게시글 삭제</button>
                         </td>
                 </tr>
             </tbody>
@@ -140,7 +140,7 @@ export default {
     width: 80%;
     min-width: 80%;
     margin-top: 100px;
-    padding: 0 10% 0 5%;
+    padding: 0 5%;
     display: inline-block;
     vertical-align: top;
     overflow-x: auto;
@@ -161,7 +161,7 @@ export default {
     background-color: #f8f7f7;
 }
 .table-light tr th {
-    padding: 23px;
+    padding: 15px;
 }
 
 
@@ -169,6 +169,7 @@ th,
 td {
     vertical-align: middle;
     font-size: 15.5px;
+    text-align: center;
 }
 
 img {
@@ -197,5 +198,10 @@ img:not(:hover) {
     font-weight: bold;
     font-size: 16.5px;
 }
-
+.qwer button {
+    font-size: 13px;
+}
+.qwer button:first-child {
+    margin-right: 10px;
+}
 </style>

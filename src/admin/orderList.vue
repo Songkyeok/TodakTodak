@@ -43,7 +43,7 @@
       </thead>
       <thead v-if="selectOrder.length == 0">
         <br>
-        <h1>주문이 없습니다.</h1>
+        <p>주문이 없습니다.</p>
       </thead>
         <tbody>
         <tr class="order-list" v-for="(order, i) in pageSelectOrder" :key="i">
