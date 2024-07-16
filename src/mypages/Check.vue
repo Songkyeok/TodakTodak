@@ -11,7 +11,6 @@
                         <table class="table" v-else>
                             <thead>
                                 <tr>
-                                    <th>주문 번호</th>
                                     <th>상품명</th>
                                     <th>주문 가격</th>
                                     <th>적립금 사용</th>
@@ -24,12 +23,11 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(ordered, i) in orderedList" :key="i">
-                                    <td>{{ordered.order_detail_no}}</td>
+                                    <td>{{formatDateTime(ordered.order_create)}}</td>
                                     <td>{{ordered.goods_nm}}</td>
                                     <td>{{ordered.ordered_price}}</td>
                                     <td>{{ordered.order_point}}</td>
                                     <td>{{ordered.order_goods_cnt}}</td>
-                                    <td>{{formatDateTime(ordered.order_create)}}</td>
                                     <td>{{formatStatus(ordered.order_status)}}</td>
                                     <td>
                                         <button v-if="ordered.order_status == 0" @click="order_cancel(ordered.order_detail_no, ordered.order_point)">주문 취소</button>
