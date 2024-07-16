@@ -149,16 +149,23 @@ export default {
 <style scoped>
 .my-qna-list {
     /* width: 1500px; */
-    width: 75%;
+    /* width: 75%;
     margin-top: 100px;
     padding: 0 5% 0 0%;
     display: inline-block;
+    vertical-align: top; */
+    width: 70%;
+    padding: 0 5%;
+    display: inline-block;
     vertical-align: top;
+    margin-top: 100px;
 }
 
 .my-qna-list h2 {
     border-bottom: 1px solid #d4cdcd;
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .pagination {
