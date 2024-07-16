@@ -36,7 +36,7 @@
                                     <ul v-else class="join quick-list">
                                         <!-- <li @click="logout()">로그아웃</li> -->
                                         <!-- 카카오톡 링크 추가 예정 -->
-                                        <li><a href="#" class="ki-cs"><em class="blind">고객센터</em></a></li>
+                                        <li><a href="https://pf.kakao.com/_xixgxexgG" target="_blank" class="ki-cs"><em class="blind">고객센터</em></a></li>
                                         <li><a href="/mypage" class="ki-mypage"><em class="blind">마이페이지</em></a></li>
                                         <li><a href="/basket" class="ki-cart"><span id="cartCnt"></span></a></li>
                                     </ul>
