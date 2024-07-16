@@ -10,8 +10,9 @@
                         <table class="table" style="width:100%;">
                             <thead class="A">
                                 <tr>
-                                    <th class="checkAll"><input class="box" type="checkbox" name="checkbox" @click="toggleSelectAll" />
-                                    전체 선택/해제</th>
+                                    <th class="checkAll">
+                                        <input class="box" type="checkbox" name="checkbox" v-model="allSelected" @click="toggleSelectAll" />
+                                    </th>
                                     <th class="goodsname">선택사항/상품이미지</th>
                                     <th>상품명</th>
                                     <th>상품금액</th>
@@ -22,7 +23,9 @@
 
                             <tbody class="QWER" v-if="basketList.length > 0">
                                 <tr class="img_container" v-for="(goods, i) in basketList" :key="i">
-                                    <input class="check" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
+                                    <td>
+                                        <input class="check" type="checkbox" v-model="goods.checked" @click="toggleCartItem(goods)" />
+                                    </td>
                                     <td>
                                         <a :href="'http://localhost:8080/goodsDetail/' + goods.goods_no">
                                             <img class="img" :src="goods.basket_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.basket_img}`) : require('../assets/goodsempty.jpg')" alt="상품 이미지" />
@@ -33,7 +36,7 @@
                                     <td>
 
                                         
-                                    <div class="goods-cnt d-flex align-items-center">
+                                    <div class="goods-cnt">
                                         <button class="input-group-text" @click="updateBasketCnt2(goods);" :disabled="goods.basket_cnt === 1">-</button>
                                         <div>{{ goods.basket_cnt }}</div>
                                         <button class="input-group-text" @click="updateBasketCnt(goods);" :disabled="goods.basket_cnt === goods.goods_cnt">+</button>
@@ -70,23 +73,29 @@ export default {
             total: 1,
             totalPrice: [],
             cnt: 1,
+            allSelected: true,
         };
-    },
-    created(){
-        
     },
     mounted(){
         this.getBasketList(); 
+    },
+    watch: {
+        basketList: {
+            handler() {
+                this.checkAllSelected();
+            },
+            deep: true,
+        },
     },
     computed: {
         user(){
                 return this.$store.state.user;
             },
             selectedTotalPrice() {
-            const selectedCarts = this.selectedCartList();
-            return selectedCarts.reduce((total, goods) => {
-                return this.totalPrice = total + goods.basket_cnt * goods.basket_price;
-            }, 0);
+                const selectedCarts = this.selectedCartList();
+                return selectedCarts.reduce((total, goods) => {
+                    return this.totalPrice = total + goods.basket_cnt * goods.basket_price;
+                }, 0);
         },
     },
     methods: {
@@ -112,7 +121,9 @@ export default {
                         }
                     })
                     .then(results => {
-                        this.basketList = results.data;
+                        // this.basketList = results.data;
+                        this.basketList = results.data.map(goods => ({ ...goods, checked: true }));
+                        this.checkAllSelected();
                     })
                 }
             },
@@ -132,7 +143,7 @@ export default {
                 const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 return `${formattedPrice} 원`;
             }
-            return '';
+                return;
             },
 
             basketDelete(goods_no) {
@@ -156,65 +167,74 @@ export default {
                 console.error("삭제 메소드 오류:", error);
                 this.$swal('오류 발생');
             });
-            },
+        },
 
-            toggleCartItem(goods) {
-                goods.checked = goods.checked;
-            },
+        toggleCartItem(goods) {
+            // goods.checked = goods.checked;
+            goods.checked = !goods.checked;
+            this.checkAllSelected();
+        },
 
-            toggleSelectAll() {
-                const allChecked = this.basketList.every(goods => goods.checked);
-                console.log("allchecked",allChecked)
-                this.basketList.forEach(goods => {
-                    goods.checked = !allChecked;
-                });
-            },
+        toggleSelectAll() {
+            // const allChecked = this.basketList.every(goods => goods.checked);
+            // console.log("allchecked",allChecked)
+            // this.basketList.forEach(goods => {
+            //     goods.checked = !allChecked;
+            // });
 
-            buyAll() {
+            const newValue = !this.allSelected;
             this.basketList.forEach(goods => {
-                this.toggleCartItem(goods);
+                goods.checked = newValue;
             });
-                this.goToBuy();
-            },
+        },
 
-            async goToBuy(){
+        buyAll() {
+            this.basketList.forEach(goods => {
+                goods.checked = true;
+            });
+            this.goToBuy();
+        },
+        async goToBuy(){
 
-                const selectedCarts = this.basketList.filter(goods => goods.checked);
-                const basketNos = selectedCarts.map(goods => goods.basket_no);
-                const goodsNos = selectedCarts.map(goods => goods.goods_no);
-                const basketCount = selectedCarts.map(goods => goods.basket_cnt);
-                const price = selectedCarts.map(goods => goods.basket_price);
-                console.log("selectedCarts", selectedCarts)
-                console.log("basketNos", basketNos)
-                console.log("basketCount", basketCount)
-                if(basketNos.length === 0){
-                    this.$swal('결제할 상품을 선택해주세요');
-                }else{
-                    axios({
-                        url: "http://localhost:3000/goods/updateBasket",
-                        method: "POST",
-                        data: {
-                            basket_no: basketNos,
-                            basket_cnt: basketCount,
-                        }
-                    })
-                    .then(res => {
+            const selectedCarts = this.basketList.filter(goods => goods.checked);
+            const basketNos = selectedCarts.map(goods => goods.basket_no);
+            const goodsNos = selectedCarts.map(goods => goods.goods_no);
+            const basketCount = selectedCarts.map(goods => goods.basket_cnt);
+            const price = selectedCarts.map(goods => goods.basket_price);
+            console.log("selectedCarts", selectedCarts)
+            console.log("basketNos", basketNos)
+            console.log("basketCount", basketCount)
+            if(basketNos.length === 0){
+                this.$swal('결제할 상품을 선택해주세요');
+            }else{
+                axios({
+                    url: "http://localhost:3000/goods/updateBasket",
+                    method: "POST",
+                    data: {
+                        basket_no: basketNos,
+                        basket_cnt: basketCount,
+                    }
+                })
+                .then(res => {
 
-                        if (res.data.message === '장바구니 업데이트 성공') {
-                            location.href = `http://localhost:8080/orderpay/1/${goodsNos}/${basketCount}`;
+                    if (res.data.message === '장바구니 업데이트 성공') {
+                        location.href = `http://localhost:8080/orderpay/1/${goodsNos}/${basketCount}`;
 
-                        } else {
-                            this.$swal('결제 실패');
-                        }
-                    })
-                    .catch(() => {
-                        this.$swal('오류 발생');
-                    });
-                }
-            },
-            selectedCartList() {
-            return this.basketList.filter(goods => goods.checked);
+                    } else {
+                        this.$swal('결제 실패');
+                    }
+                })
+                .catch(() => {
+                    this.$swal('오류 발생');
+                });
             }
+        },
+        selectedCartList() {
+            return this.basketList.filter(goods => goods.checked);
+        },
+        checkAllSelected() {
+            this.allSelected = this.basketList.length > 0 && this.basketList.every(goods => goods.checked);
+        },
     }
 }
 
@@ -259,6 +279,7 @@ h2 {
 .table td {
     padding: 15px;
     text-align: left;
+    text-align: center;
 }
 
 .table th {
@@ -304,6 +325,7 @@ h2 {
 .goods-cnt {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 /* 버튼 */
@@ -347,10 +369,18 @@ button:hover {
 .btn-order-selected:hover {
     background-color: #555;
 }
-.check{
-    
+
+/* .checkAll {
+    display: flex;
+} */
+.checkAll > input {
+    margin-top: 5px;
 }
-
-    
-
+.A > tr > th:first-child {
+    width: 50px;
+}
+.img_container > td {
+    vertical-align: middle;
+    text-align: center;
+}
 </style>
