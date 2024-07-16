@@ -3,13 +3,16 @@
         <div id="MainSlider">
             <splide :options="options">
                 <splide-slide>
-                    <img @click="this.$router.push({ path: '/goodsDetail/1' })" class="slider-image" src="../assets/banner1.png" alt="배너 이미지1" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/73' })" class="slider-image" src="../assets/banner1.png" alt="배너 이미지1" />
                 </splide-slide>
                 <splide-slide>
-                    <img @click="this.$router.push({ path: '/goodsDetail/2' })" class="slider-image" src="../assets/banner2.png" alt="배너 이미지2" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/74' })" class="slider-image" src="../assets/banner2.png" alt="배너 이미지2" />
                 </splide-slide>
                 <splide-slide>
-                    <img @click="this.$router.push({ path: '/goodsDetail/3' })" class="slider-image" src="../assets/banner3.png" alt="배너 이미지3" />
+                    <img @click="this.$router.push({ path: '/goodsDetail/75' })" class="slider-image" src="../assets/banner3.png" alt="배너 이미지3" />
+                </splide-slide>
+                <splide-slide>
+                    <img @click="this.$router.push({ path: '/goodsDetail/76' })" class="slider-image" src="../assets/banner4.png" alt="배너 이미지4" />
                 </splide-slide>
             </splide>
         </div>
@@ -164,6 +167,7 @@ export default {
 
     body {
         font-family: "Spoqa Han Sans Neo";
+        
     }
 
     .element.style{
@@ -189,6 +193,7 @@ export default {
         padding-bottom: 70px;
         width: 1200px;
         margin: 0 auto;
+        
     }
 
     .home_title {

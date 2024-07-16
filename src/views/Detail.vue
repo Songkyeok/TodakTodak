@@ -716,7 +716,7 @@ li {
   font-weight: 400;
   height: 60px;
   line-height: 30px;
-  width: 490px;
+  width: 480px;
   font-family: "Spoqa Han Sans Neo";
 }
 
@@ -1237,7 +1237,8 @@ li {
     border: none;
     cursor: pointer;
     /* display: flex; */
-    align-items: center;
+    position: absolute;
+    padding-top: 5px;
 }
 
 .like_box button i {
