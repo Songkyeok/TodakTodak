@@ -12,8 +12,8 @@
                     <th scope="col">삭제</th>
                 </tr>
             </thead>
-            <tbody class="table-data" v-if="qnaList.length>0">
-                <tr v-for="(qna, index) in qnaList" :key="index">
+            <tbody class="table-data" v-if="pageqnaList.length>0">
+                <tr v-for="(qna, index) in pageqnaList" :key="index">
                         <td>{{ qna.qna_create }}</td>
                         <td>{{ qna.goods_nm }}</td>
                         <td>{{ qna.qna_title }}</td>
@@ -31,10 +31,8 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <ul v-for="i in pageCnt" :key="i" class="pagination justify-content-center">
-                        <a href="" style="text-decoration: none;">
                             <li v-if="i != pageNum + 1" class="page-item page-link" @click="setPage(i)">{{ i }}</li>
                             <li v-else class="page-item page-link active" @click="setPage(i)">{{ i }}</li>
-                        </a>
                     </ul>
                 </ul>
             </nav>
@@ -55,7 +53,8 @@ export default {
             qnaList: [],
             pageNum: 0,
             pageCnt: 0,
-            pageqnaList: []
+            pageqnaList: [],
+            itemsPerPage: 8
         };
     },
     mounted() {
@@ -68,8 +67,10 @@ export default {
                 method: "POST",
             }).then(res => {
                 this.qnaList = res.data.results;
-                this.pageCnt = Math.ceil(this.qnaList.length / 15)
+                this.pageCnt = parseInt(this.qnaList.length / this.itemsPerPage) + 1
                 this.setPage(1)
+                // this.pageCnt = Math.ceil(this.qnaList.length / 15)
+                // this.setPage(1)
                 // 날짜 format 변경
                 for(let i=0; i<this.qnaList.length; i++) {
                     let qna_create = this.qnaList[i].qna_create
@@ -101,6 +102,7 @@ export default {
                 this.allQnaList();
             })
         },
+        //답글 삭제
         answer_delete(qna_no){
             axios({
                 url: "http://localhost:3000/admin/qnaAnswerDelete",
@@ -113,7 +115,7 @@ export default {
                 this.allQnaList();
             })
         },
-
+        //페이징
         setPage(page) {
             this.pageqnaList = []
             this.pageNum = page - 1;
@@ -121,9 +123,8 @@ export default {
         },
 
         sliceList() {
-            const start = this.pageNum * this.itemsPerPage; // 시작 인덱스 계산
-            const end = start + this.itemsPerPage; // 끝 인덱스 계산
-            this.pageqnaList = this.qnaList.slice(start, end); // 페이지에 맞는 목록 추출
+            const start = this.pageNum * this.itemsPerPage;
+            this.pageqnaList = this.qnaList.slice(start, start + this.itemsPerPage);
         },
         // qna 답변
         goToWriteQna(qna_no) {
