@@ -39,7 +39,11 @@
           <th class="user-phone">번호</th>
           <th class="user-email">결제상태</th>
           <th class="user-email">배송상태</th>
+
           <th class="user-delete">삭제</th>
+
+          <th></th>
+
         </tr>
       </thead>
       <thead v-if="selectOrder.length == 0">
