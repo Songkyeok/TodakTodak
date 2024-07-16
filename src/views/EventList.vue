@@ -152,4 +152,8 @@ export default {
     text-decoration: none;
     color: inherit;
   }
+  .js_image_load {
+    object-fit: cover;
+    object-position: left top;
+  }
 </style>

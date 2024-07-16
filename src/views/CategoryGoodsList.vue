@@ -144,6 +144,7 @@ export default {
     display: inline-block;
     border-radius: 6px;
     vertical-align: top;
+    margin-bottom: 20px;
 }
 .category-container-item:nth-child(4n) {
     margin-right: 0;
@@ -162,6 +163,7 @@ export default {
 .name {
     height: 58px;
     font-size: 15px;
+    margin-top: 10px;
 }
 
 .span {

@@ -716,7 +716,7 @@ li {
   font-weight: 400;
   height: 60px;
   line-height: 30px;
-  width: 480px;
+  width: 450px;
   font-family: "Spoqa Han Sans Neo";
 }
 
@@ -1250,7 +1250,7 @@ li {
 }
 
 button.heart-button {
-  width: 50px;
+  width: 80px;
 }
 .goods-none{
   text-align: right;
