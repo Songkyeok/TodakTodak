@@ -2,80 +2,63 @@
 <template>
     <div class="my-qna-list">
         <h2>나의 QnA</h2>
-            <div class="qna-none" v-if="myqnaList.length === 0">나의 QnA가 없습니다.</div>
-            <table class="qna-content-list" v-else>
-                <thead>
-                    <tr class="user-qna-title">
-                        <th class="qna-goods">상품명</th>
-                        <th class="qna-title">제목</th>
-                        <!-- <th class="qna-content">내용</th> -->
-                        <!-- <th class="qna-admin-answer">답변</th> -->
-                        <th class="qna-answer">답변 여부</th>
-                        <th class="qna-date">공개 여부</th>
-                        <th class="qna-date">작성 날짜</th>
-                        <th class="qna-delete">리뷰 삭제</th>
-                    </tr>
-                </thead>
-    <tbody>
-          <tr class="user-qna-content"  v-for="(myqna, i) in pageMyQnaList" :key="i">
-              <th class="qna-goods value">
-                <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.goods_nm }}</router-link>
-              </th>
-              <th class="qna-title value">
-                <a href="#" @click="toggleVisibility(i)">{{ myqna.qna_title }}</a>
-              </th>
-              <!-- <th class="qna-content value">{{ myqna.qna_content }}
-              </th> -->
-              <!-- <th class="qna-admin-answer value" v-if="myqna.qna_answer_admin == '미답변'"></th>
-              <th class="qna-admin-answer value" v-else>{{myqna.qna_answer_admin}}</th> -->
-              <th class="qna-answer value" v-if="myqna.qna_answer_admin == '미답변'">미답변</th>
-              <th class="qna-answer value" v-else>답변완료</th>
-              <th class="qna-secret value">
-                <div v-if="myqna.qna_secret == 0">공개</div>
-                <div v-else>비공개</div>
-              </th>
-              <th class="qna-date value">{{ new Date(myqna.qna_create).toISOString().split('T')[0] }}</th>
-              <th><button type="button" class="qna-delete-btn" @click="goToDelete(myqna.qna_no)">삭제</button></th>
-          </tr>
-          <tr v-show="isVisible[i]" class="qna_cont_wrap">
-            <td colspan="6">
-                <div class="qna_cont qna_btns">
-                    <p>ddd</p>
-                    <!-- <a href="#" @click.prevent="toggleVisibility" class="qna_q rv_up">{{myqna.qna_content}}</a> -->
-                    <!-- <a href="#" @click.prevent="toggleVisibility" class="qna_q rv_up">{{myqna.qna_answer_admin}}</a> -->
-                </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li v-for="i in visiblePageNumbers" :key="i" class="page-item">
-          <a href="#" class="page-link" :class="{ active: i === pageNum + 1 }" @click.prevent="setPage(i)">{{ i }}</a>
-        </li> 
-      </ul>
-    </nav>
-    <br />
+        <div class="qna-none" v-if="myqnaList.length === 0">나의 QnA가 없습니다.</div>
+        <table class="qna-content-list" v-else>
+            <thead>
+                <tr class="user-qna-title">
+                    <th class="qna-goods">상품명</th>
+                    <th class="qna-title">제목</th>
+                    <th class="qna-answer">답변 여부</th>
+                    <th class="qna-date">공개 여부</th>
+                    <th class="qna-date">작성 날짜</th>
+                    <th class="qna-delete">리뷰 삭제</th>
+                </tr>
+            </thead>
+            <tbody v-for="(myqna, i) in pageMyQnaList" :key="i">
+                <tr class="user-qna-content">
+                    <td class="qna-goods value">
+                        <router-link :to="'/goodsDetail/' + myqna.goods_no">{{ myqna.goods_nm }}</router-link>
+                    </td>
+                    <td class="qna-title value" @click="toggleAnswer(myqna.qna_no)">
+                        {{ myqna.qna_title }}
+                    </td>
+                    <td class="qna-answer value" v-if="myqna.qna_answer_admin == '미답변'">미답변</td>
+                    <td class="qna-answer value" v-else>답변완료</td>
+                    <td class="qna-secret value">
+                        <div v-if="myqna.qna_secret == 0">공개</div>
+                        <div v-else>비공개</div>
+                    </td>
+                    <td class="qna-date value">{{ new Date(myqna.qna_create).toISOString().split('T')[0] }}</td>
+                    <td><button type="button" class="qna-delete-btn" @click="goToDelete(myqna.qna_no)">삭제</button></td>
+                </tr>
+
+                <tr :class="['qna_answer_container', 'qna_answer_container'+myqna.qna_no, showAnswer ? 'show' : '']">
+                    <td class="qna_cont qna_btns qna_box">
+                        <p>Q: {{ myqna.qna_content }} </p>
+                        <p v-if="myqna.qna_answer_admin == '미답변'">아직 답변이 완료되지 않았습니다.</p>
+                        <p v-else>
+                            A: {{ myqna.qna_answer_admin }}
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li v-for="i in visiblePageNumbers" :key="i" class="page-item">
+                    <a href="#" class="page-link" :class="{ active: i === pageNum + 1 }"
+                        @click.prevent="setPage(i)">{{ i }}</a>
+                </li>
+            </ul>
+        </nav>
+        <br />
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
 
 export default {
-//     setup() {
-//     const isVisible = ref([]);
-
-//     function toggleVisibility(index) {
-//       isVisible.value[index] = !isVisible.value[index];
-//     }
-
-//     return {
-//       isVisible,
-//       toggleVisibility,
-//     };
-//   },
     data() {
         return {
             cnt: 1,
@@ -85,7 +68,7 @@ export default {
             onePageCnt: 5,
             qna_no: [],
             pageMyQnaList: [],
-            isVisible: [],
+            showAnswer: false,
         };
     },
 
@@ -111,11 +94,11 @@ export default {
 
     mounted() {
         this.getMyQnaList();
+
     },
 
     methods: {
         setPage(page) {
-            // this.pageMyQnaList = []
             this.pageNum = page - 1;
             this.sliceList();
         },
@@ -123,7 +106,6 @@ export default {
         sliceList() {
             const start = 0 + this.pageNum * this.onePageCnt
             this.pageMyQnaList = this.myqnaList.slice(start, start + this.onePageCnt);
-            this.isVisible = new Array(this.pageMyQnaList.length).fill(false);
         },
 
 
@@ -132,9 +114,6 @@ export default {
             axios({
                 url: `http://localhost:3000/qna/myqnaList/${user_no}`,
                 method: "GET",
-                // params: {
-                //     user_no: this.$store.state.user.user_no, // url에서 ${user_no}로 보냈으므로 params로 안보내도 됨
-                // }
             }).then((results) => {
                 this.myqnaList = results.data;
                 console.log(results);
@@ -157,7 +136,6 @@ export default {
                     console.log(results);
                     this.deleteQna = results.data;
                     this.getMyQnaList(); // Qna 삭제 후 목록 갱신
-                    // window.location.href = `http://localhost:8080/mypage/qna`;
                 })
                 .catch((error) => {
                     console.error('error');
@@ -166,11 +144,15 @@ export default {
                 window.location.href = `http://localhost:8080/mypage/qna`;
             }
         },
-        toggleVisibility(index) {
-            // 해당 인덱스의 isVisible 상태를 토글
-            console.log("this.isVisible", this.isVisible);
-            this.isVisible[index] = !this.isVisible[index];
-        },
+        toggleAnswer(qna_no) {
+            const temp = this.$el.querySelector(".qna_answer_container"+qna_no);
+
+            if (temp.classList.contains('show')) {
+                temp.classList.remove('show');
+            } else {
+                temp.classList.add('show');
+            }
+        }
     },
 };
 </script>
@@ -194,7 +176,7 @@ export default {
     border-bottom: 1px solid #d4cdcd;
     /* padding-bottom: 100px; */
     padding-bottom: 20px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .pagination {
@@ -232,6 +214,8 @@ button:hover {
 .qna-title {
     width: 15%;
     padding: 30px;
+    cursor: pointer;
+    
 }
 
 .qna-goods {
@@ -277,20 +261,42 @@ button:hover {
 
 .user-qna-content {
     border-bottom: 1px solid #d4cdcd;
+    border-top: 1px solid #d4cdcd;
     padding-bottom: 20px;
     font-size: small;
     color: #5d5b5b;
-    font-weight: 50px;
+    /* position: relative; */
+}
+.qna_answer_container {
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+ 
+    display: none;
+}
+.qna_answer_container.show {
+    display: block;
+}
+.qna-content-list, .qna-content-list tr {
+    text-align: center;
+}
+.qna_box {
+    padding: 20px 0;
+}
+.qna_box p {
+    color: #333;
+}
+.qna_box > p:first-child {
 }
 
-.qna_cont_wrap {
-  display: none;
+.qna_box > p:last-child {
+    margin-top: 10px;
+    /* background: url(https://static.elandrs.com/f/img/pc/bg_qna_ques_new.gif) 0 0 repeat-x; */
 }
-
-.qna_cont_wrap[style*="display: table-row"] {
-  display: table-row;
+.qna_cont {
+    text-align: left;
+    /* border-bottom: 1px solid #d4cdcd; */
+    min-width: 1140px;
+    padding-left: 20px;
 }
-
-
-
 </style>
