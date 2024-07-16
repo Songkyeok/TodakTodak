@@ -22,7 +22,8 @@
                         <td v-else>답변완료</td>
                         <td class="qwer">
                             <button v-if="qna.qna_answer_admin == '미답변'" class="btn btn-light" @click="goToWriteQna(qna.qna_no)">답변작성</button>
-                            <button v-else class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">답변삭제</button>                               
+                            <button v-else class="btn btn-outline-danger answer_btn" @click="answer_delete(qna.qna_answer_admin)">답변삭제</button>
+                            <button class="btn btn-outline-danger answer_btn" @click="answer_btn(qna.qna_no)">삭제</button>
                         </td>
                 </tr>
             </tbody>
@@ -87,6 +88,7 @@ export default {
                 }
             })
         },
+        //게시글 삭제
         answer_btn(qna_no) {
             axios({
                 url: "http://localhost:3000/admin/qnaDelete",
@@ -99,26 +101,25 @@ export default {
                 this.allQnaList();
             })
         },
-        // allDeleteQna(){
-        //     axios({
-        //         url: "http://localhost:3000/admin/qnaDelete",
-        //         method: "POST",
-        //         data: {
-                    
-        //         }
-        //     }).then(results => {
-        //         this.deleteQna = results.data;
-        //         console.log(deleteQna)
-        //     })
-        // }
-
-
+        answer_delete(qna_no){
+            axios({
+                url: "http://localhost:3000/admin/qnaAnswerDelete",
+                method: "POST",
+                data: {
+                    qna_no: qna_no
+                }
+            }).then(() => {
+                this.$swal('QnA답글이 삭제되었습니다');
+                this.allQnaList();
+            })
+        },
 
         setPage(page) {
             this.pageqnaList = []
             this.pageNum = page - 1;
             this.sliceList()
         },
+
         sliceList() {
             const start = this.pageNum * this.itemsPerPage; // 시작 인덱스 계산
             const end = start + this.itemsPerPage; // 끝 인덱스 계산
