@@ -53,12 +53,11 @@
             <div class="mypage_top_wallet">
                 <ul>
                     <li>
-                        <span><img src="../assets/img/mypage/icon_like.png" alt=""></span>
+                        <span><a href="http://localhost:8080/mypage/like"><img src="../assets/img/mypage/icon_like.png" alt=""></a></span>
                         <span>
                             <em>LIKE</em>
-                            <a href="http://localhost:8080/mypage/like">
                                 <strong>{{ like_count }}</strong>
-                            </a> 개
+                            개
                         </span>
                     </li>
                     <li>
