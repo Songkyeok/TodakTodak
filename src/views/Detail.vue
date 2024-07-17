@@ -81,9 +81,13 @@
                       </li>
                     </ul>
                   </div>
+                  
                   <div class="detail-option-section">
                     <div class="detail-final-box">
-                      <div class="input-group">
+                        <div class="input-group" style="justify-content: center; font-size: 20px;" v-if="goods.goods_cnt === 0">
+                          해당상품은 품절입니다.
+                        </div>
+                      <div class="input-group" v-if="goods.goods_cnt != 0">
                         <span class="total">[택배배송]{{goods.goods_nm}} </span>
                         <div class="button-group">
                           <button class="btn decrease" @click="calculatePrice(-1)" :disabled="total === 1">-</button>
@@ -94,18 +98,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="detail-total-box">
+                  <div class="detail-total-box" v-if="goods.goods_cnt != 0">
                     <span class="total-txt">총 합계</span>
                     <span>
                       <strong class="total-price">{{ getCurrencyFormat(this.totalPrice) }}</strong>원
                     </span>
                   </div>
-                  <div class="detail-buy-box">
+                  <div class="detail-buy-box" v-if="goods.goods_cnt != 0">
                     
                       <button class="add-to-cart" @click="addToCart()">장바구니</button>
                       <button class="buy-now" @click="goToBuy(goods.goods_no)">구매하기</button>
                 
                   </div>
+
                 </div>
               </div>
             </div>
