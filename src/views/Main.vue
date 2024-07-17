@@ -181,6 +181,7 @@ export default {
         object-fit: cover;
         margin: auto;
         display: block;
+        cursor: pointer;
     }
 
     .main_product_inner {

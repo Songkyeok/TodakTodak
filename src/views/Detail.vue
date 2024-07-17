@@ -1119,6 +1119,9 @@ li {
     font-size: 14px;
     font-family: 'Source Sans Pro', sans-serif;
 }
+.user-review-content th {
+    text-align: center;
+}
 .user-review-title th {
   text-align: center;
 }

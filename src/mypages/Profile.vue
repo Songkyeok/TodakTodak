@@ -40,7 +40,7 @@
                 <label for="address">주소</label>
                 <div class="address_postcode">
                 <div>
-                    <input type="text" name="zonecode" readonly="readonly" v-model="user_info.user_zipcode" />
+                    <input type="text" name="zonecode" readonly="readonly" v-model="user_info.user_zipcode" disabled />
                 </div>
                 <div>
                     <button type="button" id="btnPostcode" class="btn_post_search" @click="execDaumPostcode">우편번호검색</button>
@@ -50,7 +50,7 @@
             <div class="form-group form-group-ad">
                 <div class="address_input_box" style="display: flex; justify-content: space-between">
                 <div class="member_warning" style="margin-left: 128px; width: 100%;">
-                    <input type="text" v-model="user_info.user_adr1" readonly="readonly" value="" />
+                    <input type="text" v-model="user_info.user_adr1" readonly="readonly" value="" disabled />
                 </div>
                 </div>
             </div>
