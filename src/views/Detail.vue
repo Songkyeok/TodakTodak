@@ -12,7 +12,12 @@
                 <img src="../assets/event.png">
               </div>              
                 <img class="product-img" :src="goods.goods_img ? require(`../../../TodakTodak_Backend/uploads/uploadGoods/${goods.goods_img}`): require('../assets/goodsempty.jpg')" alt="상품 이미지"/>
-            </div>
+                <div class="product-rating">
+                  <!-- calculateAverageRating이 메소드이므로 괄호까지 넣어야 됨. 괄호 안넣으면 변수로 인식함 -->
+                  리뷰 : {{ getStarRating(calculateAverageRating()) }} <span>({{ this.reviewList.length }})</span> 
+                </div>
+              </div>
+
             <div class="product-info_wrap">
               <div class="details">
                 <div class="title_wrap">
@@ -276,12 +281,14 @@ export default {
       reviewList: [],
       sortOption: 0,
       goods_no:this.goods_no,
+      averageRating: 0,
 
       // 리뷰 페이징
       pageReviewList: [],
       pageNum: 0,
       pageCnt: 0,
       onePageCnt: 5,
+
 
       //qna
       qnaList: [],
@@ -530,6 +537,11 @@ export default {
 
     getStarRating(rating) {
       return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    },
+    calculateAverageRating() {
+      if (this.reviewList.length === 0) return 0;
+      const totalRating = this.reviewList.reduce((sum, review) => sum + review.review_rating, 0);
+      return Math.ceil(totalRating / this.reviewList.length.toFixed(1));
     },
     // 리뷰 불러오는 실제 정렬 로직
     getReviewList(sortNum) {
@@ -1052,6 +1064,11 @@ li {
     height: 6px;
     background: #66B1F1;
     transition: left 0.3s ease;
+}
+
+.product-rating {
+  font-size: large;
+  padding: 20px;
 }
 
 .review-none {
