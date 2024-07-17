@@ -234,7 +234,8 @@
               <th class="qna_no value">{{ qna.qna_no }}</th> 
               <th class="qna_now value" v-if="qna.qna_answer_admin == '미답변'">미답변</th>
               <th class="qna_now value" v-else>답변완료</th>
-              <th class="qna_title value">{{ qna.qna_title }}</th>
+              <th class="qna_title value" v-if="qna.qna_secret" > 비밀글입니다.</th>
+              <th class="qna_title value" v-else>{{ qna.qna_title }}</th>
               <th class="qna_user value">{{ qna.user_nm }}</th>
               <th class="qna_menu" v-if="qna.qna_secret">비밀글</th>
               <th class="qna_menu" v-else>공개글</th>
