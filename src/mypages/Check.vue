@@ -29,8 +29,8 @@
                                             {{ordered.goods_nm}}
                                         </a>
                                     </td>
-                                    <td>{{ordered.ordered_price}}</td>
-                                    <td>{{ordered.order_point}}</td>
+                                    <td>{{$currencyFormat(ordered.ordered_price)}}</td>
+                                    <td>{{$currencyFormat(ordered.order_point)}}</td>
                                     <td>{{ordered.order_goods_cnt}}</td>
                                     <td>{{formatStatus(ordered.order_status)}}</td>
                                     <td>

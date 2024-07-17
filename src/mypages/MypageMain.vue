@@ -81,7 +81,7 @@
                         <b>입금대기</b>
                         <strong>1</strong>
                     </li> -->
-                    <li class="status">
+                    <li class="status active">
                         <b>결제완료</b>
                         <strong>{{this.status0}}</strong>
                     </li>
@@ -89,11 +89,11 @@
                         <b>상품준비중</b>
                         <strong>0</strong>
                     </li> -->
-                    <li class="status">
+                    <li class="status active">
                         <b>배송중</b>
                         <strong>{{this.status1}}</strong>
                     </li>
-                    <li class="status">
+                    <li class="status active">
                         <b>배송완료</b>
                         <strong>{{this.status2}}</strong>
                     </li>
@@ -308,7 +308,7 @@ export default {
     display: inline-block;
     width: 52px;
     height: 52px;
-    padding: 10px 0 0 0;
+    padding: 13px 0 0 0;
     color: #ffffff;
     font-size: 18px;
     background: url("../assets/img/mypage/mypgae_ing_list_bg.png") no-repeat 0 0;

@@ -344,6 +344,7 @@ export default {
                     })
                     .then(() => {
                         this.$swal('구매가 완료되었습니다.');
+                        window.location.href = "http://localhost:8080/mypage/check";
                     })
 
                 }

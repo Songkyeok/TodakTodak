@@ -193,6 +193,7 @@ export default {
     overflow-x: auto;
     flex-wrap: nowrap;
     box-sizing: border-box;
+    margin-bottom: 150px;
 }
 
 .goods-management h1 {

@@ -1,6 +1,6 @@
 <template>
     <main class="qna_container">
-        <h1>상품관리</h1>
+        <h1>Q&A 관리</h1>
         <table class="table caption-top goodslist-table">
             <thead class="table-light">
                 <tr>
@@ -9,7 +9,7 @@
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">답변상태</th>
-                    <th scope="col">삭제</th>
+                    <th scope="col">답변작성/삭제</th>
                 </tr>
             </thead>
             <tbody class="table-data" v-if="pageqnaList.length>0">

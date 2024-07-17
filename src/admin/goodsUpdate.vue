@@ -225,6 +225,7 @@ export default {
     overflow-x: auto;
     flex-wrap: nowrap;
     box-sizing: border-box;
+    margin-bottom: 150px;
 }
 .inputRadio .btn-group-toggle .btn {
     margin-bottom: 10px;
